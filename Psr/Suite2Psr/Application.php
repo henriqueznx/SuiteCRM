@@ -13,6 +13,7 @@ foreach($tasks as $task) {
     if($task == '.' || $task == '..') {
         continue;
     }
+    echo '    '.$task.PHP_EOL;
     require_once $APPLICATION_TASKS_ROOT.$task;
 }
 
