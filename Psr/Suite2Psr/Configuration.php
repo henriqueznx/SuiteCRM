@@ -4,7 +4,7 @@ echo 'Suite2Psr Configuration'.PHP_EOL;
 /**
  * VENDOR PATHS
  * Old Suite CRM path => new SuiteCRM Path
- * @uses php_inc.php
+ * @uses php_inc.php copy_recursive
  */
 global $vendor;
 $vendor = array(
