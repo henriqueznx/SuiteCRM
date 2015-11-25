@@ -1,4 +1,5 @@
 <?php
+global $APPLICATION_ROOT;
 echo 'Suite2Psr Application'.PHP_EOL;
 const sugarEntry = 'defined';
 

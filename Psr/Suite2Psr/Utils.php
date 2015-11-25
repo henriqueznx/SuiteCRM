@@ -14,8 +14,7 @@ function cp($source, $dest){
                     cp($source."/".$file, $dest."/".$file);
                 } else {
                     copy($source."/".$file, $dest."/".$file);
-//                    $MAP_FILES[] = array("$source" => "$dest");
-                    $MAP_FILES['moved'][$source] = $dest;
+                    $MAP_FILES['moved'][$source."/".$file] = $dest."/".$file;
                 }
             }
         }
@@ -24,4 +23,22 @@ function cp($source, $dest){
         copy($source, $dest);
         $MAP_FILES['moved'][$source] = $dest;
     }
+}
+
+function file_find_and_replace ($search, $replace, $path) {
+    if(!is_dir($path)) {
+        if($path == '/home/administrator/Documents/projects/SuiteCRM/Psr/Suite2Psr/Build/SuiteCRM/vendor/HTTP_WebDAV_Server/Server.php' &&
+        strstr($search, 'Server') != false) {
+            $break = 1;
+        }
+        $file_contents = file_get_contents($path);
+        $found = strstr($file_contents, $search);
+        if($found != false) {
+            $replaced_text = str_replace($search, $replace, $file_contents);
+            file_put_contents($path, $replaced_text);
+            $break =1;
+            return true;
+        }
+    }
+    return false;
 }
