@@ -1,5 +1,10 @@
 <?php
 echo 'Suite2Psr Configuration'.PHP_EOL;
+
+/**
+ * VENDOR PATHS
+ * Old Suite CRM path => new SuiteCRM Path
+ */
 global $vendor;
 $vendor = array(
     'include'.DIRECTORY_SEPARATOR.'HTMLPurifier'.DIRECTORY_SEPARATOR => 'vendor'.DIRECTORY_SEPARATOR.'HTMLPurifier'.DIRECTORY_SEPARATOR,
