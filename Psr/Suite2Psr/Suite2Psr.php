@@ -9,8 +9,6 @@ require("Extension.php");
 // Get Command line arguments
 if(!file_exists($BUILD_ROOT)) { mkdir($BUILD_ROOT, 0777, true); }
 
-file_put_contents(dirname(__FILE__).DIRECTORY_SEPARATOR.'__$MAP_FILES.json', json_encode($MAP_FILES));
-
 echo 'PS4 Tasks'.PHP_EOL;
 
 $tasks = scandir($TASKS_ROOT);
@@ -38,5 +36,9 @@ foreach($patches as $patch) {
     echo '    '.$patch.PHP_EOL;
     require_once $PATCHES_ROOT.$patch;
 }
+
+// Output changes
+file_put_contents(dirname(__FILE__).DIRECTORY_SEPARATOR.'__$MAP_FILES.json', json_encode($MAP_FILES));
+
 die();
 ?>
