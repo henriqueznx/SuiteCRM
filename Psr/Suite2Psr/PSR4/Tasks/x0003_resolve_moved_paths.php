@@ -19,6 +19,6 @@ foreach($MAP_FILES['moved'] as $original_path => $moved_path) {
         }
         $original_search = str_replace('\\','/',$original_search);
         $moved_search = str_replace('\\','/',$moved_search);
-        file_find_and_replace($original_search, $moved_search, $moved_path);
+        file_str_replace($original_search, $moved_search, $moved_path);
     }
 }

@@ -21,6 +21,8 @@ $PATCHES_ROOT = $SUITE2PSR_ROOT.'PSR4'.DIRECTORY_SEPARATOR.'Patch'.DIRECTORY_SEP
  */
 $MAP_FILES = array();
 $MAP_FILES['moved'] = array();
+$MAP_FILES['namespace_identifiers'] = array();
+
 
 echo 'SuiteCRM Source Directory: ';
 echo print_r($SUITECRM_ROOT.PHP_EOL, 1);

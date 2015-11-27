@@ -25,20 +25,34 @@ function cp($source, $dest){
     }
 }
 
-function file_find_and_replace ($search, $replace, $path) {
+function file_str_replace ($search, $replace, $path) {
     if(!is_dir($path)) {
-        if($path == '/home/administrator/Documents/projects/SuiteCRM/Psr/Suite2Psr/Build/SuiteCRM/vendor/HTTP_WebDAV_Server/Server.php' &&
-        strstr($search, 'Server') != false) {
-            $break = 1;
-        }
         $file_contents = file_get_contents($path);
         $found = strstr($file_contents, $search);
         if($found != false) {
             $replaced_text = str_replace($search, $replace, $file_contents);
             file_put_contents($path, $replaced_text);
-            $break =1;
             return true;
         }
     }
     return false;
+}
+
+function file_strpos ($search, $path) {
+    if(!is_dir($path)) {
+
+        $file_contents = file_get_contents($path);
+        return strpos($file_contents, $search);
+
+    }
+    return false;
+}
+
+/**
+ * @param $str string to split
+ * @returns array string php identifiers
+ */
+function str_split_identifiers ($str) {
+    $regex = '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*';
+    return preg_split($regex, $str);
 }
