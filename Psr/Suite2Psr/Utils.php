@@ -56,3 +56,8 @@ function str_split_identifiers ($str) {
     $regex = '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*';
     return preg_split($regex, $str);
 }
+
+function file_extension ($path) {
+    $info = new SplFileInfo($path);
+    return $info->getExtension();
+}

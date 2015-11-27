@@ -10,7 +10,9 @@ foreach($MAP_FILES['moved'] as $original_path => $moved_path) {
     }
 
     if(is_dir($moved_path)) {
-
+        continue;
+    } if(file_extension($moved_path) != 'php') {
+        continue;
     }
 //    $moved_search = str_replace('\\','/',$moved_search);
 
