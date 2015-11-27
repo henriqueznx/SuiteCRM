@@ -23,7 +23,7 @@ foreach($MAP_FILES['moved'] as $original_path => $moved_path) {
             $file_lines = file($moved_path);
             foreach($file_lines as $line_number => $line) {
                 // search for namespace
-                $regex_namespace = 'namespace[\s][a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*;';
+                $regex_namespace = 'namespace[\s][\\][a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*;';
                 $pos = strpos($line, 'namespace');
                 if($pos != false) {
                     if($pos == 0) {
