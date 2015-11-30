@@ -22,12 +22,31 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-    $aow_actions_list[]='CreateRecord';
-    $aow_actions_list[]='ModifyRecord';
-    $aow_actions_list[]='SendEmail';
-    $aow_actions_list[]='CreateAlert';
 
+require_once('modules/AOW_Actions/actions/actionBase.php');
+class actionCreateAlert extends actionBase {
 
-if (file_exists('custom/modules/AOW_Actions/Ext/Actions/actions.ext.php')) {
-    require('custom/modules/AOW_Actions/Ext/Actions/actions.ext.php');
+    private $emailableModules = array();
+
+    function actionSendEmail($id = ''){
+        parent::actionBase($id);
+    }
+
+    function loadJS(){
+        return array('modules/AOW_Actions/actions/actionCreateAlert.js');
+    }
+
+    function edit_display($line,SugarBean $bean = null, $params = array()){
+        global $app_list_strings;
+
+        $html  = "";
+
+        return $html;
+
+    }
+
+    function run_action(SugarBean $bean, $params = array(), $in_save=false){
+
+        return true;
+    }
 }

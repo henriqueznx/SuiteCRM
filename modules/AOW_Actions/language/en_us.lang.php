@@ -43,6 +43,7 @@ $mod_strings = array (
   'LBL_ACTION' => 'Action',
   'LBL_PARAMETERS' => 'Parameters',
   'LBL_SENDEMAIL' => 'Send Email',
+  'LBL_CREATEALERT' => 'Create Alert',
   'LBL_CREATERECORD' => 'Create Record',
   'LBL_MODIFYRECORD' => 'Modify Record',
   'LBL_SELECT_ACTION' => 'Select Action',
