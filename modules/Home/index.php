@@ -1,331 +1,606 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- *
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- *
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
 
 global $current_user, $sugar_version, $sugar_config, $beanFiles;
 
-
-require_once('include/MySugar/MySugar.php');
-
-// build dashlet cache file if not found
-if(!is_file($cachefile = sugar_cached('dashlets/dashlets.php'))) {
-    require_once('include/Dashlets/DashletCacheBuilder.php');
-
-    $dc = new DashletCacheBuilder();
-    $dc->buildCache();
-}
-require_once $cachefile;
-
-require('modules/Home/dashlets.php');
-
-$pages = $current_user->getPreference('pages', 'Home');
-$dashlets = $current_user->getPreference('dashlets', 'Home');
-
-$defaultHomepage = false;
-// BEGIN fill in with default homepage and dashlet selections
-
-$hasUserPreferences = (!isset($pages) || empty($pages) || !isset($dashlets) || empty($dashlets)) ? false : true;
-
-if(!$hasUserPreferences){
-    $dashlets = array();
-
-    //list of preferences to move over and to where
-    $prefstomove = array(
-        'mypbss_date_start' => 'MyPipelineBySalesStageDashlet',
-        'mypbss_date_end' => 'MyPipelineBySalesStageDashlet',
-        'mypbss_sales_stages' => 'MyPipelineBySalesStageDashlet',
-        'mypbss_chart_type' => 'MyPipelineBySalesStageDashlet',
-        'lsbo_lead_sources' => 'OpportunitiesByLeadSourceByOutcomeDashlet',
-        'lsbo_ids' => 'OpportunitiesByLeadSourceByOutcomeDashlet',
-        'pbls_lead_sources' => 'OpportunitiesByLeadSourceDashlet',
-        'pbls_ids' => 'OpportunitiesByLeadSourceDashlet',
-        'pbss_date_start' => 'PipelineBySalesStageDashlet',
-        'pbss_date_end' => 'PipelineBySalesStageDashlet',
-        'pbss_sales_stages' => 'PipelineBySalesStageDashlet',
-        'pbss_chart_type' => 'PipelineBySalesStageDashlet',
-        'obm_date_start' => 'OutcomeByMonthDashlet',
-        'obm_date_end' => 'OutcomeByMonthDashlet',
-        'obm_ids' => 'OutcomeByMonthDashlet');
-
-    //upgrading from pre-5.0 homepage
-    $old_columns = $current_user->getPreference('columns', 'home');
-    $old_dashlets = $current_user->getPreference('dashlets', 'home');
-
-    if (isset($old_columns) && !empty($old_columns) && isset($old_dashlets) && !empty($old_dashlets)){
-        $columns = $old_columns;
-        $dashlets = $old_dashlets;
-
-        // resetting old columns and dashlets to have no preference and data
-        $old_columns = array();
-        $old_dashlets = array();
-        $current_user->setPreference('columns', $old_columns, 0, 'home');
-        $current_user->setPreference('dashlets', $old_dashlets, 0, 'home');
-    }
-    else{
-        // This is here to get Sugar dashlets added above the rest
-        $dashlets[create_guid()] = array ('className' => 'SugarFeedDashlet',
-            'module' => 'SugarFeed',
-            'forceColumn' => 1,
-            'fileLocation' => $dashletsFiles['SugarFeedDashlet']['file'],
-        );
-
-        foreach($defaultDashlets as $dashletName=>$module){
-            // clint - fixes bug #20398
-            // only display dashlets that are from visibile modules and that the user has permission to list
-            $myDashlet = new MySugar($module);
-            $displayDashlet = $myDashlet->checkDashletDisplay();
-            if (isset($dashletsFiles[$dashletName]) && $displayDashlet){
-                $options = array();
-                $prefsforthisdashlet = array_keys($prefstomove,$dashletName);
-                foreach ( $prefsforthisdashlet as $pref ) {
-                    $options[$pref] = $current_user->getPreference($pref);
-                }
-                $dashlets[create_guid()] = array('className' => $dashletName,
-                    'module' => $module,
-                    'forceColumn' => 0,
-                    'fileLocation' => $dashletsFiles[$dashletName]['file'],
-                    'options' => $options);
-            }
-        }
-
-        $count = 0;
-        $columns = array();
-        $columns[0] = array();
-        $columns[0]['width'] = '60%';
-        $columns[0]['dashlets'] = array();
-        $columns[1] = array();
-        $columns[1]['width'] = '40%';
-        $columns[1]['dashlets'] = array();
-
-        foreach($dashlets as $guid=>$dashlet) {
-            if( $dashlet['forceColumn'] == 0 ) array_push($columns[0]['dashlets'], $guid);
-            else array_push($columns[1]['dashlets'], $guid);
-            $count++;
-        }
-    }
-
-
-
-
-    $current_user->setPreference('dashlets', $dashlets, 0, 'Home');
-}
-
-// handles upgrading from versions that had the 'Dashboard' module; move those items over to the Home page
-$pagesDashboard = $current_user->getPreference('pages', 'Dashboard');
-$dashletsDashboard = $current_user->getPreference('dashlets', 'Dashboard');
-if ( !empty($pagesDashboard) ) {
-    // move dashlets from the dashboard to be at the end of the home screen dashlets
-    foreach ($pagesDashboard[0]['columns'] as $dashboardColumnKey => $dashboardColumn ) {
-        foreach ($dashboardColumn['dashlets'] as $dashletItem ) {
-            $pages[0]['columns'][$dashboardColumnKey]['dashlets'][] = $dashletItem;
-        }
-    }
-    $pages = array_merge($pages,$pagesDashboard);
-    $current_user->setPreference('pages', $pages, 0, 'Home');
-}
-if ( !empty($dashletsDashboard) ) {
-    $dashlets = array_merge($dashlets,$dashletsDashboard);
-    $current_user->setPreference('dashlets', $dashlets, 0, 'Home');
-}
-if ( !empty($pagesDashboard) || !empty($dashletsDashboard) )
-    $current_user->resetPreferences('Dashboard');
-
-if (empty($pages)){
-    $pages = array();
-    $pageIndex = 0;
-    $pages[0]['columns'] = $columns;
-    $pages[0]['numColumns'] = '3';
-    $pages[0]['pageTitleLabel'] = 'LBL_HOME_PAGE_1_NAME';	// "My Sugar"
-    $pageIndex++;
-    $current_user->setPreference('pages', $pages, 0, 'Home');
-    $activePage = 0;
-}
-
-$sugar_smarty = new Sugar_Smarty();
-
-$activePage = 0;
-
-$divPages[] = $activePage;
-
-$numCols = $pages[$activePage]['numColumns'];
-
-
-$count = 0;
-$dashletIds = array(); // collect ids to pass to javascript
-$display = array();
-
-foreach($pages[$activePage]['columns'] as $colNum => $column) {
-    if ($colNum == $numCols){
-        break;
-    }
-    $display[$colNum]['width'] = $column['width'];
-    $display[$colNum]['dashlets'] = array();
-    foreach($column['dashlets'] as $num => $id) {
-        // clint - fixes bug #20398
-        // only display dashlets that are from visibile modules and that the user has permission to list
-        if(!empty($id) && isset($dashlets[$id]) && is_file($dashlets[$id]['fileLocation'])) {
-            $module = 'Home';
-            if ( !empty($dashletsFiles[$dashlets[$id]['className']]['module']) )
-                $module = $dashletsFiles[$dashlets[$id]['className']]['module'];
-            // Bug 24772 - Look into the user preference for the module the dashlet is a part of in case
-            //             of the Report Chart dashlets.
-            elseif ( !empty($dashlets[$id]['module']) )
-                $module = $dashlets[$id]['module'];
-
-            $myDashlet = new MySugar($module);
-
-            if($myDashlet->checkDashletDisplay()) {
-                require_once($dashlets[$id]['fileLocation']);
-
-
-                $dashlet = new $dashlets[$id]['className']($id, (isset($dashlets[$id]['options']) ? $dashlets[$id]['options'] : array()));
-                // Need to add support to dynamically display/hide dashlets
-                // If it has a method 'shouldDisplay' we will call it to see if we should display it or not
-                if (method_exists($dashlet,'shouldDisplay')) {
-                    if (!$dashlet->shouldDisplay()) {
-                        // This dashlet doesn't want us to show it, skip it.
-                        continue;
-                    }
-                }
-
-                array_push($dashletIds, $id);
-
-                $dashlets = $current_user->getPreference('dashlets', 'Home'); // Using hardcoded 'Home' because DynamicAction.php $_REQUEST['module'] value is always Home
-                $lvsParams = array();
-                if(!empty($dashlets[$id]['sort_options'])){
-                    $lvsParams = $dashlets[$id]['sort_options'];
-                }
-
-                $dashlet->process($lvsParams);
-                try {
-                    $display[$colNum]['dashlets'][$id]['display'] = $dashlet->display();
-                    $display[$colNum]['dashlets'][$id]['displayHeader'] = $dashlet->getHeader();
-                    $display[$colNum]['dashlets'][$id]['displayFooter'] = $dashlet->getFooter();
-                    if($dashlet->hasScript) {
-                        $display[$colNum]['dashlets'][$id]['script'] = $dashlet->displayScript();
-                    }
-                } catch (Exception $ex) {
-                    $display[$colNum]['dashlets'][$id]['display'] = $ex->getMessage();
-                    $display[$colNum]['dashlets'][$id]['displayHeader'] = $dashlet->getHeader();
-                    $display[$colNum]['dashlets'][$id]['displayFooter'] = $dashlet->getFooter();
-                }
-            }
-        }
-    }
-}
-
-
-$i = 0;
-    while($i < count($pages)){
-        if($i == 0){
-            $pageTabs[$i]['pageTitle'] = $GLOBALS['app_strings']['LBL_SUITE_DASHBOARD'];
-//            $pageTabs[$i]['active'] = 'current';
-        }else{
-            $pageTabs[$i]['pageTitle'] = $pages[$i]['pageTitle'];
-            $divPages[] = $i;
-        }
-        $i++;
-    }
-
-if(!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == true) $sugar_smarty->assign('lock_homepage', true);
-
-$sugar_smarty->assign('sugarVersion', $sugar_version);
-$sugar_smarty->assign('sugarFlavor', $sugar_flavor);
-$sugar_smarty->assign('currentLanguage', $GLOBALS['current_language']);
-$sugar_smarty->assign('serverUniqueKey', $GLOBALS['server_unique_key']);
-$sugar_smarty->assign('imagePath', $GLOBALS['image_path']);
-
-$sugar_smarty->assign('maxCount', empty($sugar_config['max_dashlets_homepage']) ? 15 : $sugar_config['max_dashlets_homepage']);
-$sugar_smarty->assign('dashletCount', $count);
-$sugar_smarty->assign('dashletIds', '["' . implode('","', $dashletIds) . '"]');
-$sugar_smarty->assign('columns', $display);
-
-global $theme;
-$sugar_smarty->assign('theme', $theme);
-
-$sugar_smarty->assign('divPages', $divPages);
-$sugar_smarty->assign('activePage', $activePage);
-$sugar_smarty->assign('dashboardPages', $pageTabs);
-$sugar_smarty->assign('current_user', $current_user->id);
-
-$sugar_smarty->assign('lblAdd', $GLOBALS['app_strings']['LBL_ADD_BUTTON']);
-$sugar_smarty->assign('lblAddTab', $GLOBALS['app_strings']['LBL_ADD_TAB']);
-$sugar_smarty->assign('lblAddDashlets', $GLOBALS['app_strings']['LBL_ADD_DASHLETS']);
-$sugar_smarty->assign('lblLnkHelp', $GLOBALS['app_strings']['LNK_HELP']);
-
-$sugar_smarty->assign('mod', return_module_language($GLOBALS['current_language'], 'Home'));
-$sugar_smarty->assign('app', $GLOBALS['app_strings']);
-$sugar_smarty->assign('module', 'Home');
-
-//custom chart code
-//Get the RGraph libraries (add this more elegantly later to check exactly what is needed, not just all).
-require_once('include/SuiteGraphs/RGraphIncludes.php');
-
-require_once('include/SugarCharts/SugarChartFactory.php');
-$sugarChart = SugarChartFactory::getInstance();
-$resources = $sugarChart->getChartResources();
-$mySugarResources = $sugarChart->getMySugarChartResources();
-$sugar_smarty->assign('chartResources', $resources);
-$sugar_smarty->assign('mySugarChartResources', $mySugarResources);
-
-if (file_exists("custom/themes/" . $theme ."/tpls/MySugar.tpl")) {
-    echo $sugar_smarty->fetch("custom/themes/" . $theme ."/tpls/MySugar.tpl");
-}
-else if(file_exists('custom/include/MySugar/tpls/MySugar.tpl')) {
-    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
-}
-elseif (file_exists("themes/" . $theme ."/tpls/MySugar.tpl")) {
-    echo $sugar_smarty->fetch("themes/" . $theme ."/tpls/MySugar.tpl");
-}
-else if(file_exists('include/MySugar/tpls/MySugar.tpl')) {
-    echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
-}
-else {
-    $GLOBALS['log']->fatal('MySugar.tpl not found');
-}
-
-
-//init the quickEdit listeners after the dashlets have loaded on home page the first time
-echo"<script>if(typeof(qe_init) != 'undefined'){qe_init();}</script>";
-echo"<script> $( '#pageNum_'+ 0 +'_anchor').addClass( 'current' );</script>";
-echo"<script> $( '#pageNum_'+ 0).addClass( 'active' );</script>";
-
-
 ?>
+
+
+
+<body role="document">
+
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Bootstrap theme</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Nav header</li>
+                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<div class="navbar"></div>
+<div class="container theme-showcase" role="main">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <h1>Theme example</h1>
+        <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
+    </div>
+
+
+    <div class="page-header">
+        <h1>Buttons</h1>
+    </div>
+    <p>
+        <button type="button" class="btn btn-lg btn-default">Default</button>
+        <button type="button" class="btn btn-lg btn-primary">Primary</button>
+        <button type="button" class="btn btn-lg btn-success">Success</button>
+        <button type="button" class="btn btn-lg btn-info">Info</button>
+        <button type="button" class="btn btn-lg btn-warning">Warning</button>
+        <button type="button" class="btn btn-lg btn-danger">Danger</button>
+        <button type="button" class="btn btn-lg btn-link">Link</button>
+    </p>
+    <p>
+        <button type="button" class="btn btn-default">Default</button>
+        <button type="button" class="btn btn-primary">Primary</button>
+        <button type="button" class="btn btn-success">Success</button>
+        <button type="button" class="btn btn-info">Info</button>
+        <button type="button" class="btn btn-warning">Warning</button>
+        <button type="button" class="btn btn-danger">Danger</button>
+        <button type="button" class="btn btn-link">Link</button>
+    </p>
+    <p>
+        <button type="button" class="btn btn-sm btn-default">Default</button>
+        <button type="button" class="btn btn-sm btn-primary">Primary</button>
+        <button type="button" class="btn btn-sm btn-success">Success</button>
+        <button type="button" class="btn btn-sm btn-info">Info</button>
+        <button type="button" class="btn btn-sm btn-warning">Warning</button>
+        <button type="button" class="btn btn-sm btn-danger">Danger</button>
+        <button type="button" class="btn btn-sm btn-link">Link</button>
+    </p>
+    <p>
+        <button type="button" class="btn btn-xs btn-default">Default</button>
+        <button type="button" class="btn btn-xs btn-primary">Primary</button>
+        <button type="button" class="btn btn-xs btn-success">Success</button>
+        <button type="button" class="btn btn-xs btn-info">Info</button>
+        <button type="button" class="btn btn-xs btn-warning">Warning</button>
+        <button type="button" class="btn btn-xs btn-danger">Danger</button>
+        <button type="button" class="btn btn-xs btn-link">Link</button>
+    </p>
+
+
+    <div class="page-header">
+        <h1>Tables</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td rowspan="2">1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@TwBootstrap</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="page-header">
+        <h1>Thumbnails</h1>
+    </div>
+    <img data-src="holder.js/200x200" class="img-thumbnail" alt="A generic square placeholder image with a white border around it, making it resemble a photograph taken with an old instant camera">
+
+
+    <div class="page-header">
+        <h1>Labels</h1>
+    </div>
+    <h1>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+    </h1>
+    <h2>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+    </h2>
+    <h3>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+    </h3>
+    <h4>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+    </h4>
+    <h5>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+    </h5>
+    <h6>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+    </h6>
+    <p>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+    </p>
+
+
+    <div class="page-header">
+        <h1>Badges</h1>
+    </div>
+    <p>
+        <a href="#">Inbox <span class="badge">42</span></a>
+    </p>
+    <ul class="nav nav-pills" role="tablist">
+        <li role="presentation" class="active"><a href="#">Home <span class="badge">42</span></a></li>
+        <li role="presentation"><a href="#">Profile</a></li>
+        <li role="presentation"><a href="#">Messages <span class="badge">3</span></a></li>
+    </ul>
+
+
+    <div class="page-header">
+        <h1>Dropdown menus</h1>
+    </div>
+    <div class="dropdown theme-dropdown clearfix">
+        <a id="dropdownMenu1" href="#" class="sr-only dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li class="active"><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+        </ul>
+    </div>
+
+
+    <div class="page-header">
+        <h1>Navs</h1>
+    </div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#">Home</a></li>
+        <li role="presentation"><a href="#">Profile</a></li>
+        <li role="presentation"><a href="#">Messages</a></li>
+    </ul>
+    <ul class="nav nav-pills" role="tablist">
+        <li role="presentation" class="active"><a href="#">Home</a></li>
+        <li role="presentation"><a href="#">Profile</a></li>
+        <li role="presentation"><a href="#">Messages</a></li>
+    </ul>
+
+
+    <div class="page-header">
+        <h1>Navbars</h1>
+    </div>
+
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Nav header</li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Nav header</li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+
+    <div class="page-header">
+        <h1>Alerts</h1>
+    </div>
+    <div class="alert alert-success" role="alert">
+        <strong>Well done!</strong> You successfully read this important alert message.
+    </div>
+    <div class="alert alert-info" role="alert">
+        <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+    </div>
+    <div class="alert alert-warning" role="alert">
+        <strong>Warning!</strong> Best check yo self, you're not looking too good.
+    </div>
+    <div class="alert alert-danger" role="alert">
+        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+    </div>
+
+
+    <div class="page-header">
+        <h1>Progress bars</h1>
+    </div>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"><span class="sr-only">60% Complete</span></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"><span class="sr-only">40% Complete (success)</span></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%"><span class="sr-only">20% Complete</span></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"><span class="sr-only">60% Complete (warning)</span></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%"><span class="sr-only">80% Complete (danger)</span></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"><span class="sr-only">60% Complete</span></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-success" style="width: 35%"><span class="sr-only">35% Complete (success)</span></div>
+        <div class="progress-bar progress-bar-warning" style="width: 20%"><span class="sr-only">20% Complete (warning)</span></div>
+        <div class="progress-bar progress-bar-danger" style="width: 10%"><span class='sr-only'>10% Complete (danger)</span></div>
+    </div>
+
+
+    <div class="page-header">
+        <h1>List groups</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <ul class="list-group">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Morbi leo risus</li>
+                <li class="list-group-item">Porta ac consectetur ac</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4">
+            <div class="list-group">
+                <a href="#" class="list-group-item active">
+                    Cras justo odio
+                </a>
+                <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+                <a href="#" class="list-group-item">Morbi leo risus</a>
+                <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+                <a href="#" class="list-group-item">Vestibulum at eros</a>
+            </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4">
+            <div class="list-group">
+                <a href="#" class="list-group-item active">
+                    <h4 class="list-group-item-heading">List group item heading</h4>
+                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">List group item heading</h4>
+                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">List group item heading</h4>
+                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                </a>
+            </div>
+        </div><!-- /.col-sm-4 -->
+    </div>
+
+
+    <div class="page-header">
+        <h1>Panels</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Panel title</h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Panel title</h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Panel title</h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Panel title</h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Panel title</h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Panel title</h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+        </div><!-- /.col-sm-4 -->
+    </div>
+
+
+    <div class="page-header">
+        <h1>Wells</h1>
+    </div>
+    <div class="well">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
+    </div>
+
+
+    <div class="page-header">
+        <h1>Carousel</h1>
+    </div>
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img data-src="holder.js/1140x500/auto/#777:#555/text:First slide" alt="First slide">
+            </div>
+            <div class="item">
+                <img data-src="holder.js/1140x500/auto/#666:#444/text:Second slide" alt="Second slide">
+            </div>
+            <div class="item">
+                <img data-src="holder.js/1140x500/auto/#555:#333/text:Third slide" alt="Third slide">
+            </div>
+        </div>
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+</div> <!-- /container -->
