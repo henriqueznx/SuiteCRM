@@ -5,6 +5,33 @@
 
 		$(document).foundation();
 
+		var selectedFilters = [];
+
+		$(".filterAreaToggle").change(function(){
+			var id = $(this).attr("id").replace('checkbox_','');
+			//http://stackoverflow.com/a/178450
+			if($(".filterArea."+id).is(":visible"))
+			{
+				$(".filterArea."+id).hide();
+			}
+			else
+			{
+				$(".filterArea."+id).show();
+			}
+
+			updateCheckedFilters();
+
+		});
+
+		function updateCheckedFilters()
+		{
+			selectedFilters = [];
+			$('.filterAreaToggle:checked').each(function(){
+				selectedFilters.push($(this).attr('id'));
+			});
+			console.log(selectedFilters);
+		}
+
 	var $dialog = $('<div></div>')
 		.html(SUGAR.language.get('app_strings', 'LBL_SEARCH_HELP_TEXT'))
 		.dialog({
@@ -19,8 +46,19 @@
 	});
 	
 	});
-{/literal}
+
 </script>
+
+<style>
+	table.filterItems tr:nth-of-type(even) {
+		background-color: transparent !important;
+	}
+	table.filterItems tr {
+		border-style: solid;
+	}
+</style>
+
+{/literal}
 
 <!-- include the foundation links -->
 <link rel="stylesheet" href="include/javascript/foundation/css/foundation.css">
@@ -32,11 +70,8 @@
 <table class="filterItems">
 	<thead>
 	<tr>
-
 		<th>Filter Area</th>
 		<th>Filter Value</th>
-		<th>Order By</th>
-		<th>Sort Order</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -70,33 +105,6 @@
 			{{sugar_field parentFieldArray='fields' accesskey=$ACCKEY vardef=$fields[$colData.field.name] displayType=$displayType displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
 			{{/if}}
 		</td>
-		<td>
-			<div class="switch">
-				{{if isset($colData.field.label)}}
-				<input class="switch-input orderToggle" id="rs{{$colData.field.name}}" type="radio" checked name="testGroup">
-				<label class="switch-paddle" for="rs{{$colData.field.name}}">
-					<span class="show-for-sr">Bulbasaur</span>
-				</label>
-				{{elseif isset($fields[$colData.field.name])}}
-				<input class="switch-input orderToggle" id="rs{{$fields[$colData.field.name].name}}" type="radio" checked name="testGroup">
-				<label class="switch-paddle" for="rs{{$fields[$colData.field.name].name}}">
-					<span class="show-for-sr">Bulbasaur</span>
-				</label>
-				{{/if}}
-			</div>
-		</td>
-		<td>
-			<div class="orderDiv" style="display:none;">
-				{{if isset($colData.field.label)}}
-				<input class="orderItem" type="radio" name="pockets" value="Red" id="orderAsc{{$colData.field.name}}"><label for="orderAsc{{$colData.field.name}}"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></label>
-				<input class="orderItem" type="radio" name="pockets" value="Blue" id="orderDesc{{$colData.field.name}}"><label for="orderDesc{{$colData.field.name}}"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></label>
-				{{elseif isset($fields[$colData.field.name])}}
-				<input class="orderItem" type="radio" name="pockets" value="Red" id="orderAsc{{$fields[$colData.field.name].name}}"><label for="orderAsc{{$fields[$colData.field.name].name}}"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></label>
-				<input class="orderItem" type="radio" name="pockets" value="Blue" id="orderDesc{{$fields[$colData.field.name].name}}"><label for="orderDesc{{$fields[$colData.field.name].name}}"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></label>
-				{{/if}}
-			</div>
-		</td>
-
 	</tr>
 	{{/foreach}}
 	</tbody>
@@ -104,50 +112,7 @@
 
 
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
-<tr>
-{{assign var='accesskeycount' value=0}}  {{assign var='ACCKEY' value=''}}
-{{foreach name=colIteration from=$formData key=col item=colData}}
-    {{math assign="accesskeycount" equation="$accesskeycount + 1"}}
-    {{if $accesskeycount==1}} {{assign var='ACCKEY' value=$APP.LBL_FIRST_INPUT_SEARCH_KEY}} {{else}} {{assign var='ACCKEY' value=''}} {{/if}}
 
-	
-	{counter assign=index}
-	{math equation="left % right"
-   		  left=$index
-          right=$templateMeta.maxColumns
-          assign=modVal
-    }
-	{if ($index % $templateMeta.maxColumns == 1 && $index != 1)}
-        {if $isHelperShown==0}
-            {assign var="isHelperShown" value="1"}
-            <td class="helpIcon" width="*">
-                <img alt="{$APP.LBL_SEARCH_HELP_TITLE}" id="helper_popup_image" border="0" src='{sugar_getimagepath file="help-dashlet.gif"}' class="help-search">
-            </td>
-        {else}
-            <td>&nbsp;</td>
-        {/if}
-		</tr><tr>
-	{/if}
-	
-	<td scope="row" nowrap="nowrap" width='{{$templateMeta.widths.label}}%' >
-	{{if isset($colData.field.label)}}	
-		<label for='{{$colData.field.name}}'>{sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}</label>
-    {{elseif isset($fields[$colData.field.name])}}
-		<label for='{{$fields[$colData.field.name].name}}'>{sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}</label>
-	{{/if}}
-	</td>
-	<td  nowrap="nowrap" width='{{$templateMeta.widths.field}}%'>
-	{{if $fields[$colData.field.name]}}
-		{{sugar_field parentFieldArray='fields' accesskey=$ACCKEY vardef=$fields[$colData.field.name] displayType=$displayType displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
-   	{{/if}}
-   	</td>
-{{/foreach}}
-	</tr>
-<tr>
-	<td colspan='20'>
-		&nbsp;
-	</td>
-</tr>	
 {if $DISPLAY_SAVED_SEARCH}
 <tr>
 	<td colspan='2'>
