@@ -2,6 +2,9 @@
 <script>
 {literal}
 	$(function() {
+
+		$(document).foundation();
+
 	var $dialog = $('<div></div>')
 		.html(SUGAR.language.get('app_strings', 'LBL_SEARCH_HELP_TEXT'))
 		.dialog({
@@ -18,6 +21,88 @@
 	});
 {/literal}
 </script>
+
+<!-- include the foundation links -->
+<link rel="stylesheet" href="include/javascript/foundation/css/foundation.css">
+<link rel="stylesheet" href="include/javascript/foundation/css/app.css">
+<script src="include/javascript/foundation/js/lib/what-input.js"></script>
+<script src="include/javascript/foundation/js/lib/foundation.js"></script>
+<!-- end of foundation links -->
+
+<table class="filterItems">
+	<thead>
+	<tr>
+
+		<th>Filter Area</th>
+		<th>Filter Value</th>
+		<th>Order By</th>
+		<th>Sort Order</th>
+	</tr>
+	</thead>
+	<tbody>
+
+
+	<div class="newFilterItems">
+		<fieldset class="fieldset">
+			<legend>Filter Areas</legend>
+			{{foreach name=colIteration from=$formData key=col item=colData}}
+			{{if isset($colData.field.label)}}
+			<input id='checkbox_{{$colData.field.name}}' type="checkbox" class="filterAreaToggle"><label for="checkbox_{{$colData.field.name}}">{sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}</label>
+			{{elseif isset($fields[$colData.field.name])}}
+			<input id='checkbox_{{$fields[$colData.field.name].name}}' type="checkbox" class="filterAreaToggle"><label for="checkbox_{{$fields[$colData.field.name].name}}">{sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}</label>
+			{{/if}}
+			{{/foreach}}
+		</fieldset>
+
+
+	{{foreach name=colIteration from=$formData key=col item=colData}}
+	<tr class="filterArea {{$colData.field.name}}" style="display:none;">
+
+		<td scope="row" nowrap="nowrap" width='{{$templateMeta.widths.label}}%' >
+			{{if isset($colData.field.label)}}
+			<label for='{{$colData.field.name}}'>{sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}</label>
+			{{elseif isset($fields[$colData.field.name])}}
+			<label for='{{$fields[$colData.field.name].name}}'>{sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}</label>
+			{{/if}}
+		</td>
+		<td  nowrap="nowrap" width='{{$templateMeta.widths.field}}%' >
+			{{if $fields[$colData.field.name]}}
+			{{sugar_field parentFieldArray='fields' accesskey=$ACCKEY vardef=$fields[$colData.field.name] displayType=$displayType displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
+			{{/if}}
+		</td>
+		<td>
+			<div class="switch">
+				{{if isset($colData.field.label)}}
+				<input class="switch-input orderToggle" id="rs{{$colData.field.name}}" type="radio" checked name="testGroup">
+				<label class="switch-paddle" for="rs{{$colData.field.name}}">
+					<span class="show-for-sr">Bulbasaur</span>
+				</label>
+				{{elseif isset($fields[$colData.field.name])}}
+				<input class="switch-input orderToggle" id="rs{{$fields[$colData.field.name].name}}" type="radio" checked name="testGroup">
+				<label class="switch-paddle" for="rs{{$fields[$colData.field.name].name}}">
+					<span class="show-for-sr">Bulbasaur</span>
+				</label>
+				{{/if}}
+			</div>
+		</td>
+		<td>
+			<div class="orderDiv" style="display:none;">
+				{{if isset($colData.field.label)}}
+				<input class="orderItem" type="radio" name="pockets" value="Red" id="orderAsc{{$colData.field.name}}"><label for="orderAsc{{$colData.field.name}}"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></label>
+				<input class="orderItem" type="radio" name="pockets" value="Blue" id="orderDesc{{$colData.field.name}}"><label for="orderDesc{{$colData.field.name}}"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></label>
+				{{elseif isset($fields[$colData.field.name])}}
+				<input class="orderItem" type="radio" name="pockets" value="Red" id="orderAsc{{$fields[$colData.field.name].name}}"><label for="orderAsc{{$fields[$colData.field.name].name}}"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></label>
+				<input class="orderItem" type="radio" name="pockets" value="Blue" id="orderDesc{{$fields[$colData.field.name].name}}"><label for="orderDesc{{$fields[$colData.field.name].name}}"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></label>
+				{{/if}}
+			</div>
+		</td>
+
+	</tr>
+	{{/foreach}}
+	</tbody>
+</table>
+
+
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
 {{assign var='accesskeycount' value=0}}  {{assign var='ACCKEY' value=''}}
