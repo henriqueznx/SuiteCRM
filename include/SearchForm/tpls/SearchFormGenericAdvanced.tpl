@@ -133,6 +133,14 @@
 	{
 		border:none;
 	}
+	.switch.small .switch-paddle {
+		width: 7rem !important;
+		height: 1.75rem;
+		font-size: 0.75rem;
+	}
+	.switch.small input:checked ~ .switch-paddle::after {
+		left: 5.5rem !important;
+	}
 </style>
 
 {/literal}
@@ -150,25 +158,38 @@
 <!--I have added the basic_search_link below as a quick fix as it was required by some of the grouping js files-->
 <input id="basic_search_link" type="hidden">
 
-<p>Filter:</p>
 <div class="switch small">
 	<input class="switch-input" id="showFilter" type="checkbox" name="exampleSwitch">
 	<label class="switch-paddle" for="showFilter">
 		<span class="show-for-sr">Filter</span>
-		<span class="switch-active" aria-hidden="true">Yes</span>
-		<span class="switch-inactive" aria-hidden="true">No</span>
+		<span class="switch-active" aria-hidden="true">Filter</span>
+		<span class="switch-inactive" aria-hidden="true">No Filter</span>
 	</label>
 </div>
 
 <div class="filterSection callout" style="display:none;">
-
 	<div class="reveal" id="saveFilterModal" data-reveal>
+		<h4>Please enter a name for the filter</h4>
 		<input type="text" name="saved_search_name" id="saved_search_name">
 		<input type="hidden" name="search_module" value="">
 		<input type="hidden" name="saved_search_action" value="">
 		<input title="Save" value="Save" class="button" type="button" name="saved_search_submit" onclick="SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action(&quot;save&quot;);">
+		<button class="close-button" data-close aria-label="Close reveal" type="button">
+			<span aria-hidden="true">&times;</span>
+		</button>
 	</div>
 
+
+	<div class="reveal" id="loadFilterModal" data-reveal>
+		<h4>Please choose filter to load</h4>
+		<select name="saved_search_select" id="saved_search_select" onchange="SUGAR.savedViews.shortcut_select(this, '{{$module}}');">
+			<option selected="" value="_none">--None--</option>
+			<option  value="2543d893-b046-6626-5b6a-57304ac551d1">Hardcoded Avery</option>
+		</select>
+		<button class="close-button" data-close aria-label="Close reveal" type="button">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
 
 <!--	<p>Save / Load:</p>
 	<div class="switch small">
@@ -194,7 +215,7 @@
 	<input title='{$APP.LBL_SEARCH_BUTTON_TITLE}' onclick='SUGAR.savedViews.setChooser()' class='button' type='submit' name='button' value='{$APP.LBL_SEARCH_BUTTON_LABEL}' id='searchFormSubmit'/>&nbsp;
 	<input title='{$APP.LBL_CLEAR_BUTTON_TITLE}'  class='button' type='button' id='searchFormClear' value='{$APP.LBL_CLEAR_BUTTON_LABEL}'/>
 	<input title='{$APP.LBL_SAVE_BUTTON_TITLE}'  class='button' type='button' id='searchFormSave' value='{$APP.LBL_SAVE_BUTTON_LABEL}' data-open="saveFilterModal"/>
-	<input title='{$APP.LBL_LOAD_BUTTON_TITLE}'  class='button' type='button' id='search_form_delete_advanced' value='{$APP.LBL_LOAD_BUTTON_LABEL}'/>
+	<input title='{$APP.LBL_LOAD_BUTTON_TITLE}'  class='button' type='button' id='search_form_delete_advanced' value='{$APP.LBL_LOAD_BUTTON_LABEL}' data-open="loadFilterModal" />
 	<input title='{$APP.LBL_DELETE_BUTTON_TITLE}'  class='button' type='button' id='search_form_delete_advanced' value='{$APP.LBL_DELETE_BUTTON_LABEL}'/>
 
 <table class="filterItems">
