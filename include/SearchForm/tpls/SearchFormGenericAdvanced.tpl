@@ -49,6 +49,11 @@
 			clearAllFilterValues();
 		});
 
+		$('#searchFormSave').on('click',function(){
+			//SUGAR.savedViews.saved_search_action('Save');
+		});
+
+
 
 		//$("#search_form_clear_advanced").on("click",function(){
 		//	$(".filterAreaToggle:checked").click();
@@ -80,9 +85,25 @@
 			{
 				//$("#isFilterLive").val('true');
 				$(".filterSection").show();
+				$('#filterSelect option:eq(0)').prop('selected', true);
+				$("#addField").click();
 
 			}
 		});
+
+
+		$("#showSaveLoad").on('change',function(){
+			var selected = $("#showSaveLoad:checked").val();
+			if(selected === undefined)
+			{
+				$(".advancedOptions").hide();
+			}
+			else
+			{
+				$(".advancedOptions").show();
+			}
+		});
+
 
 	var $dialog = $('<div></div>')
 		.html(SUGAR.language.get('app_strings', 'LBL_SEARCH_HELP_TEXT'))
@@ -140,12 +161,42 @@
 </div>
 
 <div class="filterSection callout" style="display:none;">
+
+	<div class="reveal" id="saveFilterModal" data-reveal>
+		<input type="text" name="saved_search_name" id="saved_search_name">
+		<input type="hidden" name="search_module" value="">
+		<input type="hidden" name="saved_search_action" value="">
+		<input title="Save" value="Save" class="button" type="button" name="saved_search_submit" onclick="SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action(&quot;save&quot;);">
+	</div>
+
+
+<!--	<p>Save / Load:</p>
+	<div class="switch small">
+		<input class="switch-input" id="showSaveLoad" type="checkbox" name="showSaveLoad">
+		<label class="switch-paddle" for="showSaveLoad">
+			<span class="show-for-sr">Advanced Options</span>
+			<span class="switch-active" aria-hidden="true">Yes</span>
+			<span class="switch-inactive" aria-hidden="true">No</span>
+		</label>
+	</div>
+
+
+<div class="callout warning">
+	<fieldset class="advancedOptions" style="display:none;">
+
+		<select name="saved_search_select" id="saved_search_select" onchange="SUGAR.savedViews.shortcut_select(this, '{{$module}}');">
+			<option selected="" value="_none">--None--</option>
+			<option  value="2543d893-b046-6626-5b6a-57304ac551d1">Hardcoded Avery</option>
+		</select>
+	</fieldset>
+	</div>-->
+
 	<input title='{$APP.LBL_SEARCH_BUTTON_TITLE}' onclick='SUGAR.savedViews.setChooser()' class='button' type='submit' name='button' value='{$APP.LBL_SEARCH_BUTTON_LABEL}' id='searchFormSubmit'/>&nbsp;
 	<input title='{$APP.LBL_CLEAR_BUTTON_TITLE}'  class='button' type='button' id='searchFormClear' value='{$APP.LBL_CLEAR_BUTTON_LABEL}'/>
-	<input title='{$APP.LBL_SAVE_BUTTON_TITLE}'  class='button' type='button' id='search_form_save_advanced' value='{$APP.LBL_SAVE_BUTTON_LABEL}'/>
+	<input title='{$APP.LBL_SAVE_BUTTON_TITLE}'  class='button' type='button' id='searchFormSave' value='{$APP.LBL_SAVE_BUTTON_LABEL}' data-open="saveFilterModal"/>
+	<input title='{$APP.LBL_LOAD_BUTTON_TITLE}'  class='button' type='button' id='search_form_delete_advanced' value='{$APP.LBL_LOAD_BUTTON_LABEL}'/>
 	<input title='{$APP.LBL_DELETE_BUTTON_TITLE}'  class='button' type='button' id='search_form_delete_advanced' value='{$APP.LBL_DELETE_BUTTON_LABEL}'/>
-	<input title='{$APP.LBL_UPDATE_BUTTON_TITLE}'  class='button' type='button' id='search_form_update_advanced' value='{$APP.LBL_UPDATE_BUTTON_LABEL}'/>
-	<input title='{$APP.LBL_LOAD_BUTTON_TITLE}'  class='button' type='button' id='search_form_load_advanced' value='{$APP.LBL_LOAD_BUTTON_LABEL}'/>
+
 <table class="filterItems">
 	<thead>
 	<tr>
@@ -155,8 +206,6 @@
 	</tr>
 	</thead>
 	<tbody>
-
-
 	<div class="newFilterItems">
 		<fieldset class="fieldset">
 			<legend>Filter Areas</legend>
@@ -190,7 +239,7 @@
 			{{/if}}
 		</td>
 		<td class="callout">
-			<input class='button removeFilter' type='button' value='X'/>
+			<button class='button removeFilter' type='button' ><img src="themes/default/images/id-ff-remove-nobg.png"></button>
 		</td>
 	</tr>
 
