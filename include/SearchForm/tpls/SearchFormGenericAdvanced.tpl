@@ -19,14 +19,14 @@
 			$(".filterSection").show();
 		}
 
-
+/*
 		$("#addField").on("click",function(){
 			var id = $("#filterSelect").val();
 			$('.filterArea.'+id).show();
 		});
-
+*/
 		$('.removeFilter').on('click',function(){
-			$("tr.filterArea").has($(this)).hide();
+			$(".filterArea").has($(this)).hide();
 			var $inputContainer = $(this).parent().prev();
 			//console.log($inp);
 			clearFilterValue($inputContainer);
@@ -69,6 +69,16 @@
 //			console.log(selectedFilters);
 //		}
 
+
+        $('#addSelectedFilters').on('click',function(){
+            $.each($('#filterSelect option:selected'),function(i,v){
+                //$(v).val()
+                $('.filterArea.'+$(v).val()).show();
+            })
+        });
+
+
+
 		$("#showFilter").on('change',function(){
 			var selected = $("#showFilter:checked").val();
 			if(selected === undefined)
@@ -86,7 +96,7 @@
 				//$("#isFilterLive").val('true');
 				$(".filterSection").show();
 				$('#filterSelect option:eq(0)').prop('selected', true);
-				$("#addField").click();
+				//$("#addField").click();
 
 			}
 		});
@@ -155,6 +165,9 @@
 <!--<input type="hidden" id="checkedFilterItems" name="checkedFilterItems">-->
 <!--<input type="hidden" id="isFilterLive" name="isFilterLive" value="false">-->
 
+<div class="filterPage">
+
+
 <!--I have added the basic_search_link below as a quick fix as it was required by some of the grouping js files-->
 <input id="basic_search_link" type="hidden">
 
@@ -167,7 +180,7 @@
 	</label>
 </div>
 
-<div class="filterSection callout" style="display:none;">
+<div class="filterSection callout secondary" style="display:none;">
 	<div class="reveal" id="saveFilterModal" data-reveal>
 		<h4>Please enter a name for the filter</h4>
 		<input type="text" name="saved_search_name" id="saved_search_name">
@@ -178,7 +191,6 @@
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
-
 
 	<div class="reveal" id="loadFilterModal" data-reveal>
 		<h4>Please choose filter to load</h4>
@@ -218,7 +230,28 @@
 	<input title='{$APP.LBL_LOAD_BUTTON_TITLE}'  class='button' type='button' id='search_form_delete_advanced' value='{$APP.LBL_LOAD_BUTTON_LABEL}' data-open="loadFilterModal" />
 	<input title='{$APP.LBL_DELETE_BUTTON_TITLE}'  class='button' type='button' id='search_form_delete_advanced' value='{$APP.LBL_DELETE_BUTTON_LABEL}'/>
 
-<table class="filterItems">
+    <div class="reveal" id="addFilterModal" data-reveal>
+        <!--<fieldset class="fieldset">
+            <legend>Filter Areas</legend>-->
+        <h4>Please choose filter areas</h4>
+            <select id="filterSelect" multiple>
+                {{foreach name=colIteration from=$formData key=col item=colData}}
+                {{if isset($colData.field.label)}}
+                <option value='{{$colData.field.name}}' class="filterAreaToggle">{sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}</option>
+                {{elseif isset($fields[$colData.field.name])}}
+                <option value='{{$fields[$colData.field.name].name}}' class="filterAreaToggle">{sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}</option>
+                {{/if}}
+                {{/foreach}}
+            </select>
+        <button class="close-button" data-close aria-label="Close reveal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <a class="button" id="addSelectedFilters" data-close="addFilterModal">Add Filter(s)</a>
+        <!--</fieldset>-->
+    </div>
+    <input title='{$APP.LBL_ADD_FILTER}'  class='button' type='button' id='addField' value='{$APP.LBL_ADD_FILTER}' data-open="addFilterModal"/>
+
+<!--<table class="filterItems">
 	<thead>
 	<tr>
 		<th>Filter Area</th>
@@ -227,20 +260,7 @@
 	</tr>
 	</thead>
 	<tbody>
-	<div class="newFilterItems">
-		<fieldset class="fieldset">
-			<legend>Filter Areas</legend>
-			<select id="filterSelect">
-			{{foreach name=colIteration from=$formData key=col item=colData}}
-			{{if isset($colData.field.label)}}
-			<option value='{{$colData.field.name}}' class="filterAreaToggle">{sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}</option>
-			{{elseif isset($fields[$colData.field.name])}}
-			<option value='{{$fields[$colData.field.name].name}}' class="filterAreaToggle">{sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}</option>
-			{{/if}}
-			{{/foreach}}
-			</select>
-			<input title='{$APP.LBL_ADD_FILTER}'  class='button' type='button' id='addField' value='{$APP.LBL_ADD_FILTER}'/>
-		</fieldset>
+
 
 
 	{{foreach name=colIteration from=$formData key=col item=colData}}
@@ -266,11 +286,28 @@
 
 	{{/foreach}}
 	</tbody>
-</table>
+</table>-->
 
 
-</div>
-
+        {{foreach name=colIteration from=$formData key=col item=colData}}
+        <div class="row filterArea {{$colData.field.name}}" style="display:none;">
+            <div class="small-4 columns">
+                {{if isset($colData.field.label)}}
+                {sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}
+                {{elseif isset($fields[$colData.field.name])}}
+                {sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}
+                {{/if}}
+            </div>
+            <div class="small-4 columns">
+                {{if $fields[$colData.field.name]}}
+                {{sugar_field parentFieldArray='fields' accesskey=$ACCKEY vardef=$fields[$colData.field.name] displayType=$displayType displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
+                {{/if}}
+            </div>
+            <div class="small-4 columns">
+                <button class='button removeFilter' type='button' ><img src="themes/default/images/id-ff-remove-nobg.png"></button>
+            </div>
+        </div>
+        {{/foreach}}
 
 <!--<p>Layout Options:</p>
 <div class="switch small">
@@ -283,7 +320,8 @@
 </div>-->
 
 
-
+</div>
+    </div>
 
 
 
