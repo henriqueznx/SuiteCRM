@@ -5,6 +5,9 @@
 
 		$(document).foundation();
 
+        formdata = {{$formData|@json_encode}};
+        fields = {{$fields|@json_encode}};
+        customFields = {{$customFields|@json_encode}};
 
 
 		{{foreach from=$setFilters key=col item=colData}}
@@ -308,6 +311,14 @@
             </div>
         </div>
         {{/foreach}}
+
+    <div class="input-group">
+        <span class="input-group-label">$</span>
+        <input class="input-group-field" type="number">
+        <div class="input-group-button">
+            <input type="submit" class="" value="Submit">
+        </div>
+    </div>
 
 <!--<p>Layout Options:</p>
 <div class="switch small">
