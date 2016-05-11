@@ -1,14 +1,116 @@
 
 <script>
 {literal}
+var formdata, fields,customFields, filterComponents, module, filterLabels, lineOptions;
+
+
 	$(function() {
 
-		$(document).foundation();
+		//$(document).foundation();
 
         formdata = {{$formData|@json_encode}};
         fields = {{$fields|@json_encode}};
         customFields = {{$customFields|@json_encode}};
+        module = '{{$module}}';
 
+        lineOptions = "<option value='blank'></option>";
+        //build an array of the drop down label values
+        filterComponents = {};
+        filterLabels = [];
+        $.each(formdata,function(i,v){
+            var line = {};
+            line.name = v.field.name;
+            line.details = fields[v.field.name];
+
+            if(line.details.vname !== undefined)
+            {
+                line.label = SUGAR.language.get(module,line.details.vname).replace(":","");
+            }
+            else
+            {
+                line.label = SUGAR.language.get(module, v.field.label).replace(":","");
+            }
+            filterLabels.push(line.label);
+            lineOptions += "<option value='"+line.name+"'>"+line.label+"</option>"
+            filterComponents[v.field.name] = line;
+        });
+
+
+
+
+
+        $('.addFilterLine').on('click',function()
+        {
+
+            //TODO Refactor to handlebar'esque template after prototype completion
+            var item = "";
+            item+=      '<div class="filterLine row">';
+            item+=          '<div class="small-3 columns">';
+            item+=              '<select class="filterAreaChoice">'+lineOptions+'</select>';
+            item+=          '</div>';
+            item+=          '<div class="small-4 columns filterArea1 filterArea">';
+            item+=          '</div>';
+            item+=          '<div class="small-2 columns filterArea2 filterArea">';
+            item+=          '</div>';
+            item+=          '<div class="small-2 columns filterArea3 filterArea">';
+            item+=          '</div>';
+            item+=          '<div class="small-1 columns">';
+            item+=              '<button class="button removeFilter" type="button" >';
+            item+=                  '<img src="themes/default/images/id-ff-remove-nobg.png">';
+            item+=              '</button>';
+            item+=          '</div>';
+            item+=      '</div>';
+
+            $(item).appendTo('.filterLineItems');
+        });
+
+
+        $('.filterPage').on('change','.filterAreaChoice',function(){
+            var item = $(this).val();
+            var input = getInputForType(item);
+            var $this = $(this);
+            $this.parent().parent().find('.filterArea').empty();
+            $.each(input,function(i,v){
+                $this.parent().parent().find('.filterArea'+(i+1)).append(v);
+            });
+
+            //TODO Need a less intensive way of doing this if prototype approved
+            $('.date').fdatepicker({
+                format: 'dd-mm-yyyy',
+                disableDblClickSelection: true
+            });
+        });
+//
+//        $('.filterPage').on('change','select.containsRange',function(){
+//            if($(this).val() === "between")
+//            {
+//                $(this).parent().find('.filterArea3').hide();
+//            }
+//        });
+
+        function getInputForType(item)
+        {
+            if(filterComponents[item]!== undefined && filterComponents[item].details !== undefined && (filterComponents[item].details.type === "enum" || filterComponents[item].details.type === "multienum"))
+            {
+                return(getEnumList(item));
+            }
+            else if(filterComponents[item]!== undefined && filterComponents[item].details !== undefined && (filterComponents[item].details.type === "name" || filterComponents[item].details.type === "url" || filterComponents[item].details.type === "varchar"))
+            {
+                return(getTextItem(item));
+            }
+            else if(filterComponents[item]!== undefined && filterComponents[item].details !== undefined && filterComponents[item].details.type === "date")
+            {
+                return(getDateItem(item));
+            }
+            else if(filterComponents[item]!== undefined && filterComponents[item].details !== undefined && filterComponents[item].details.type === "currency")
+            {
+                return(getCurrencyItem(item));
+            }
+            else if(filterComponents[item]!== undefined && filterComponents[item].details !== undefined && filterComponents[item].details.type === "relate")
+            {
+                return(getRelateItem(item));
+            }
+        }
 
 		{{foreach from=$setFilters key=col item=colData}}
 		$('#checkbox_{{$colData}}').click();
@@ -28,11 +130,14 @@
 			$('.filterArea.'+id).show();
 		});
 */
-		$('.removeFilter').on('click',function(){
-			$(".filterArea").has($(this)).hide();
-			var $inputContainer = $(this).parent().prev();
+		$('.filterLineItems').on('click','button.removeFilter',function(){
+            $('.filterLine').has($(this)).hide();
+            //console.log($this);
+            //alert("here");
+			//$(".filterArea").has($(this)).hide();
+			//var $inputContainer = $(this).parent().prev();
 			//console.log($inp);
-			clearFilterValue($inputContainer);
+			//clearFilterValue($inputContainer);
 		});
 
 
@@ -133,6 +238,79 @@
 	
 	});
 
+    function getEnumList(item)
+    {
+        var list = "";
+        if(filterComponents[item].details !== undefined && filterComponents[item].details.options !== undefined)
+        {
+            $.each(filterComponents[item].details.options,function(i,v){
+                list+= '<option value="'+i+'">'+v+'</option>';
+            });
+        }
+
+        var items = [];
+        items.push("<select multiple>"+list+"</select>");
+        return items;
+    }
+
+    function getTextItem(item)
+    {
+        var items = [];
+        items.push("<input type='text'>");
+        return items;
+    }
+    function getDateItem(item)
+    {
+        var list = "";
+        if(filterComponents[item].details !== undefined && filterComponents[item].details.options !== undefined)
+        {
+            $.each(filterComponents[item].details.options,function(i,v){
+                list+= '<option value="'+i+'">'+v+'</option>';
+            });
+        }
+
+        var items = [];
+        items.push("<select class='containsRange'>"+list+"</select>");
+
+        var dateItem = '<input type="text" class="date">';
+
+        items.push(dateItem);
+
+        if(filterComponents[item].details !== undefined && filterComponents[item].details.enable_range_search !== undefined && filterComponents[item].details.enable_range_search === true)
+        {
+            items.push(dateItem);
+        }
+        return items;
+    }
+
+    function getCurrencyItem(item)
+    {
+        var list = "";
+        if(filterComponents[item].details !== undefined && filterComponents[item].details.options !== undefined)
+        {
+            $.each(filterComponents[item].details.options,function(i,v){
+                list+= '<option value="'+i+'">'+v+'</option>';
+            });
+        }
+
+        var items = [];
+        items.push("<select class='containsRange'>"+list+"</select>");
+
+        var currencyItem = '<input type="number">';
+        var currencyItemReadOnly = '<input type="number" readonly="readonly">'
+
+        items.push(currencyItem);
+        items.push(currencyItem);
+
+        return items;
+    }
+
+    function getRelateItem(item)
+    {
+        var items = [];
+        items.push("<input type='text' value='relate'>");
+        return items;
+    }
 </script>
 
 <style>
@@ -161,27 +339,37 @@
 <!-- include the foundation links -->
 <link rel="stylesheet" href="include/javascript/foundation/css/foundation.css">
 <link rel="stylesheet" href="include/javascript/foundation/css/app.css">
+<link rel="stylesheet" href="include/javascript/foundation-datepicker/css/foundation-datepicker.min.css">
 <script src="include/javascript/foundation/js/lib/what-input.js"></script>
 <script src="include/javascript/foundation/js/lib/foundation.js"></script>
+<script src="include/javascript/foundation-datepicker/js/foundation-datepicker.min.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
 <!-- end of foundation links -->
 
 <!--<input type="hidden" id="checkedFilterItems" name="checkedFilterItems">-->
 <!--<input type="hidden" id="isFilterLive" name="isFilterLive" value="false">-->
-
 <div class="filterPage">
 
 
 <!--I have added the basic_search_link below as a quick fix as it was required by some of the grouping js files-->
 <input id="basic_search_link" type="hidden">
 
-<div class="switch small">
+<!--<div class="switch small">
 	<input class="switch-input" id="showFilter" type="checkbox" name="exampleSwitch">
 	<label class="switch-paddle" for="showFilter">
 		<span class="show-for-sr">Filter</span>
 		<span class="switch-active" aria-hidden="true">Filter</span>
 		<span class="switch-inactive" aria-hidden="true">No Filter</span>
 	</label>
-</div>
+</div>-->
+        <input type="button" class="addFilterLine" value="Add filter item">
+        <input type="button" class="filterData" value="Filter">
+        <input type="button" class="filterLoad" value="Load">
+        <input type="button" class="filterSave" value="Save">
+
+    <div class="filterLineItems"></div>
+
+
 
 <div class="filterSection callout secondary" style="display:none;">
 	<div class="reveal" id="saveFilterModal" data-reveal>
