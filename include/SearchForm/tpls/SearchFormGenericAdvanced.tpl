@@ -12,10 +12,6 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
         setFilters = {{$setFilters|@json_encode}};
         module = '{{$module}}';
 
-
-
-
-
         lineOptions = "<option value='blank'></option>";
         //build an array of the drop down label values
         filterComponents = {};
@@ -63,6 +59,10 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
             $(item).appendTo('.filterLineItems');
         });
 
+        $('.filterPage').on('click','.filterClear',function(){
+            $('.filterLine button.removeFilter').click();
+            $('.filterPerform').click();
+        });
 
         $('.filterPage').on('click','.resetRelate',function(){
             $(this).parent().prev().val('');
@@ -128,6 +128,7 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 
         function populateFilterItems()
         {
+
             if(setFilters !== undefined && setFilters.length > 0)
             {
                 $.each(setFilters,function(i,v){
@@ -276,7 +277,7 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 
 
     <input type="button" class="addFilterLine" value="Add filter item">
-    <input title="Filter" onclick="SUGAR.savedViews.setChooser()" class="button" type="submit" value="Filter">
+    <input title="Filter" onclick="SUGAR.savedViews.setChooser()" class="button filterPerform" type="submit" value="Filter">
     <input type="button" class="filterClear" value="Clear">
     <input type="button" class="filterLoad" value="Load">
     <input type="button" class="filterSave" value="Save">
