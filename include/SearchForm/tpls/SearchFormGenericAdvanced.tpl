@@ -6,6 +6,8 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 
 	$(function() {
 
+        $(document).foundation();
+
         formdata = {{$formData|@json_encode}};
         fields = {{$fields|@json_encode}};
         customFields = {{$customFields|@json_encode}};
@@ -271,16 +273,40 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 <link href="//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
 <!-- end of foundation links -->
 
+<div class="reveal" id="loadModal" data-reveal>
+    <h4>Please choose filter to load</h4>
+    <select>
+        <option>New customers needing follow-up</option>
+        <option>Unpaid bills</option>
+        <option>High-value losses</option>
+    </select>
+
+    <button class="close-button" data-close aria-label="Close reveal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <button type="button" class="success button">Load</button>
+</div>
+
+<div class="reveal" id="saveModal" data-reveal>
+    <h4>Please choose a save name</h4>
+    <input type="text">
+
+    <button class="close-button" data-close aria-label="Close reveal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <button type="button" class="success button">Save</button>
+</div>
+
 <div class="filterPage">
 <!--I have added the basic_search_link below as a quick fix as it was required by some of the grouping js files-->
     <input id="basic_search_link" type="hidden">
 
 
     <input type="button" class="addFilterLine" value="Add filter item">
-    <input title="Filter" onclick="SUGAR.savedViews.setChooser()" class="button filterPerform" type="submit" value="Filter">
+    <input title="Filter" onclick="SUGAR.savedViews.setChooser()" class="filterPerform" type="submit" value="Filter">
     <input type="button" class="filterClear" value="Clear">
-    <input type="button" class="filterLoad" value="Load">
-    <input type="button" class="filterSave" value="Save">
+    <input type="button" class="filterLoad" value="Load" data-open="loadModal">
+    <input type="button" class="filterSave" value="Save" data-open="saveModal">
 
     <div class="filterLineItems">
     </div>
