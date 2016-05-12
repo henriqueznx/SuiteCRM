@@ -3638,7 +3638,9 @@ SUGAR.savedViews = function() {
 				if(!confirm(delete_lang)) return;
 			}
 			if(action == 'save') {
-				if(document.search_form.saved_search_name.value.replace(/^\s*|\s*$/g, '') == '') {
+				//if(document.search_form.saved_search_name.value.replace(/^\s*|\s*$/g, '') == '')
+				if($('#saved_search_name').val().replace(/^\s*|\s*$/g, '') == '')
+				{
 					alert(SUGAR.language.get('app_strings', 'LBL_SAVED_SEARCH_ERROR'));
 					return;
 				}

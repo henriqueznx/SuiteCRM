@@ -109,6 +109,7 @@ require_once('include/EditView/EditView2.php');
  		//used by advanced search
  		$this->listViewDefs = $listViewDefs;
  		$this->displayView = $displayView;
+        //$this->displayView = 'advanced_search';
  		$this->view = $this->view.'_'.$displayView;
  		$tokens = explode('_', $this->displayView);
  		$this->parsedView = $tokens[0];
@@ -166,6 +167,24 @@ require_once('include/EditView/EditView2.php');
 		$this->th->ss->assign('fields', $this->fieldDefs);
 		$this->th->ss->assign('customFields', $this->customFieldDefs);
 		$this->th->ss->assign('formData', $this->formData);
+
+        //PG added to pass through the checked filters to maintain visibility of displayed items
+        $setFilters = [];
+        foreach($this->searchFields as $key=>$val)
+        {
+            if((!is_array($val["value"]) && isset($val["value"]) && $val["value"] !== '') || (is_array($val["value"])&& sizeof($val["value"])>0) )
+            {
+                $item = new stdClass();
+                $item->key = $key."_advanced";
+                $item->value = $val["value"];
+                //$setFilters[] = $key."_advanced";
+                $setFilters[] = $item;
+            }
+
+        }
+        $this->th->ss->assign('setFilters', $setFilters);
+        //PG end of filter pass through
+
         $time_format = $timedate->get_user_time_format();
         $this->th->ss->assign('TIME_FORMAT', $time_format);
         $this->th->ss->assign('USER_DATEFORMAT', $timedate->get_user_date_format());

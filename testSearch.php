@@ -10,13 +10,13 @@ require_once('include/entryPoint.php');
 $return_array= Array();
 
 $db = DBManagerFactory::getInstance();
-$query="select distinct name, id from accounts where name like'%$_REQUEST[query]%' and deleted=0";
+$query="select distinct name from accounts where name like'%$_REQUEST[query]%' and deleted=0";
 $result=$db->query($query);
 if (!empty($result)) {
     while (($row=$db->fetchByAssoc($result)) != null) {
         $std = new stdClass();
         $std->value = $row['name'];
-        $std->data = $row['id'];
+        //$std->data = $row['id'];
         $return_array[]=$std;
     }
 }

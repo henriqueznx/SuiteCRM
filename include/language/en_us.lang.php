@@ -1596,6 +1596,9 @@ $app_strings = array(
     'LBL_ADD_BUTTON_TITLE' => 'Add',
     'LBL_ADD_BUTTON' => 'Add',
     'LBL_ADD_DOCUMENT' => 'Add Document',
+
+    'LBL_ADD_FILTER' => 'Add Filter',
+
     'LBL_REPLACE_BUTTON' => 'Replace',
     'LBL_ADD_TO_PROSPECT_LIST_BUTTON_KEY' => 'L',
     'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL' => 'Add To Target List',
@@ -1747,6 +1750,9 @@ $app_strings = array(
     'LBL_LISTVIEW_OPTION_SELECTED' => 'Selected Records',
     'LBL_LISTVIEW_SELECTED_OBJECTS' => 'Selected: ',
 
+    'LBL_LOAD_BUTTON_LABEL' => 'Load',
+    'LBL_LOAD_BUTTON_TITLE' => 'Load',
+
     'LBL_LOCALE_NAME_EXAMPLE_FIRST' => 'David',
     'LBL_LOCALE_NAME_EXAMPLE_LAST' => 'Livingstone',
     'LBL_LOCALE_NAME_EXAMPLE_SALUTATION' => 'Dr.',
@@ -1865,6 +1871,10 @@ $app_strings = array(
     'LBL_SELECT_USER_BUTTON_KEY' => 'U',
     'LBL_SELECT_USER_BUTTON_LABEL' => 'Select User',
     'LBL_SELECT_USER_BUTTON_TITLE' => 'Select User',
+
+    'LBL_UPDATE_BUTTON_LABEL' => 'Update',
+    'LBL_UPDATE_BUTTON_TITLE' => 'Update',
+
     // Clear buttons take up too many keys, lets default the relate and collection ones to be empty
     'LBL_ACCESSKEY_CLEAR_RELATE_KEY' => ' ',
     'LBL_ACCESSKEY_CLEAR_RELATE_TITLE' => 'Clear Selection',

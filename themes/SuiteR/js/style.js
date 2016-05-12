@@ -190,7 +190,7 @@ SUGAR.append(SUGAR.themes, {
             $('#ajaxHeader').html(html);
             loadSidebar();
             if ($(window).width() < 979) {
-                $('#bootstrap-container').removeClass('main');
+                //$('#bootstrap-container').removeClass('main');
             }
         }
     }, actionMenu: function () {
@@ -285,9 +285,9 @@ var checkContents = setInterval(function(){
         //$(".footable").find("th:first").attr("data-toggle","true");
 
         // Button to toggle list view search
-        $('.showsearch').click(function() {
-            $('.search_form').toggle();
-        });
+        //$('.showsearch').click(function() {
+
+        //});
         $('#userlinks_togglemobilesearch').click(function() {
             $('#searchmobile').toggle('slide', {direction: 'left'}, '350');
         });
@@ -298,12 +298,14 @@ var checkContents = setInterval(function(){
 
 // JavaScript fix to remove unrequired classes on smaller screens where sidebar is obsolete
 $(window).resize(function () {
-    if ($(window).width() < 979) {
+    $('.search_form').show();
+    /*
+    if ($(window).width() <= 979) {
         $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 sidebar main');
     }
-    if ($(window).width() > 980 && $('.sidebar').is(':visible')) {
+    if ($(window).width() > 979 && $('.sidebar').is(':visible')) {
         $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main');
-    }
+    }*/
 });
 
 // jQuery to toggle sidebar
