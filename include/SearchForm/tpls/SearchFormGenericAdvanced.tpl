@@ -1,4 +1,4 @@
-
+<script src="https://use.fontawesome.com/205c1fda24.js"></script>
 <script>
 {literal}
 var formdata, fields,customFields, filterComponents, module, filterLabels, lineOptions, setFilters;
@@ -7,7 +7,7 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 	$(function() {
 
         $(document).foundation();
-
+        $('#massassign_form').hide()
         formdata = {{$formData|@json_encode}};
         fields = {{$fields|@json_encode}};
         customFields = {{$customFields|@json_encode}};
@@ -52,9 +52,10 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
             item+=          '<div class="small-2 columns filterArea3 filterArea">';
             item+=          '</div>';
             item+=          '<div class="small-1 columns">';
-            item+=              '<button class="button removeFilter" type="button" >';
-            item+=                  '<img src="themes/default/images/id-ff-remove-nobg.png">';
-            item+=              '</button>';
+            item+=          '<button type="button" class="button removeFilter" title="Remove Filter"><i class="fa fa-minus" aria-hidden="true"></i></button>'
+            //item+=              '<button class="button removeFilter" type="button" >';
+           // item+=                  '<img src="themes/default/images/id-ff-remove-nobg.png">';
+            //item+=              '</button>';
             item+=          '</div>';
             item+=      '</div>';
 
@@ -64,6 +65,10 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
         $('.filterPage').on('click','.filterClear',function(){
             $('.filterLine button.removeFilter').click();
             $('.filterPerform').click();
+        });
+
+        $('.filterPage').on('click','.toggleSecurityGroups',function(){
+            $('#massassign_form').toggle()
         });
 
         $('.filterPage').on('click','.resetRelate',function(){
@@ -86,6 +91,7 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
             });
             $('.relate').autocomplete({
                 serviceUrl: '/filter/testSearch.php',
+                groupBy:'category',
                 params:{
                     module:module
                 },
@@ -237,9 +243,10 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 
         var i =     '<div class="input-group">';
             i+=         '<input class="input-group-field relate" type="text" name="'+item+'">';
-            i+=         '<div class="input-group-button">';
-            i+=             '<input type="button" class="button resetRelate" value="X">';
-            i+=         '</div>';
+            //i+=         '<div class="input-group-button">';
+            //i+=             '<input type="button" class="button resetRelate" value="X">';
+            //i+=                '<button type="button" class="button resetRelate" title="Clear field"><i class="fa fa-ban" aria-hidden="true"></i></button>'
+            //i+=         '</div>';
             i+=     '</div>';
 
         items.push(i);
@@ -269,7 +276,7 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 <script src="include/javascript/foundation/js/lib/what-input.js"></script>
 <script src="include/javascript/foundation/js/lib/foundation.js"></script>
 <script src="include/javascript/foundation-datepicker/js/foundation-datepicker.min.js"></script>
-<script src="include/javascript/jQuery-Autocomplete/dist/jquery.autocomplete.min.js"></script>
+<script src="include/javascript/jQuery-Autocomplete/dist/jquery.autocomplete.min.js"></script><!--https://github.com/devbridge/jQuery-Autocomplete-->
 <link href="//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
 <!-- end of foundation links -->
 
@@ -302,12 +309,20 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
     <input id="basic_search_link" type="hidden">
 
 
-    <input type="button" class="addFilterLine" value="Add filter item">
+    <!--<input type="button" class="addFilterLine" value="Add filter item">
     <input title="Filter" onclick="SUGAR.savedViews.setChooser()" class="filterPerform" type="submit" value="Filter">
     <input type="button" class="filterClear" value="Clear">
     <input type="button" class="filterLoad" value="Load" data-open="loadModal">
-    <input type="button" class="filterSave" value="Save" data-open="saveModal">
+    <input type="button" class="filterSave" value="Save" data-open="saveModal">-->
+
+    <button type="button" class="button addFilterLine"  title="Add Filter Line"><i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-filter" aria-hidden="true"></i></button>
+    <button type="submit" class="button filterPerform" onclick="SUGAR.savedViews.setChooser()"  title="Filter"><i class="fa fa-filter" aria-hidden="true"></i></button>
+    <button type="submit" class="button filterClear" title="Clear Filter"><i class="fa fa-ban" aria-hidden="true"></i><i class="fa fa-filter" aria-hidden="true"></i></button>
+    <button type="button" class="button" data-open="loadModal" title="Load Filter"><i class="fa fa-download" aria-hidden="true"></i></button>
+    <button type="button" class="button" data-open="saveModal" title="Save Filter"><i class="fa fa-upload" aria-hidden="true"></i></button>
+    <button type="button" class="button toggleSecurityGroups float-right"  title="Security Groups"><i class="fa fa-key" aria-hidden="true"></i><i class="fa fa-users" aria-hidden="true"></i></button>
 
     <div class="filterLineItems">
     </div>
 </div>
+
