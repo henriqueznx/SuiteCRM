@@ -43,12 +43,35 @@
 
 *}
 
-<script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
+{literal}
+	<script src="include/javascript/jQuery-Autocomplete/dist/jquery.autocomplete.min.js"></script><!--https://github.com/devbridge/jQuery-Autocomplete-->
+
+	<style>
+
+		input.inputFilter{
+			background-color:orange;
+		}
+		.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+		.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+		.autocomplete-selected { background: #F0F0F0; }
+		.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+		.autocomplete-group { padding: 2px 5px; }
+		.autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+
+		input.relate {
+			font-size: 12px;
+		}
+	</style>
+
+
+<script src="https://use.fontawesome.com/205c1fda24.js"></script>
 
 
 <script>
-{literal}
+
 	$(document).ready(function(){
+
+
 	    $("ul.clickMenu").each(function(index, node){
 	  		$(node).sugarActionMenu();
 	  	});
@@ -61,6 +84,67 @@
         if(typeof(selectedTopValue) != "undefined" && selectedTopValue != "0"){
         	sugarListView.prototype.toggleSelected();
         }
+/*
+		$('.relate').autocomplete({
+			serviceUrl: '/filter/testSearch.php',
+			//groupBy:'category',
+			params:{
+				module:module,
+			},
+			minChars:2,
+			onSelect: function (suggestion) {
+				// alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+			}
+		});
+*/
+
+		$('.relate').each(function(i,v){
+			var field = $(this).next().val();
+			var table = $(this).next().next().val();
+			$(this).autocomplete({
+				serviceUrl: '/filter/testSearch.php',
+				params:{
+					module:module,
+					field:field,
+					table:table
+				},
+				minChars:2,
+				onSelect: function (suggestion) {
+					//console.log($(this));
+					$(this).change();
+					$(this).addClass('inputFilter');
+				}
+			});
+		});
+
+		$('.relate').on('change',function(){
+			console.log('change');
+			var index = $(this).index('.relate');
+			console.log(index);
+			console.log($(this).val());
+			if($(this).val().length > 0)
+			{
+				//$('.warning:eq('+index+')').show();
+				$(this).addClass('inputFilter');
+			}
+			else
+			{
+				//$('.warning').hide();
+				$(this).removeClass('inputFilter');
+			}
+
+
+
+		});
+
+		$('.clearFilters').on('click',function(){
+			$('.relate').val('');
+			$('.warning').hide();
+			$('input.inputFilter').removeClass('inputFilter');
+		});
+
+
+
 	});
 {/literal}
 </script>
@@ -68,6 +152,7 @@
 {assign var="singularModule" value = $moduleListSingular.$currentModule}
 {assign var="moduleName" value = $moduleList.$currentModule}
 {assign var="hideTable" value=false}
+
 
 {if count($data) == 0}
 	{assign var="hideTable" value=true}
@@ -113,6 +198,19 @@
     {assign var="selectLink" value=$selectLinkTop}
     {assign var="action_menu_location" value="top"}
 	{include file='include/ListView/ListViewPagination.tpl'}
+	<!-- Start of filter prototype -->
+	<tr height='20'>
+		<!-- the first two td overlap the check box / edit icon-->
+		<td><button class="button clearFilters" type="button"><i class="fa fa-ban" aria-hidden="true"></i></button></td>
+		<td><button class="button"><i class="fa fa-filter" aria-hidden="true"></i></button></td>
+		{foreach from=$displayColumns key=colHeader item=params}
+			<!--<td><input class="inputFilter" type="text" /></td>-->
+			<td><input class='relate' type='text' name="'+item+'"><input class="lookupType" type="hidden" value="{$colHeader}"></td>
+		{/foreach}
+
+	</tr>
+
+	<!-- End of filter prototype -->
 	<tr height='20'>
 			{if $prerow}
 				<td width='1%' class="td_alt">
@@ -129,7 +227,7 @@
                 {if $colCounter == '5'}{assign var='datahide' value="phone,phonelandscape,tablet"}{/if}
                 {if $colHeader == 'NAME' || $params.bold}<th scope='col' data-toggle="true">
 				{else}<th scope='col' data-hide="{$datahide}">{/if}
-					<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
+					<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'><span class="warning badge" style="display:none;"><i class="fa fa-filter" aria-hidden="true"></i></span>
 	                {if $params.sortable|default:true}
 	                    {if $params.url_sort}
 	                        <a href='{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}' class='listViewThLinkS1'>
@@ -281,3 +379,5 @@ function lvg_nav(m,id,act,offset,t){
 </script>
 <script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
 {/if}
+
+

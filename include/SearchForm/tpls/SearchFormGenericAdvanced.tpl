@@ -1,4 +1,6 @@
 <script src="https://use.fontawesome.com/205c1fda24.js"></script>
+<!--<link rel="stylesheet" href="include/javascript/foundation-select/foundation-select.css">
+<script src="include/javascript/foundation-select/foundation-select.js"></script>-->
 <script>
 {literal}
 var formdata, fields,customFields, filterComponents, module, filterLabels, lineOptions, setFilters;
@@ -6,7 +8,7 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 
 	$(function() {
 
-        $(document).foundation();
+        //$(document).foundation();
         $('#massassign_form').hide()
         formdata = {{$formData|@json_encode}};
         fields = {{$fields|@json_encode}};
@@ -101,6 +103,7 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
                 }
             });
 
+
         });
 
         function getInputForType(item)
@@ -165,7 +168,7 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
         }
 
 
-
+        $('.filterPage').hide();
 
     });
 
@@ -270,7 +273,7 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 {/literal}
 
 <!-- include the foundation links -->
-<link rel="stylesheet" href="include/javascript/foundation/css/foundation.css">
+<!--<link rel="stylesheet" href="include/javascript/foundation/css/foundation.css">
 <link rel="stylesheet" href="include/javascript/foundation/css/app.css">
 <link rel="stylesheet" href="include/javascript/foundation-datepicker/css/foundation-datepicker.min.css">
 <script src="include/javascript/foundation/js/lib/what-input.js"></script>
@@ -278,8 +281,10 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 <script src="include/javascript/foundation-datepicker/js/foundation-datepicker.min.js"></script>
 <script src="include/javascript/jQuery-Autocomplete/dist/jquery.autocomplete.min.js"></script><!--https://github.com/devbridge/jQuery-Autocomplete-->
 <link href="//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
-<!-- end of foundation links -->
 
+
+<!-- end of foundation links -->
+<!--
 <div class="reveal" id="loadModal" data-reveal>
     <h4>Please choose filter to load</h4>
     <select>
@@ -306,14 +311,7 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 
 <div class="filterPage">
 <!--I have added the basic_search_link below as a quick fix as it was required by some of the grouping js files-->
-    <input id="basic_search_link" type="hidden">
-
-
-    <!--<input type="button" class="addFilterLine" value="Add filter item">
-    <input title="Filter" onclick="SUGAR.savedViews.setChooser()" class="filterPerform" type="submit" value="Filter">
-    <input type="button" class="filterClear" value="Clear">
-    <input type="button" class="filterLoad" value="Load" data-open="loadModal">
-    <input type="button" class="filterSave" value="Save" data-open="saveModal">-->
+    <!--<input id="basic_search_link" type="hidden">
 
     <button type="button" class="button addFilterLine"  title="Add Filter Line"><i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-filter" aria-hidden="true"></i></button>
     <button type="submit" class="button filterPerform" onclick="SUGAR.savedViews.setChooser()"  title="Filter"><i class="fa fa-filter" aria-hidden="true"></i></button>
@@ -324,5 +322,5 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 
     <div class="filterLineItems">
     </div>
-</div>
+</div>-->
 

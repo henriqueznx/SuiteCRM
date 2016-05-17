@@ -176,6 +176,8 @@ class ViewList extends SugarView{
             $this->lv->ss->assign("SEARCH",true);
             $this->lv->setup($this->seed, 'include/ListView/ListViewGeneric.tpl', $this->where, $this->params);
             $savedSearchName = empty($_REQUEST['saved_search_select_name']) ? '' : (' - ' . $_REQUEST['saved_search_select_name']);
+            //$this->lv->ss->assign("TEST",'TEST OF PASSING PARAMETER');
+
             echo $this->lv->display();
         }
     }
