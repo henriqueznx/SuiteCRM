@@ -118,10 +118,10 @@
 		});
 
 		$('.relate').on('change',function(){
-			console.log('change');
+			//console.log('change');
 			var index = $(this).index('.relate');
-			console.log(index);
-			console.log($(this).val());
+			//console.log(index);
+			//console.log($(this).val());
 			if($(this).val().length > 0)
 			{
 				//$('.warning:eq('+index+')').show();
