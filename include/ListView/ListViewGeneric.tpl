@@ -104,7 +104,7 @@
 			$(this).autocomplete({
 				serviceUrl: '/filter/testSearch.php',
 				params:{
-					module:module,
+					//module:module,
 					field:field,
 					table:table
 				},
