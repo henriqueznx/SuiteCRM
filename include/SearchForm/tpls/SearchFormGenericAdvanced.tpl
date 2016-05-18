@@ -9,7 +9,7 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 	$(function() {
 
         //$(document).foundation();
-        $('#massassign_form').hide()
+        $('#massassign_form').hide();
         formdata = {{$formData|@json_encode}};
         fields = {{$fields|@json_encode}};
         customFields = {{$customFields|@json_encode}};
