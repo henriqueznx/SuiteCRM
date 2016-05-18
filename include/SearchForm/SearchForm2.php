@@ -170,7 +170,7 @@ require_once('include/EditView/EditView2.php');
 
         //PG added to pass through the checked filters to maintain visibility of displayed items
         $setFilters = [];
-        foreach($this->searchFields as $key=>$val)
+        /*foreach($this->searchFields as $key=>$val)
         {
             if((!is_array($val["value"]) && isset($val["value"]) && $val["value"] !== '') || (is_array($val["value"])&& sizeof($val["value"])>0) )
             {
@@ -181,7 +181,7 @@ require_once('include/EditView/EditView2.php');
                 $setFilters[] = $item;
             }
 
-        }
+        }*/
         $this->th->ss->assign('setFilters', $setFilters);
         //PG end of filter pass through
 
