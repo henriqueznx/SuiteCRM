@@ -306,6 +306,7 @@
 <script>
 
 	$(document).ready(function(){
+        $('#search_form').hide();
         $('[data-toggle="popover"]').popover({trigger:'hover', html:true});
 
         $(document).ready(function() {
