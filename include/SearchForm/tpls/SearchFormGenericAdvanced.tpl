@@ -7,7 +7,6 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 
 
 	$(function() {
-
         //$(document).foundation();
         $('#massassign_form').hide();
         formdata = {{$formData|@json_encode}};
@@ -108,6 +107,7 @@ var formdata, fields,customFields, filterComponents, module, filterLabels, lineO
 
         function getInputForType(item)
         {
+
             if(filterComponents[item]!== undefined && filterComponents[item].details !== undefined && (filterComponents[item].details.type === "enum" || filterComponents[item].details.type === "multienum"))
             {
                 return(getEnumList(item));
