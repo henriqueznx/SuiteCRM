@@ -470,12 +470,12 @@ class SugarController{
 	/**
 	 * Perform the actual save
 	 */
-	public function action_save() {
+	public function save() {
 
 		$this->bean->save(!empty($this->bean->notify_on_save));
 	}
 
-	public function action_spot() {
+	public function spot() {
 
 		$this->view = 'spot';
     }
@@ -554,7 +554,7 @@ class SugarController{
 	/**
 	 * Perform the actual deletion.
 	 */
-	protected function action_delete() {
+	protected function delete() {
 
 		//do any pre delete processing
 		//if there is some custom logic for deletion.
@@ -596,7 +596,7 @@ class SugarController{
 	/**
 	 * Perform the actual massupdate.
 	 */
-	protected function action_massupdate() {
+	protected function massupdate() {
 
 		if (!empty($_REQUEST['massupdate']) && $_REQUEST['massupdate'] == 'true' && (!empty($_REQUEST['uid']) || !empty($_REQUEST['entire']))) {
 			if (!empty($_REQUEST['Delete']) && $_REQUEST['Delete'] == 'true' && !$this->bean->ACLAccess('delete') || (empty($_REQUEST['Delete']) || $_REQUEST['Delete'] != 'true') && !$this->bean->ACLAccess('save')) {
@@ -657,7 +657,7 @@ class SugarController{
 	/**
 	 * Perform the listview action
 	 */
-	protected function action_listview() {
+	protected function listview() {
 
 		$this->view_object_map['bean'] = $this->bean;
 		$this->view = 'list';
@@ -666,7 +666,7 @@ class SugarController{
 	/**
 	 * this method id used within a Dashlet when performing an ajax call
 	 */
-	protected function action_callmethoddashlet() {
+	protected function callmethoddashlet() {
 
 		if (!empty($_REQUEST['id'])) {
 			$id = $_REQUEST['id'];
@@ -690,7 +690,7 @@ class SugarController{
 	/**
 	 * this method is used within a Dashlet when the options configuration is posted
 	 */
-	protected function action_configuredashlet() {
+	protected function configuredashlet() {
 
 		global $current_user, $mod_strings;
 
@@ -725,7 +725,7 @@ class SugarController{
 	 *
 	 * @return void
 	 */
-	protected function action_deleteattachment() {
+	protected function deleteattachment() {
 
 		$this->view = 'edit';
 		$GLOBALS['view'] = $this->view;
@@ -749,7 +749,7 @@ class SugarController{
 /*
 
 	//THIS IS HANDLED IN ACTION_REMAP WHERE INDEX IS SET TO LISTVIEW
-	function action_index(){
+	function index(){
 	}
 */
 
@@ -946,12 +946,16 @@ class SugarController{
 			$GLOBALS['log']->debug('Using Action File Map:' . $this->action_file_map[strtolower($this->do_action)]);
 			require_once($this->action_file_map[strtolower($this->do_action)]);
 			$this->_processed = true;
-		}elseif(!empty($this->action_view_map[strtolower($this->do_action)])){
+		}
+		elseif (!empty($this->action_view_map[strtolower($this->do_action)])) {
 			$GLOBALS['log']->debug('Using Action View Map:' . $this->action_view_map[strtolower($this->do_action)]);
 			$this->view = $this->action_view_map[strtolower($this->do_action)];
 			$this->_processed = true;
-		}else
+		}
+		else {
 			$this->no_action();
+		}
+
 	}
 
 	/**
