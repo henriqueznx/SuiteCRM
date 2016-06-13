@@ -43,7 +43,7 @@ require_once('include/MVC/View/SugarView.php');
  * Main SugarCRM controller
  * @api
  */
-class SugarController{
+	class SugarController {
 	/**
 	 * Map case sensitive filenames to action.  This is used for linux/unix systems
 	 * where filenames are case sensitive
@@ -167,6 +167,18 @@ class SugarController{
 	 * as the mapping arrays.
 	 */
 	public function __construct(){
+	}
+
+		public function __call($method, $arguments) {
+
+			if (method_exists($this, $method) === false) {
+				$prefix = 'action_';
+				if (substr($method, 0, strlen($prefix)) == $prefix) {
+					$method = substr($method, strlen($prefix));
+				}
+			}
+
+			return call_user_func_array(array($this, $method), $arguments);
 	}
 
 	/**
