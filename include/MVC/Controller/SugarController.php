@@ -174,6 +174,8 @@ require_once('include/MVC/View/SugarView.php');
 			if (method_exists($this, $method) === false) {
 				$prefix = 'action_';
 				if (substr($method, 0, strlen($prefix)) == $prefix) {
+					$deprecatedMessage = 'the action_ prefixes are deprecated and will be removed, please update your code';
+					$GLOBALS['log']->deprecated($deprecatedMessage);
 					$method = substr($method, strlen($prefix));
 				}
 			}
