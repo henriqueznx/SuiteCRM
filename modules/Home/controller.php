@@ -42,7 +42,7 @@ include_once("include/InlineEditing/InlineEditing.php");
 class HomeController extends SugarController{
 
 
-    public function action_getEditFieldHTML(){
+    public function getEditFieldHTML() {
 
         if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']){
 
@@ -52,7 +52,7 @@ class HomeController extends SugarController{
 
     }
 
-    public function action_saveHTMLField(){
+    public function saveHTMLField() {
 
         if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']){
 
@@ -62,7 +62,7 @@ class HomeController extends SugarController{
 
     }
 
-    public function action_getDisplayValue(){
+    public function getDisplayValue() {
 
         if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module'] ){
 
@@ -78,7 +78,7 @@ class HomeController extends SugarController{
 
     }
 
-    public function action_getValidationRules(){
+    public function getValidationRules() {
         global $app_strings, $mod_strings;
 
         if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module'] ){
@@ -113,7 +113,7 @@ class HomeController extends SugarController{
 
     }
     
-    public function action_getRelateFieldJS(){
+    public function getRelateFieldJS() {
         
         global $beanFiles, $beanList;
         

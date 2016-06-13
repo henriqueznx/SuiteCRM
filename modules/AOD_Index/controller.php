@@ -26,12 +26,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class AOD_IndexController extends SugarController {
 
-    protected $action_remap = array('index'=>'indexdata');
+    protected $remap = array('index' => 'indexdata');
 
-    function action_indexdata() {
+    function indexdata() {
         $this->view = 'indexdata';
     }
-    function action_optimise(){
+
+    function optimise() {
         set_time_limit(6000);
         $index = BeanFactory::getBean("AOD_Index")->getIndex();
         $index->optimise();

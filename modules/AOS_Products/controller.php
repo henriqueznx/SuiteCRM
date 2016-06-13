@@ -43,8 +43,9 @@
   
   
  class AOS_ProductsController extends SugarController
-{	
-	function action_editview(){
+{
+
+	 function editview() {
 		$this->view = 'edit';
 		$GLOBALS['view'] = $this->view;
 		if(!empty($_REQUEST['deleteAttachment'])){

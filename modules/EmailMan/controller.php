@@ -40,7 +40,8 @@
 
 class EmailManController extends SugarController
 {
-	function action_Save(){
+
+    function Save() {
 
         
         require_once('include/OutboundEmail/OutboundEmail.php');

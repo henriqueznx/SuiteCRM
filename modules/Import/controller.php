@@ -92,12 +92,24 @@ class ImportController extends SugarController
             $GLOBALS['FOCUS'] = $this->bean;
     }
     
-    function action_index()
+    function index()
     {
-        $this->action_Step1();
+
+        $this->Step1();
     }
 
-    function action_mapping()
+    function Step1() {
+
+        $fromAdminView = isset($_REQUEST['from_admin_wizard']) ? $_REQUEST['from_admin_wizard'] : false;
+        if ($this->importModule == 'Administration' || $fromAdminView) {
+            $this->view = 'step1';
+        }
+        else {
+            $this->view = 'step2';
+        }
+    }
+
+    function mapping()
     {
         global $mod_strings, $current_user;
         $results = array('message' => '');
@@ -128,11 +140,12 @@ class ImportController extends SugarController
                     $results['message'] = $mod_strings['LBL_ERROR_UNABLE_TO_UNPUBLISH'];
             }
         }
-        
+
         echo json_encode($results);
         sugar_cleanup(TRUE);
     }
-    function action_RefreshMapping()
+
+    function RefreshMapping()
     {
         global $mod_strings;
         require_once('modules/Import/sources/ImportFile.php');
@@ -160,8 +173,8 @@ class ImportController extends SugarController
         sugar_cleanup(TRUE);
 
     }
-
-    function action_RefreshTable()
+    
+    function RefreshTable()
     {
         $offset = isset($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
         $tableID = isset($_REQUEST['tableID']) ? $_REQUEST['tableID'] : 'errors';
@@ -175,89 +188,77 @@ class ImportController extends SugarController
         $if->setHeaderRow($has_header);
         $lv = new ImportListView($if,array('offset'=> $offset), $tableID);
         $lv->display(FALSE);
-        
+
         sugar_cleanup(TRUE);
     }
     
-	function action_Step1()
-    {
-        $fromAdminView = isset($_REQUEST['from_admin_wizard']) ? $_REQUEST['from_admin_wizard'] : FALSE;
-        if( $this->importModule == 'Administration' || $fromAdminView
-        )
-        {
-    		$this->view = 'step1';
-        }
-        else
-            $this->view = 'step2';
-    }
-    
-    function action_Step2()
+    function Step2()
     {
 		$this->view = 'step2';
     }
 
-    function action_Confirm()
+    function Confirm()
     {
 		$this->view = 'confirm';
     }
 
-    function action_Step3()
+    function Step3()
     {
 		$this->view = 'step3';
     }
 
-    function action_DupCheck()
+    function DupCheck()
     {
 		$this->view = 'dupcheck';
     }
 
-    function action_Step4()
+    function Step4()
     {
 		$this->view = 'step4';
     }
     
-    function action_Last()
+    function Last()
     {
 		$this->view = 'last';
     }
     
-    function action_Undo()
+    function Undo()
     {
 		$this->view = 'undo';
     }
     
-    function action_Error()
+    function Error()
     {
 		$this->view = 'error';
     }
 
-    function action_ExtStep1()
+    function ExtStep1()
     {
         $this->view = 'extStep1';
     }
 
-    function action_Extdupcheck()
+    function Extdupcheck()
     {
         $this->view = 'extdupcheck';
     }
 
-    function action_Extimport()
+    function Extimport()
     {
         $this->view = 'extimport';
     }
     
-    function action_GetControl()
+    function GetControl()
     {
         echo getControl($_REQUEST['import_module'],$_REQUEST['field_name']);
         exit;
     }
 
-    public function action_AuthenticatedSources()
+    public function AuthenticatedSources()
     {
         $this->view = 'authenticatedsources';
     }
 
-    public function action_RevokeAccess()
+    public function RevokeAccess()
     {
         $this->view = 'revokeaccess';
     }

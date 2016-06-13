@@ -23,7 +23,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class AM_ProjectTemplatesController extends SugarController {
 
-    function action_create_project(){
+    function create_project() {
 
         global $current_user, $db;
 

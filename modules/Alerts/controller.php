@@ -39,7 +39,8 @@
 
 class AlertsController extends SugarController
 {
-    public function action_get()
+
+    public function get()
     {
         global $current_user, $app_strings;
         $bean = BeanFactory::getBean('Alerts');
@@ -52,7 +53,7 @@ class AlertsController extends SugarController
         $this->view = 'default';
     }
 
-    public function action_add()
+    public function add()
     {
         global $current_user;
         $name = null;
@@ -112,7 +113,7 @@ class AlertsController extends SugarController
         $this->view = 'json';
     }
 
-    public function action_markAsRead()
+    public function markAsRead()
     {
         $bean = BeanFactory::getBean('Alerts', $_GET['record']);
         $bean->is_read = 1;
@@ -121,7 +122,7 @@ class AlertsController extends SugarController
         $this->view = 'json';
     }
 
-    public function action_redirect()
+    public function redirect()
     {
         $bean = BeanFactory::getBean('Alerts', $_GET['record']);
         $bean->is_read = 1;
