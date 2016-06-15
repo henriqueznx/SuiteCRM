@@ -299,7 +299,7 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
             'Cases',
             'AOS_Products',
             'Opportunities',
-            'FP_Event_Locations',
+            'FP_Event_Locations', 'Spots',
             'Tasks',
             'jjwg_Markers',
             'EmailTemplates',
