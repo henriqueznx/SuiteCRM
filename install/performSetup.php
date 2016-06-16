@@ -679,6 +679,19 @@ $current_user->retrieve(1);
 $current_user->is_admin = '1';
 $sugar_config = get_sugar_config_defaults();
 
+$current_user->setPreference('silentInstall', $silentInstall);
+//Check if the user has chosen in config_si not to see the wizard post silent install (skip_post_silent_install_admin_wizard)
+$skip_post_silent_install_admin_wizard = false;
+if(isset($_SESSION['skip_post_silent_install_admin_wizard']) && $_SESSION['skip_post_silent_install_admin_wizard'] === true)
+{
+    $skip_post_silent_install_admin_wizard = true;
+}
+if($silentInstall && !$skip_post_silent_install_admin_wizard)
+{
+    $current_user->setPreference('postSilentInstallAdminWizardCompleted', false);
+}
+
+
 // set local settings -  if neccessary you can set here more fields as named in User module / EditView form...
 if(isset($_REQUEST['timezone']) && $_REQUEST['timezone']) {
     $current_user->setPreference('timezone', $_REQUEST['timezone']);
