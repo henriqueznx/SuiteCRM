@@ -6082,16 +6082,6 @@ object {
     border-top: 1px solid lightgray;
 }
 
-#detailpanel_fields_select {
-    float: left;
-    width: 20%;
-    height: 640px;
-    overflow-y: auto;
-    margin-right: 20px;
-}
-
-
-
 .panel-default > .panel-heading {
     background: #66727D;
     color: white;
@@ -6580,7 +6570,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        /* width: 80%; */
+         width: 80%;
     }
 
     .button-toggle-expanded {
