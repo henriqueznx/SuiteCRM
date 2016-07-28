@@ -922,7 +922,7 @@ $(document).ready(function() {
     }else{
         var all_events = [];
         $("#user_name1").html(global_current_user_name);
-        get_cal(CAL.current_user_id, all_events);
+        get_cal(global_current_user_id, all_events);
     }
 
 
