@@ -4538,25 +4538,6 @@ input#btn_ActionLine.button[type="button"] {
     width: 100% !important;
 }
 
-table#lineItems tr td table tfoot tr td span {
-    width: 20%;
-}
-table#lineItems tr td table tfoot tr td span input[type="text"] {
-    display: block;
-    float: none;
-}
-table#lineItems tr td table thead tr td table tbody tr td input,
-table#lineItems tr td table thead tr td table tbody tr td select,
-table#lineItems tr td table thead tr td table tbody tr td textarea {
-    display: block;
-    min-width: 80px;
-}
-
-table#lineItems tr td table thead tr td table tbody tr td {
-    white-space: nowrap;
-    padding: 10px;
-}
-
 #total_amt,
 #discount_amount,
 #subtotal_amount,
@@ -5617,54 +5598,126 @@ span#quickcreateplus {
     border-radius: 50%;
 }
 
-#conditionLines_head,
-#fieldLines_head, #lineItems,
-table#lineItems,
-#lineItems table,
-#lineItems thead,
-#lineItems tr,
-#lineItems td {
-    background: none !important;
-}
-
-#actionLines,
-#actionLines table,
-#actionLines tr,
-#actionLines td {
-    border: 1px solid transparent !important;
-}
-
-#actionLines,
-#actionLines table,
-#line_items table {
-    clear: both;
-    border-radius: 4px;
+div[field=line_items] {
     width: 100%;
-}
-
-table#actionLines > tr > td > table td {
-    padding: 4px;
-}
-
-table#actionLines > tr > td > table td:first-of-type {
-    padding-left: 16px;
-}
-
-
-table#actionLines > tr > td > table, #line_items table > tr > td > table {
-    background: #F5F5F5;
-    margin: 16px 0 0 0 !important;
+    float: none;
     clear: both;
-    display: block;
 }
 
-#conditionLines td,  #fieldLines td {
+    /*make the span#line_items_span behave like  div*/
+span#line_items_span {
+    display: block !important;
+    width: 100%;
+    position: relative;
+    background: #F5F5F5;
+    border: 1px solid transparent;
+    border-radius: 4px;
     padding: 8px;
 }
 
+table#lineItems,
+table#lineItems > tr,
+table#lineItems > tr > td,
+table#lineItems > tr > td > table {
+    display: block;
+    width: 100%;
+    position: relative;
+}
 
-#lineItems table > thead:nth-child(1) > tr > td:nth-child(1) [type="text"] {
-    width: 50% !important;
+table.lineItemGroup,
+table.lineItemGroup thead,
+table.lineItemGroup tbody,
+table.lineItemGroup tfoot,
+table.lineItemGroup tr,
+table.lineItemGroup td,
+table.lineItemGroup th {
+    background-color: inherit;
+}
+
+table.lineItemGroup,
+table.lineItemGroup  thead,
+table.lineItemGroup  tr,
+table.lineItemGroup  thead:nth-of-type(2) > tr > td,
+table.lineItemGroup  tbody,
+table.lineItemGroup  tfoot {
+    display: block;
+    width: 100%;
+}
+
+table.lineItemGroup > thead > tr > td {
+    display: inline-block;
+}
+
+
+table.lineItemGroup > tfoot > tr > td > span {
+    float: none !important;
+    clear: both;
+    display: block;
+    position: relative;
+    width: 100%;
+    margin-top: 8px;
+    font-weight: bold;
+}
+
+table.lineItemGroup > tfoot > tr > td > span > input[type=text] {
+    display: block;
+    position: relative;
+    font-weight: normal;
+}
+
+
+table.lineItemGroup > tfoot > tr {
+    width: 16.6666667%;
+}
+
+table.lineItemGroup {
+    margin-top: 8px;
+    border: 1px solid #DBDBDB;
+    border-radius: 4px;
+    padding: 8px;
+}
+td.groupName {
+    width: 50%;
+    font-weight: bold;
+}
+
+table.lineItemGroupProduct, table.lineItemGroupService {
+    display: block;
+    position: relative;
+    width: 100%;
+    margin: 8px 0 8px 0;
+    padding: 8px;
+    border-bottom: 1px solid #DBDBDB;
+}
+
+table.lineItemGroupProduct td {
+    display: inline-block;
+    position: relative;
+    width: 33.33333%;
+}
+
+.lineItemFieldLabel {
+    display: block;
+}
+
+.col-sm-12 .edit-view-field table.lineItemGroupProduct input[type="text"] {
+    width: 60% !important;
+    display: inline-block;
+}
+
+table.lineItemGroupProduct select,
+table.lineItemGroupProduct button{
+    margin-left: 8px;
+}
+
+
+td.deleteGroup {
+    width: 50%;
+}
+span.deleteGroup {
+    position: relative;
+    top:0;
+    right: 0;
 }
 
 li.moremenu {
@@ -8888,16 +8941,4 @@ table tr#delegates_search {
     #service_head {
         display: none;
     }
-
-    table#lineItems table tr td table tbody tr td span.hidden.alignedLabel {
-        display: inline!important;
-    }
-
-    table#lineItems tr td table thead tr td table tbody tr td {
-        display: block;
-        float: left;
-    }
-
-
-
 }
