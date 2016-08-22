@@ -3681,15 +3681,20 @@ li div.star {float:none;}
 .star div:hover {cursor:pointer;background-position:0px 0px;}
 
 #ajaxStatusDiv {
-    background : #ffffff;
+    background: #ffffff;
     color : #c60c30;
-    position : fixed;
-    opacity : .8;
-    filter : alpha(opacity=80);
+    position: absolute;
     z-index: 20;
-    top: 7px;
+    opacity: 1;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    top: 50%;
+    left: 50%;
+    width: 256px;
+    height: 32px;
     border: 1px solid #aaa;
     padding: 5px;
+    text-align: center;
 }
 
 div#chartDashlets
