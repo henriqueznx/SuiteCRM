@@ -641,6 +641,7 @@ $mod_strings = array(
 
     'LBL_AJAX_RESPONSE_TITLE' => 'Result',
     'LBL_AJAX_RESPONSE_MESSAGE' => 'This operation is completed successfully',
+    'LBL_AJAX_RESPONSE_FAILED_MESSAGE' => 'This operation is completed unsuccessfully',
     'LBL_AJAX_LOADING_TITLE' => 'In Progress..',
     'LBL_AJAX_LOADING_MESSAGE' => 'Please wait, loading..',
 
