@@ -242,19 +242,6 @@ RegExp.escape = function(text) { // http://simon.incutio.com/archive/2006/01/20/
   return text.replace(arguments.callee.sRE, '\\$1');
 }
 
-function addAlert(type, name,subtitle, description,time, redirect) {
-	var addIndex = alertList.length;
-	alertList[addIndex]= new Array();
-	alertList[addIndex]['name'] = name;
-	alertList[addIndex]['type'] = type;
-	alertList[addIndex]['subtitle'] = subtitle;
-	alertList[addIndex]['description'] = replaceHTMLChars(description.replace(/<br>/gi, "\n"));
-	alertList[addIndex]['time'] = time;
-	alertList[addIndex]['done'] = 0;
-	alertList[addIndex]['redirect'] = redirect;
-}
-
-
 function toggleDisplay(id) {
 	if(this.document.getElementById(id).style.display == 'none') {
 		this.document.getElementById(id).style.display = '';

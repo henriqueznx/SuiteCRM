@@ -42,6 +42,19 @@ Alerts.prototype.replaceMessages = [];
 Alerts.prototype.updatePendingAlertsInterval = 1000;
 Alerts.prototype.updateMissedAlertsInterval = 60000;
 
+
+Alerts.prototype.add = function(type, name,subtitle, description,time, redirect) {
+  var addIndex = alertList.length;
+  alertList[addIndex]= new Array();
+  alertList[addIndex]['name'] = name;
+  alertList[addIndex]['type'] = type;
+  alertList[addIndex]['subtitle'] = subtitle;
+  alertList[addIndex]['description'] = replaceHTMLChars(description.replace(/<br>/gi, "\n"));
+  alertList[addIndex]['time'] = time;
+  alertList[addIndex]['done'] = 0;
+  alertList[addIndex]['redirect'] = redirect;
+}
+
 Alerts.prototype.enable = function ()
 {
   if (!("Notification" in window)) {
