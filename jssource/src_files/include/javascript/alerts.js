@@ -39,13 +39,16 @@ function Alerts() {
 };
 
 Alerts.prototype.replaceMessages = [];
+Alerts.prototype.updatePendingAlertsInterval = 1000;
+Alerts.prototype.updateMissedAlertsInterval = 60000;
 
-Alerts.prototype.enable = function () {
+Alerts.prototype.enable = function ()
+{
   if (!("Notification" in window)) {
     Alerts.prototype.show({title: "This browser does not support desktop notifications"});
     return;
   }
-  Notification.requestPermission(function (permission) {
+  Notification.requestPermission(function (permission){
     if (permission === "granted") {
       Alerts.prototype.show({title: "Desktop notifications are now enabled for this web browser."});
     }
@@ -54,13 +57,17 @@ Alerts.prototype.enable = function () {
     }
   });
 }
-Alerts.prototype.requestPermission = function () {
+
+Alerts.prototype.requestPermission = function ()
+{
   if (!("Notification" in window)) {
     return;
   }
   Notification.requestPermission();
 }
-Alerts.prototype.show = function (AlertObj) {
+
+Alerts.prototype.show = function (AlertObj)
+{
   Alerts.prototype.requestPermission();
   if (("Notification" in window)) {
     if (Notification.permission === "granted") {
@@ -109,7 +116,8 @@ Alerts.prototype.show = function (AlertObj) {
   }
 }
 
-Alerts.prototype.addToManager = function (AlertObj) {
+Alerts.prototype.addToManager = function (AlertObj)
+{
   var url = 'index.php', name = AlertObj.title, description, url_redirect, is_read = 0, target_module, type = 'info';
   if (typeof AlertObj.options !== "undefined") {
     if (typeof AlertObj.options.url_redirect !== "undefined") {
@@ -141,7 +149,9 @@ Alerts.prototype.addToManager = function (AlertObj) {
     Alerts.prototype.updateManager();
   });
 }
-Alerts.prototype.redirectToLogin = function () {
+
+Alerts.prototype.redirectToLogin = function ()
+{
   var getQueryParams = function (qs) {
     qs = qs.split('+').join(' ');
     var params = {},
@@ -159,8 +169,11 @@ Alerts.prototype.redirectToLogin = function () {
   }
   return false;
 }
-Alerts.prototype.updateManager = function () {
+
+Alerts.prototype.updateManager = function ()
+{
   var url = 'index.php?module=Alerts&action=get&to_pdf=1';
+
   $.ajax(url).done(function (data) {
     if (data == 'lost session') {
       Alerts.prototype.redirectToLogin();
@@ -186,6 +199,7 @@ Alerts.prototype.updateManager = function () {
   }).always(function () {
   });
 }
+
 Alerts.prototype.markAsRead = function (id) {
   var url = 'index.php?module=Alerts&action=markAsRead&record=' + id + '&to_pdf=1';
   $.ajax(url).done(function (data) {
@@ -194,18 +208,49 @@ Alerts.prototype.markAsRead = function (id) {
   }).always(function () {
   });
 }
-function AlertObj() {
+
+
+
+Alerts.prototype.updateAlerts = function()
+{
+  for(var currentAlert in alertList) {
+
+    currentAlert.time += Alerts.prototype.updatePendingAlertsInterval / 1000;
+
+    var currentAlertObject = new AlertObj();
+    currentAlertObject.title = currentAlert.type + ": " + currentAlert.name;
+    currentAlertObject.options.body = currentAlert.subtitle + "\n" + currentAlert.description + "\n\n";
+    currentAlertObject.options.url_redirect = currentAlert.redirect;
+    currentAlertObject.options.target_module = currentAlert.type;
+
+    if(currentAlert.done == 0 && currentAlert.time > -1) {
+      // show alert
+      Alerts.prototype.show(currentAlertObject);
+      // mark as done
+      currentAlert.done = 1;
+    }
+  }
+}
+
+function AlertObj()
+{
   this.title = 'Alert';
   this.options = {body: ' ', url_redirect: null, target_module: null, type: 'info'};
 }
-$(document).ready(function () {
+
+$(document).ready(function ()
+{
   Alerts.prototype.replaceMessages = [
     {search: SUGAR.language.translate("app","MSG_JS_ALERT_MTG_REMINDER_CALL_MSG"), replace: ""},
     {search: SUGAR.language.translate("app","MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG"), replace: ""},
   ];
-  var updateMissed = function () {
-    Alerts.prototype.updateManager();
-    setTimeout(updateMissed, 60000);
+
+  if(typeof checkPendingAlerts !== "undefined") {
+    checkPendingAlerts = setInterval(Alerts.prototype.updateAlerts, Alerts.prototype.updatePendingAlertsInterval);
   }
-  setTimeout(updateMissed, 2000);
+
+  if(typeof checkMissedAlerts) {
+    checkMissedAlerts = setInterval(Alerts.prototype.updateManager, Alerts.prototype.updateMissedAlertsInterval);
+  }
 });
+

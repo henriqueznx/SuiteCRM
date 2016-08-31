@@ -253,47 +253,7 @@ function addAlert(type, name,subtitle, description,time, redirect) {
 	alertList[addIndex]['done'] = 0;
 	alertList[addIndex]['redirect'] = redirect;
 }
-function checkAlerts() {
-	secondsSinceLoad += 1;
-	var mj = 0;
-	var alertmsg = '';
-	for(mj = 0 ; mj < alertList.length; mj++) {
-		if(alertList[mj]['done'] == 0) {
-			if(alertList[mj]['time'] < secondsSinceLoad && alertList[mj]['time'] > -1 ) {
-                alertList[mj]['done'] = 1;
-                if(typeof Alerts !== "undefined") {
-                    //
-                    // Use Alerts module
-                    Alerts.prototype.show(
-                        {
-                            title: alertList[mj]['type'] + ": " + alertList[mj]['name'],
-                            options: {
-                                body: alertList[mj]['subtitle']+ "\n"+ alertList[mj]['description'] + "\n\n",
-                                url_redirect: alertList[mj]['redirect'],
-                                target_module: alertList[mj]['type']
-                            }
-                        }
-                    );
-                } else {
-                    //
-                    // Revert back to the legacy
-                    alertmsg = alertList[mj]['type'] + ":" + alertList[mj]['name'] + "\n" +alertList[mj]['subtitle']+ "\n"+ alertList[mj]['description'] + "\n\n";
-                    alertList[mj]['done'] = 1;
-                    alertmsg = alertList[mj]['type'] + ":" + alertList[mj]['name'] + "\n" +alertList[mj]['subtitle']+ "\n"+ alertList[mj]['description'] + "\n\n";
-                    alertList[mj]['done'] = 1;
-                    if(alertList[mj]['redirect'] == '') {
-                        alert(alertmsg);
-                    }
-                    else if(confirm(alertmsg)) {
-                        window.location = alertList[mj]['redirect'];
-                    }
-                }
-            }
-		}
-	}
 
-    alertsTimeoutId = setTimeout("checkAlerts()", 1000);
-}
 
 function toggleDisplay(id) {
 	if(this.document.getElementById(id).style.display == 'none') {
