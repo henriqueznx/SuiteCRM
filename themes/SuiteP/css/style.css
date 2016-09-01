@@ -302,10 +302,6 @@ div#searchResults {
     padding-bottom: 50px;
 }
 
-div#pageContainer td.dashletcontainer div.hd .icon {
-    fill: #fff;
-}
-
 .sidebar {
     position: fixed;
     top: 90px;
@@ -6823,9 +6819,8 @@ h3 span {
 }
 
 .icon {
-    fill: #F08377;
     pointer-events: none;
-    fill: #F08377;
+    fill: #FFFFF;
     pointer-events: none;
 }
 
