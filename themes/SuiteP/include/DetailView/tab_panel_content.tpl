@@ -40,13 +40,11 @@
  *}
 <!-- tab_panel_content.tpl START -->
 
-<!-- tab panel main div -->
-<div class="row detail-view-row">
-
 {{foreach name=rowIteration from=$panel key=row item=rowData}}
 
     {*row*}
-
+    <!-- tab panel main div -->
+    <div class="row detail-view-row">
     <!-- ROW -->
 
     {{counter name="columnCount" start=0 print=false assign="columnCount"}}
@@ -57,18 +55,24 @@
 
         <!-- COLUMN -->
 
+        <!-- key={{$smarty.foreach.colIteration.index}}-->
         {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
+            {{if $smarty.foreach.colIteration.index == 1}}
+                <div class="col-xs-hidden col-sm-1 col-half detail-view-row-item"></div>
+            {{/if}}
+
             <!-- DIV column - colspan != 3 -->
-            <div class="col-xs-12 col-sm-6 detail-view-row-item">
+            <div class="col-xs-12 col-sm-6 col-container-field detail-view-row-item">
         {{else}}
             <!-- DIV column - colspan = 3 -->
-            <div class="col-xs-12 col-sm-12 detail-view-row-item">
+            <div class="col-xs-12 col-sm-12 col-container-field-3 detail-view-row-item">
         {{/if}}
 
 
         {{counter name="fieldCount" start=0 print=false assign="fieldCount"}}
 
         {{foreach name=fieldIteration from=$colData key=field item=subField}}
+
 
             {{if !(!isset($subField.name) || !$subField.name)}}
                 <!-- [hide!!] -->
@@ -77,10 +81,10 @@
 
                     {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
                         <!-- DIV inside - colspan != 3 -->
-                        <div class="col-xs-12 col-sm-4 label">
+                        <div class="col-xs-12 col-sm-4 label col-label">
                     {{else}}
                         <!-- DIV inside - colspan = 3 -->
-                        <div class="col-xs-12 col-sm-2 label">
+                        <div class="col-xs-12 col-sm-2 label col-label-3">
                     {{/if}}
 
                     {*label*}
@@ -116,10 +120,10 @@
 
                     {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
                         <!-- phone (version 1) -->
-                        <div class="col-xs-12 col-sm-8 detail-view-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
+                        <div class="col-xs-12 col-sm-8 detail-view-field col-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
                     {{else}}
                         <!-- phone (version 2) -->
-                        <div class="col-xs-12 col-sm-10 detail-view-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
+                        <div class="col-xs-12 col-sm-10 detail-view-field col-field-3 {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
                     {{/if}}
 
                     {{if !empty($colData.field.name)}}
@@ -165,8 +169,6 @@
 
                     {{if !empty($colData.field.name)}}
 
-
-
                     {/if}
                     <!-- simple hidden finish -->
 
@@ -180,7 +182,7 @@
                 {{/if}}
 
                 {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}
-                    <div class="inlineEditIcon col-xs-1">
+                    <div class="inlineEditIcon col-xs-hidden">
                         {sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}
                     </div>
                 {{/if}}
@@ -194,6 +196,7 @@
 
         </div>
         <!-- /DIV column -->
+
         {{if $fieldCount==0}}
         <div class="clear"></div>
         {{/if}}
@@ -201,8 +204,8 @@
 
     {{/foreach}}
     {{counter name="columnCount" print=false}}
-
+    </div>
 {{/foreach}}
 
-</div>
+
 <!-- /tab panel main div -->
