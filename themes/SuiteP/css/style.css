@@ -9512,7 +9512,7 @@ table tr#delegates_search {
     }
 }
 
-@media (min-width: 1130px) and (max-width: 1600px) and (min-height: 600px) and (max-height: 1080px) {
+@media (min-width: 1130px) and (max-width: 1600px) and (max-height: 1080px) {
     .nav-tabs:empty {
         margin: 0 !important;
     }
@@ -9597,6 +9597,11 @@ table tr#delegates_search {
         padding: 0 40px 0 20px;
         height: 28px;
         line-height: 28px;
+    }
+    a#basic_search_link {
+        background-position: 136px 10px;
+    }
+    a#advanced_search_link {
         background-position: 173px -2px;
     }
 }
