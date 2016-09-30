@@ -10329,8 +10329,9 @@ body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui
     .navbar-inverse .navbar-brand:hover {
         background-position: 0px -165px;
     }
-
-    li.topnav {
+.navbar-header *,
+.mobile-bar #globalLinks,
+li.topnav {
         height: 48px;
         line-height: 48px;
     }
@@ -10344,5 +10345,9 @@ body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui
     }
 
     #desktop_notifications {
-        margin-top: 12px;
+        margin-top: 10px;
+    }
+
+    #quickcreatetop {
+        margin-top: 10px;
     }
