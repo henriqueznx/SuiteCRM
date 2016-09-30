@@ -9434,7 +9434,6 @@ table tr#delegates_search {
         padding: 0 1% 0 15%;
     }
 }
-
 @media (min-width: 1230px) {
     .sidebar {
         width: 15%;
@@ -9513,13 +9512,102 @@ table tr#delegates_search {
     }
 }
 
+@media (min-width: 1130px) and (max-width: 1600px) and (min-height: 600px) and (max-height: 1080px) {
+    .nav-tabs:empty {
+        margin: 0 !important;
+    }
+
+    [field="billing_address_street"].detail-view-field,
+    [field="shipping_address_street"].detail-view-field,
+    div[field="billing_address_street"] td,
+    div[field="shipping_address_street"] td,
+    .detail-view-row-item .label,
+    .detail-view-field {
+        padding:  8px;
+        font-size: 12px;
+        line-height: 14px;
+        min-height: 28px;
+    }
+
+    #billing_address_street, #shipping_address_street, #primary_address_street, #alt_address_street {
+        height: 40px;
+    }
+
+    .button, input[type=submit], input[type=button], input[type=reset] {
+        padding: 0 20px 0 20px;
+        height: 28px;
+        line-height: 28px;
+    }
+
+    .dropdown-menu li a {
+        padding: 5px 15px 12px 15px !important;
+    }
+
+    table {
+        font-size: 12px;
+    }
+    .nav>li>a {
+        position: relative;
+        display: block;
+        padding: 5px 10px;
+    }
+    li#tab-actions > a {
+        background-position: 80% 105%;
+    }
+
+    .moduleTitle h2 {
+        font-size: 24px;
+        margin: 0px 0 10px 0;
+    }
+
+    div.tab-content {
+        margin-bottom: 5px;
+    }
+
+    .panel-default.sub-panel > .panel-heading  > a,
+    .panel-default > .panel-heading {
+        height: 40px;
+    }
+    .panel-default > .panel-heading > button,
+    .panel-default > .panel-heading > a.collapse,
+    .panel-default > .panel-heading > a {
+        padding-top: 10px;
+        height: 40px;
+    }
+    .panel-default.sub-panel > .panel-heading  > a {
+        font-size: 14px !important;
+        padding: 5px 5px 0 5px;
+    }
+
+    input[type=text], input[type=password], input:not([type]) {
+        line-height: 28px;
+        min-height: 28px;
+    }
+
+    .list tr.oddListRowS1 td, .list tr.evenListRowS1 td {
+        padding-top: 8px !important;
+        padding-bottom: 6px !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    a#basic_search_link,
+    a#advanced_search_link {
+        margin: 4px 0px 4px 0px;
+        padding: 0 40px 0 20px;
+        height: 28px;
+        line-height: 28px;
+        background-position: 173px -2px;
+    }
+}
+
 @media (min-width: 1600px) {
     .sidebar {
         width: 12%;
     }
 
     #bootstrap-container.col-md-offset-2 {
-        margin-left: 12.;
+        margin-left: 12%;
     }
 
     .button-toggle-expanded {
@@ -9537,6 +9625,14 @@ table tr#delegates_search {
     footer.expandedSidebar {
         width: 88%;
         width: 88%;
+    }
+
+    .detail-view-row-item .label,
+    .detail-view-field {
+        padding:  12px;
+        font-size: 14px;
+        line-height: 20px;
+        min-height: 48px;
     }
 }
 
@@ -9590,7 +9686,6 @@ table tr#delegates_search {
     footer.expandedSidebar {
         width: 90%;
     }
-
 }
 
 @media (min-width: 2100px) {
@@ -9617,7 +9712,6 @@ table tr#delegates_search {
     footer.expandedSidebar {
         width: 91%;
     }
-
 }
 
 @media (min-width: 2300px) {
