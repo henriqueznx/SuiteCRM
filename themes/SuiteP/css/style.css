@@ -10329,11 +10329,13 @@ body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui
     .navbar-inverse .navbar-brand:hover {
         background-position: 0px -165px;
     }
-.navbar-header *,
+.mobileheader,
 .mobile-bar #globalLinks,
 li.topnav {
-        height: 48px;
-        line-height: 48px;
+        height: 64px;
+        line-height: 64px;
+        padding-left: 4px;
+        padding-right: 4px;
     }
 
     .globalLinks-desktop #usermenu {
@@ -10344,10 +10346,61 @@ li.topnav {
         padding-top: 10px;
     }
 
-    #desktop_notifications {
+    #usermenu,
+    #desktop_notifications,
+    #quickcreatetop,
+    #searchform {
         margin-top: 10px;
     }
 
-    #quickcreatetop {
-        margin-top: 10px;
+.navbar {
+    min-height: 64px;
+}
+
+
+.navbar-inverse .navbar-brand {
+    line-height: 64px;
+    height: 64px;
+    margin-top: 4px;
+}
+
+.globalLinks-desktop ul {
+    top: 48px !important;
+}
+.sidebar {
+    top: 64px;
+}
+
+#bootstrap-container {
+    margin-top: 60px !important;
+}
+
+@media (max-width: 1600px) {
+    #searchbutton {
+        margin: 10px 15px 0 0;
     }
+
+    #globalLinks,
+    #usermenucollapsed {
+        margin-top: 0px;
+    }
+    .navbar-fixed-top {
+        height: 64px;
+        max-height: 64px;
+    }
+
+    #search .dropdown-menu {
+        top: 0px !important;
+    }
+}
+
+@media (min-width: 600px) {
+    .navbar-toggle,
+    #mobileheader #modulelinks {
+        height: 64px;
+    }
+    #mobileheader .modulename,
+    #mobileheader .modulename a {
+        line-height: 64px;
+    }
+}
