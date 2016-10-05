@@ -10379,6 +10379,11 @@ li.topnav {
     top: 60px
 }
 
+.mobile-bar ul.dropdown-menu.user-dropdown{
+    top: 60px !important;
+
+}
+
 @media (max-width: 1600px) {
     #searchbutton {
         margin: 10px 15px 0 0;
