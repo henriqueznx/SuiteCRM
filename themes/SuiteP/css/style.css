@@ -10375,6 +10375,10 @@ li.topnav {
     margin-top: 60px !important;
 }
 
+#mobile_menu {
+    top: 60px
+}
+
 @media (max-width: 1600px) {
     #searchbutton {
         margin: 10px 15px 0 0;
@@ -10392,6 +10396,8 @@ li.topnav {
     #search .dropdown-menu {
         top: 0px !important;
     }
+
+
 }
 
 @media (min-width: 600px) {
@@ -10402,5 +10408,8 @@ li.topnav {
     #mobileheader .modulename,
     #mobileheader .modulename a {
         line-height: 64px;
+    }
+    #mobile_menu {
+        top: 64px
     }
 }
