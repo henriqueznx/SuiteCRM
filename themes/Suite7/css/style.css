@@ -4656,7 +4656,7 @@ ul#drop-nav ul li:hover {
 }
 
 #search {
-    padding:5px 5px 00;
+    padding: 2px 32px 0 0;
     margin:0;
 }
 
@@ -4922,13 +4922,14 @@ ul#quick-nav ul li:hover {
 #desktop_notifications {
     position: absolute;
     top: 8px;
-    right: 320px;
+    right: 164px;
     width:35px;
     float:left;
     z-index:55;
     padding:0;
     margin-bottom:2px;
 }
+
 
 .alert {
     padding: 15px;
