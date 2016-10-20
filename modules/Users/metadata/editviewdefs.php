@@ -43,10 +43,16 @@ $viewdefs['Users']['EditView'] = array(
                                 array('label' => '10', 'field' => '30'), 
                                 array('label' => '10', 'field' => '30')
                             ),
-                            'form' => array(
-                                'headerTpl'=>'modules/Users/tpls/EditViewHeader.tpl',
-                                'footerTpl'=>'modules/Users/tpls/EditViewFooter.tpl',
-                            ),
+                            'form' =>
+                                array (
+                                    /**
+                                     * Actions for users are configured in modules/Users/views/view.edit.php
+                                     * This is to control security access to the actions based on the user and system preferences.
+                                     * To customise in an upgrade safe way, You need to create custom view instead.
+                                     * Then override UsersEditDetail::preDisplay().
+                                     */
+                                    'buttons' => array (),
+                                ),
                       ),
     'panels' => array (
         'LBL_USER_INFORMATION' => array (
