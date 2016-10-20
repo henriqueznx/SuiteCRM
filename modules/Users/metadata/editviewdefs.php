@@ -38,9 +38,9 @@
  ********************************************************************************/
 
 $viewdefs['Users']['EditView'] = array(
-    'templateMeta' => array('maxColumns' => '2', 
+    'templateMeta' => array('maxColumns' => '2',
                             'widths' => array(
-                                array('label' => '10', 'field' => '30'), 
+                                array('label' => '10', 'field' => '30'),
                                 array('label' => '10', 'field' => '30')
                             ),
                             'form' =>
@@ -52,6 +52,22 @@ $viewdefs['Users']['EditView'] = array(
                                      * Then override UsersEditDetail::preDisplay().
                                      */
                                     'buttons' => array (),
+//                                    'headerTpl'=>'modules/Users/tpls/EditViewHeader.tpl',
+//                                    'footerTpl'=>'modules/Users/tpls/EditViewFooter.tpl',
+                                ),
+                            'useTabs' => true,
+                            'tabDefs' =>
+                                array (
+                                    'LBL_USER_INFORMATION' =>
+                                        array (
+                                            'newTab' => true,
+                                            'panelDefault' => 'expanded',
+                                        ),
+                                    'LBL_EMPLOYEE_INFORMATION' =>
+                                        array (
+                                            'newTab' => false,
+                                            'panelDefault' => 'collapsed',
+                                        ),
                                 ),
                       ),
     'panels' => array (

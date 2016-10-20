@@ -107,91 +107,91 @@
 </div>
 <div class="user-tab-content">
             {if ($CHANGE_PWD) == '1'}
-            <div id="generate_password">
-            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
-                <tr>
-                    <td width='40%'>
-                        <table width='100%' cellspacing='0' cellpadding='0' border='0' >
-                            <tr>
-                                <th align="left" scope="row" colspan="4">
-                                    <h4>{$MOD.LBL_CHANGE_PASSWORD_TITLE}</h4><br>
-                                    {$ERROR_PASSWORD}
-                                </th>
-                            </tr>
-                        </table>
-                            <!-- hide field if user is admin that is not editing themselves -->
-                            <div id='generate_password_old_password' {if ($IS_ADMIN && !$ADMIN_EDIT_SELF)} style='display:none' {/if}>
-
-                                 <table width='100%' cellspacing='0' cellpadding='0' border='0' >
+                <div id="generate_password">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+                        <tr>
+                            <td width='40%'>
+                                <table width='100%' cellspacing='0' cellpadding='0' border='0' >
                                     <tr>
-                                        <td width='35%' scope="row">
-                                            {$MOD.LBL_OLD_PASSWORD}
+                                        <th align="left" scope="row" colspan="4">
+                                            <h4>{$MOD.LBL_CHANGE_PASSWORD_TITLE}</h4><br>
+                                            {$ERROR_PASSWORD}
+                                        </th>
+                                    </tr>
+                                </table>
+                                    <!-- hide field if user is admin that is not editing themselves -->
+                                    <div id='generate_password_old_password' {if ($IS_ADMIN && !$ADMIN_EDIT_SELF)} style='display:none' {/if}>
+
+                                         <table width='100%' cellspacing='0' cellpadding='0' border='0' >
+                                            <tr>
+                                                <td width='35%' scope="row">
+                                                    {$MOD.LBL_OLD_PASSWORD}
+                                                </td>
+                                                <td >
+                                                    <input name='old_password' id='old_password' type='password' tabindex='2' onkeyup="password_confirmation();" >
+                                                </td>
+                                                <td width='40%'>
+                                                </td>
+                                            </tr>
+                                         </table>
+                                    </div>
+                                <table width='100%' cellspacing='0' cellpadding='0' border='0' >
+                                    <tr>
+                                        <td width='35%' scope="row" snowrap>
+                                            {$MOD.LBL_NEW_PASSWORD}
+                                            <span class="required" id="mandatory_pwd">{if ($REQUIRED_PASSWORD)}{$APP.LBL_REQUIRED_SYMBOL}{/if}</span>
                                         </td>
-                                        <td >
-                                            <input name='old_password' id='old_password' type='password' tabindex='2' onkeyup="password_confirmation();" >
+                                        <td class='dataField'>
+
+                                            <input name='new_password' id= "new_password" type='password' tabindex='2' onkeyup="password_confirmation();newrules('{$PWDSETTINGS.minpwdlength}','{$PWDSETTINGS.maxpwdlength}','{$REGEX}');" />
                                         </td>
                                         <td width='40%'>
                                         </td>
                                     </tr>
-                                 </table>
-                            </div>
-                        <table width='100%' cellspacing='0' cellpadding='0' border='0' >
-                            <tr>
-                                <td width='35%' scope="row" snowrap>
-                                    {$MOD.LBL_NEW_PASSWORD}
-                                    <span class="required" id="mandatory_pwd">{if ($REQUIRED_PASSWORD)}{$APP.LBL_REQUIRED_SYMBOL}{/if}</span>
-                                </td>
-                                <td class='dataField'>
+                                    <tr>
+                                        <td scope="row" width='35%'>
+                                            {$MOD.LBL_CONFIRM_PASSWORD}
+                                        </td>
+                                        <td class='dataField'>
+                                            <input name='confirm_new_password' id='confirm_pwd' style ='' type='password' tabindex='2' onkeyup="password_confirmation();"  >
+                                        </td>
+                                        <td width='40%'>
+                                        <div id="comfirm_pwd_match" class="error" style="display: none;">{$MOD.ERR_PASSWORD_MISMATCH}</div>
+                                             {*<span id="ext-gen63" class="x-panel-header-text">
+                                                Requirements
+                                                <span id="Filter.1_help" onclick="return SUGAR.util.showHelpTips(this,help());">
+                                                    <img src="themes/default/images/help.gif"/>
+                                                </span>
+                                            </span>*}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class='dataLabel'></td>
+                                        <td class='dataField'></td>
+                                    </td>
+                                </table>
 
-                                    <input name='new_password' id= "new_password" type='password' tabindex='2' onkeyup="password_confirmation();newrules('{$PWDSETTINGS.minpwdlength}','{$PWDSETTINGS.maxpwdlength}','{$REGEX}');" />
-                                </td>
-                                <td width='40%'>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td scope="row" width='35%'>
-                                    {$MOD.LBL_CONFIRM_PASSWORD}
-                                </td>
-                                <td class='dataField'>
-                                    <input name='confirm_new_password' id='confirm_pwd' style ='' type='password' tabindex='2' onkeyup="password_confirmation();"  >
-                                </td>
-                                <td width='40%'>
-                                <div id="comfirm_pwd_match" class="error" style="display: none;">{$MOD.ERR_PASSWORD_MISMATCH}</div>
-                                     {*<span id="ext-gen63" class="x-panel-header-text">
-                                        Requirements
-                                        <span id="Filter.1_help" onclick="return SUGAR.util.showHelpTips(this,help());">
-                                            <img src="themes/default/images/help.gif"/>
-                                        </span>
-                                    </span>*}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class='dataLabel'></td>
-                                <td class='dataField'></td>
+                                <table width='17%' cellspacing='0' cellpadding='1' border='0'>
+                                    <tr>
+                                        <td width='50%'>
+                                            <input title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey='{$APP.LBL_SAVE_BUTTON_KEY}' class='button' id='save_new_pwd_button' LANGUAGE=javascript onclick='if (set_password(this.form)) window.close(); else return false;' type='submit' name='button' style='display:none;' value='{$APP.LBL_SAVE_BUTTON_LABEL}'>
+                                        </td>
+                                        <td width='50%'>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
-                        </table>
-
-                        <table width='17%' cellspacing='0' cellpadding='1' border='0'>
-                            <tr>
-                                <td width='50%'>
-                                    <input title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey='{$APP.LBL_SAVE_BUTTON_KEY}' class='button' id='save_new_pwd_button' LANGUAGE=javascript onclick='if (set_password(this.form)) window.close(); else return false;' type='submit' name='button' style='display:none;' value='{$APP.LBL_SAVE_BUTTON_LABEL}'>
-                                </td>
-                                <td width='50%'>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td width='60%' style="vertical-align:middle;">
-                    </td>
-                </tr>
-            </table>
-            </div>
+                            <td width='60%' style="vertical-align:middle;">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             {else}
-            <div id="generate_password">
-                <input name='old_password' id='old_password' type='hidden'>
-                <input name='new_password' id= "new_password" type='hidden'>
-                <input name='confirm_new_password' id='confirm_pwd' type='hidden'>
-            </div>
+                <div id="generate_password">
+                    <input name='old_password' id='old_password' type='hidden'>
+                    <input name='new_password' id= "new_password" type='hidden'>
+                    <input name='confirm_new_password' id='confirm_pwd' type='hidden'>
+                </div>
             {/if}
     </div>
     {if $SHOW_THEMES}
