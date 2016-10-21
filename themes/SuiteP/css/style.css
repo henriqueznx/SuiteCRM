@@ -6374,9 +6374,7 @@ select::selection {
 }
 
 
-select#user_theme_picker {
-    background-image: none;
-}
+
 
 select:checked,
 option:checked {
