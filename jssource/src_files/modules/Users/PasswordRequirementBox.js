@@ -58,28 +58,28 @@ function password_confirmation() {
 }
 
 function set_password(form,rules) {
-	if(form.password_change.value == 'true'){
+	if($('[name="password_change"]').val() == 'true'){
     	if( rules=='1'){
         	alert(ERR_RULES_NOT_MET);
         	return false;
     	}
     	
-		if (form.is_admin.value != 1 && (form.is_current_admin && form.is_current_admin.value != '1')&& form.old_password.value == "" ){
+		if ($('[name="is_admin"]').val() != 1 && ($('[name="is_current_admin$"]').val() && $('[name="is_current_admin"]').val() != '1')&& $('[name="old_password"]').val() == "" ){
 			alert(ERR_ENTER_OLD_PASSWORD);
 			return false;
 		}
 		
-		if (form.new_password.value == "" ) {
+		if ($('[name="new_password"]').val() == "" ) {
 			alert(ERR_ENTER_NEW_PASSWORD);
 			return false;
 		}
 		
-		if (form.confirm_pwd.value == ""){
+		if ($('[name="confirm_pwd"]').val() == ""){
 			alert(ERR_ENTER_CONFIRMATION_PASSWORD);
 			return false;
 		}
 		
-		if (form.new_password.value == form.confirm_pwd.value)
+		if ($('[name="new_password"]').val() == $('[name="confirm_pwd"]').val())
 			return true;
 		else{
 			alert(ERR_REENTER_PASSWORDS);
