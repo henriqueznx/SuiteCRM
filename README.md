@@ -50,3 +50,4 @@ SuiteCRM is an open source project. As such please do not contact us directly vi
 
 SuiteCRM is published under the AGPLv3 license.
 
+Test
