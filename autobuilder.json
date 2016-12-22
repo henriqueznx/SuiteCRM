@@ -1,0 +1,11 @@
+{
+  "compiler": "SuiteCRMCompiler",
+  "build-to-release": "*",
+  "upgrade-from-mask": "*.3.*",
+  "create-upgrade_package": false,
+  "create-installer-package": true,
+  "exclude-from-package": [
+    ".git",
+    "autobuild.json"
+  ]
+}
