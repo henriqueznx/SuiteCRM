@@ -50,7 +50,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
-require_once('modules/Users/authentication/SAMLAuthenticate/lib/onelogin/saml.php');
+
 class SAMLAuthenticate extends SugarAuthenticate {
 	var $userAuthenticateClass = 'SAMLAuthenticateUser';
 	var $authenticationDir = 'SAMLAuthenticate';
@@ -119,7 +119,7 @@ class SAMLAuthenticate extends SugarAuthenticate {
         // $settings - variable from modules/Users/authentication/SAMLAuthenticate/settings.php
         $settings->assertion_consumer_service_url .= htmlspecialchars($loginVars);
 
-        $authRequest = new SamlAuthRequest($settings);
+        $authRequest = new OneLogin_Saml_AuthRequest($settings);
         $url = $authRequest->create();
 
         SugarApplication::redirect($url);

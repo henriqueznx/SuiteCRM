@@ -26,7 +26,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ********************************************************************************/
 
-$settings                           = new SamlSettings();
+$settings                           = new OneLogin_Saml_Settings();
 // when using Service Provider Initiated SSO (starting at index.php), this URL asks the IdP to authenticate the user.
 $settings->idp_sso_target_url       = isset($GLOBALS['sugar_config']['SAML_loginurl']) ? $GLOBALS['sugar_config']['SAML_loginurl'] : '';
 

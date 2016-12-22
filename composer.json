@@ -9,6 +9,8 @@
     "vendor-dir": "vendor"
   },
   "require": {
+    "onelogin/php-saml": "^2.10.2",
+    "robrichards/xmlseclibs": "^2.0.1"
   },
   "require-dev": {
     "phpunit/phpunit": "^3.7",
