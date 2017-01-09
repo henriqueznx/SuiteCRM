@@ -56,14 +56,17 @@ $app_list_strings = array(
     'moduleList' => array(
             'Home' => 'Home',
 			'ResourceCalendar' => 'Resource Calendar',
-			'AOBH_BusinessHours' => 'BusinessHours',
             'Contacts' => 'Contacts',
             'Accounts' => 'Accounts',
+            'Alerts' => 'Alerts',
             'Opportunities' => 'Opportunities',
             'Cases' => 'Cases',
             'Notes' => 'Notes',
             'Calls' => 'Calls',
+            'TemplateSectionLine' => 'Template Section Line',
+            'Calls_Reschedule' => 'Calls Reschedule',
             'Emails' => 'Emails',
+            'EAPM' => 'EAPM',
             'Meetings' => 'Meetings',
             'Tasks' => 'Tasks',
             'Calendar' => 'Calendar',
@@ -108,7 +111,6 @@ $app_list_strings = array(
             'FAQ' => 'FAQ',
             'Newsletters' => 'Newsletters',
             'SugarFeed' => 'SuiteCRM Feed',
-            'KBDocuments' => 'Knowledge Base',
             'SugarFavorites' => 'SuiteCRM Favorites',
 
             'OAuthKeys' => 'OAuth Consumer Keys',
@@ -444,14 +446,8 @@ $app_list_strings = array(
         'inactive' => 'Inactive',
     ),
 
-    'project_priority_options' => array(
-        'High' => 'High',
-        'Medium' => 'Medium',
-        'Low' => 'Low',
-    ),
-    'project_priority_default' => 'Medium',
-    //Note:  do not translate record_type_default_key
-//       it is the key for the default record_type_module value
+    // Note:  do not translate record_type_default_key
+    //        it is the key for the default record_type_module value
     'record_type_default_key' => 'Accounts',
     'record_type_display' => array(
             '' => '',
@@ -740,9 +736,6 @@ $app_list_strings = array(
     'dom_email_distribution' => array('' => '--None--',
         'direct' => 'Direct Assign',
         'roundRobin' => 'Round-Robin',
-        'leastBusy' => 'Least-Busy',
-    ),
-    'dom_email_distribution_for_auto_create' => array('roundRobin' => 'Round-Robin',
         'leastBusy' => 'Least-Busy',
     ),
     'dom_email_errors' => array(1 => 'Only select one user when Direct Assigning items.',
@@ -1081,7 +1074,7 @@ $app_strings = array(
     'LBL_COMPANY_LOGO' => 'Company logo' /*for 508 compliance fix*/,
     'LBL_JS_CALENDAR' => 'Calendar' /*for 508 compliance fix*/,
     'LBL_ADVANCED' => 'Advanced',
-    'LBL_BASIC' => 'Basic',
+    'LBL_BASIC' => 'BASIC',
     'LBL_MODULE_FILTER' => 'Filter By',
     'LBL_CONNECTORS_POPUPS' => 'Connectors Popups',
     'LBL_CLOSEINLINE' => 'Close',
@@ -1092,7 +1085,7 @@ $app_strings = array(
     'LBL_PRINT' => 'Print',
     'LBL_HELP' => 'Help',
     'LBL_ID_FF_SELECT' => 'Select',
-    'DEFAULT' => 'Basic',
+    'DEFAULT' => 'BASIC',
     'LBL_SORT' => 'Sort',
     'LBL_OUTBOUND_EMAIL_ADD_SERVER' => 'Add Server...',
     'LBL_EMAIL_SMTP_SSL_OR_TLS' => 'Enable SMTP over SSL or TLS?',
@@ -1529,7 +1522,7 @@ $app_strings = array(
     'LBL_LINK_ALL' => 'All',
     'LBL_LINK_RECORDS' => 'Records',
     'LBL_LINK_SELECT' => 'Select',
-    'LBL_LINK_ACTIONS' => 'Actions',
+    'LBL_LINK_ACTIONS' => 'ACTIONS',
     'LBL_LINK_MORE' => 'More',
     'LBL_CLOSE_ACTIVITY_HEADER' => 'Confirm',
     'LBL_CLOSE_ACTIVITY_CONFIRM' => 'Do you want to close this #module#?',
@@ -1652,7 +1645,7 @@ $app_strings = array(
     'LBL_CONTRACT' => 'Contract',
     'LBL_CONTRACTS' => 'Contracts',
     'LBL_COUNTRY' => 'Country:',
-    'LBL_CREATE_BUTTON_LABEL' => 'Create',
+    'LBL_CREATE_BUTTON_LABEL' => 'CREATE',
     'LBL_CREATED_BY_USER' => 'Created by User',
     'LBL_CREATED_USER' => 'Created by User',
     'LBL_CREATED_ID' => 'Created By Id',
@@ -1739,9 +1732,6 @@ $app_strings = array(
     'LBL_LISTVIEW_TWO_REQUIRED' => 'Please select at least 2 records to proceed.',
     'LBL_LISTVIEW_LESS_THAN_TEN_SELECT' => 'Please select less than 10 records to proceed.',
     'LBL_LISTVIEW_ALL' => 'All',
-    'LBL_LISTVIEW_NONE' => 'Deselect All',
-    'LBL_LISTVIEW_OPTION_CURRENT' => 'Select This Page',
-    'LBL_LISTVIEW_OPTION_ENTIRE' => 'Select All',
     'LBL_LISTVIEW_OPTION_SELECTED' => 'Selected Records',
     'LBL_LISTVIEW_SELECTED_OBJECTS' => 'Selected: ',
 
@@ -1787,9 +1777,9 @@ $app_strings = array(
     'LBL_OPPORTUNITY' => 'Opportunity',
     'LBL_OR' => 'OR',
     'LBL_LOWER_OR' => 'or',
-    'LBL_PANEL_OVERVIEW' => 'Overview',
-    'LBL_PANEL_ASSIGNMENT' => 'Other',
-    'LBL_PANEL_ADVANCED' => 'More Information',
+    'LBL_PANEL_OVERVIEW' => 'OVERVIEW',
+    'LBL_PANEL_ASSIGNMENT' => 'OTHER',
+    'LBL_PANEL_ADVANCED' => 'MORE INFORMATION',
     'LBL_PARENT_TYPE' => 'Parent Type',
     'LBL_PERCENTAGE_SYMBOL' => '%',
     'LBL_PHASE' => 'Range',
@@ -1988,14 +1978,16 @@ $app_strings = array(
     'LNK_ABOUT' => 'About',
     'LNK_ADVANCED_SEARCH' => 'Advanced Search',
     'LNK_BASIC_SEARCH' => 'Basic Search',
+    'LBL_ADVANCED_SEARCH' => 'Advanced Search',
+    'LBL_QUICK_SEARCH' => 'Quick Search',
     'LNK_SEARCH_FTS_VIEW_ALL' => 'View all results',
     'LNK_SEARCH_NONFTS_VIEW_ALL' => 'Show All',
-    'LNK_CLOSE' => 'close',
+    'LNK_CLOSE' => 'Close',
     'LBL_MODIFY_CURRENT_SEARCH' => 'Modify current search',
     'LNK_SAVED_VIEWS' => 'Layout Options',
-    'LNK_DELETE_ALL' => 'del all',
-    'LNK_DELETE' => 'delete',
-    'LNK_EDIT' => 'edit',
+    'LNK_DELETE_ALL' => 'Delete all',
+    'LNK_DELETE' => 'Delete',
+    'LNK_EDIT' => 'Edit',
     'LNK_GET_LATEST' => 'Get latest',
     'LNK_GET_LATEST_TOOLTIP' => 'Replace with latest version',
     'LNK_HELP' => 'Help',
@@ -2009,7 +2001,7 @@ $app_strings = array(
     'LNK_LOAD_SIGNED_TOOLTIP' => 'Replace with signed document',
     'LNK_PRINT' => 'Print',
     'LNK_BACKTOTOP' => 'Back to top',
-    'LNK_REMOVE' => 'remove',
+    'LNK_REMOVE' => 'Remove',
     'LNK_RESUME' => 'Resume',
     'LNK_VIEW_CHANGE_LOG' => 'View Change Log',
 
@@ -2088,6 +2080,7 @@ $app_strings = array(
     'MSG_LIST_VIEW_NO_RESULTS_BASIC' => 'No results found.',
     'MSG_LIST_VIEW_NO_RESULTS' => 'No results found for <item1>',
     'MSG_LIST_VIEW_NO_RESULTS_SUBMSG' => 'Create <item1> as a new <item2>',
+    'MSG_LIST_VIEW_CHANGE_SEARCH' => 'or change your search criteria',
     'MSG_EMPTY_LIST_VIEW_NO_RESULTS' => 'You currently have no records saved. <item2> or <item3> one now.',
     'MSG_EMPTY_LIST_VIEW_NO_RESULTS_SUBMSG' => '<item4> to learn more about the <item1> module. In order to access more information, use the user menu drop down located on the main navigation bar to access Help.',
 
@@ -2167,7 +2160,6 @@ $app_strings = array(
     'LBL_ADD_DASHLETS' => 'Add Dashlets',
     'LBL_CLOSE_DASHLETS' => 'Close',
     'LBL_OPTIONS' => 'Options',
-    'LBL_NUMBER_OF_COLUMNS' => 'Select the number of columns',
     'LBL_1_COLUMN' => '1 Column',
     'LBL_2_COLUMN' => '2 Column',
     'LBL_3_COLUMN' => '3 Column',
@@ -2415,6 +2407,8 @@ $app_strings = array(
     'LBL_DELETE_BUTTON_KEY' => 'd',
     'LBL_DELETE_BUTTON_LABEL' => 'Delete',
     'LBL_DELETE_BUTTON_TITLE' => 'Delete',
+    'LBL_BULK_ACTION_BUTTON_LABEL' => 'BULK ACTION',
+    'LBL_BULK_ACTION_BUTTON_LABEL_MOBILE' => 'ACTION',
     'LBL_SAVE_BUTTON_KEY' => 'a',
     'LBL_SAVE_BUTTON_LABEL' => 'Save',
     'LBL_SAVE_BUTTON_TITLE' => 'Save',
@@ -2444,6 +2438,19 @@ $app_strings = array(
     'ERR_A_REMINDER_IS_EMPTY_OR_INCORRECT' => 'A reminder is empty or incorrect.',
     'ERR_REMINDER_IS_NOT_SET_POPUP_OR_EMAIL' => 'Reminder is not set for either a popup or email.',
     'ERR_NO_INVITEES_FOR_REMINDER' => 'No invitees for reminder.',
+    'LBL_DELETE_REMINDER_CONFIRM' => 'Reminder doesn\'t include any invitees, do you want to remove the reminder?',
+    'LBL_DELETE_REMINDER' => 'Delete Reminder',
+    'LBL_OK' => 'Ok',
+
+    'LBL_COLUMNS_FILTER_HEADER_TITLE' => 'Choose columns',
+    'LBL_SAVE_CHANGES_BUTTON_TITLE' => 'Save changes',
+    'LBL_DISPLAYED' => 'Displayed',
+    'LBL_HIDDEN' => 'Hidden',
+    'ERR_EMPTY_COLUMNS_LIST' => 'At least, one element required',
+
+    'LBL_SEARCH_HEADER_TITLE' => 'Search',
+
+    'LBL_AOP_INTERNAL' => 'Internal',
 
 );
 
@@ -3895,7 +3902,7 @@ $app_strings['LBL_COLLECTION_TYPE'] = 'Type';
 
 $app_strings['LBL_ADD_TAB'] = 'Add Tab';
 $app_strings['LBL_EDIT_TAB'] = 'Edit Tabs';
-$app_strings['LBL_SUITE_DASHBOARD'] = 'SuiteCRM Dashboard';
+$app_strings['LBL_SUITE_DASHBOARD'] = 'SUITECRM DASHBOARD';
 $app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Enter Dashboard Name:';
 $app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Number of Columns:';
 $app_strings['LBL_DELETE_DASHBOARD1'] = 'Are you sure you want to delete the';
@@ -3903,7 +3910,7 @@ $app_strings['LBL_DELETE_DASHBOARD2'] = 'dashboard?';
 $app_strings['LBL_ADD_DASHBOARD_PAGE'] = 'Add a Dashboard Page';
 $app_strings['LBL_DELETE_DASHBOARD_PAGE'] = 'Remove Current Dashboard Page';
 $app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Rename Dashboard Page';
-$app_strings['LBL_SUITE_DASHBOARD_ACTIONS'] = 'Actions';
+$app_strings['LBL_SUITE_DASHBOARD_ACTIONS'] = 'ACTIONS';
 
 $app_strings['LBL_DISCOVER_SUITECRM'] = 'Discover SuiteCRM';
 
