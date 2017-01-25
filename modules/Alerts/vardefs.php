@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -38,49 +37,55 @@
  ********************************************************************************/
 
 $dictionary['Alert'] = array(
-	'table'=>'alerts',
-	'audited'=> false,
-		'duplicate_merge'=>true,
-		'fields'=>array (
-            'is_read' =>
-                array(
-                    'name'		=> 'is_read',
-                    'vname'     => 'LBL_IS_READ',
-                    'type'		=> 'bool',
-                    'massupdate' => false,
-                    'studio'=> 'false',
-                ),
-            'target_module' =>
-                array(
-                    'name'		=> 'target_module',
-                    'vname'     => 'LBL_TYPE',
-                    'type'		=> 'varchar',
-                    'massupdate' => false,
-                    'studio'=> 'false',
-                ),
-            'type' =>
-                array(
-                    'name'		=> 'type',
-                    'vname'     => 'LBL_TYPE',
-                    'type'		=> 'varchar',
-                    'massupdate' => false,
-                    'studio'=> 'false',
-                ),
-            'url_redirect' =>
-                array(
-                    'name'		=> 'url_redirect',
-                    'vname'     => 'LBL_TYPE',
-                    'type'		=> 'varchar',
-                    'massupdate' => false,
-                    'studio'=> 'false',
-                )
-),
-	'relationships'=>array (
-),
-	'optimistic_locking'=>true,
-		'unified_search'=>false,
-	);
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+    'table' => 'alerts',
+    'audited' => false,
+    'duplicate_merge' => true,
+    'fields' => array(
+        'is_read' =>
+            array(
+                'name' => 'is_read',
+                'vname' => 'LBL_IS_READ',
+                'type' => 'bool',
+                'massupdate' => false,
+                'studio' => 'false',
+            ),
+        'target_module' =>
+            array(
+                'name' => 'target_module',
+                'vname' => 'LBL_TYPE',
+                'type' => 'varchar',
+                'massupdate' => false,
+                'studio' => 'false',
+            ),
+        'type' =>
+            array(
+                'name' => 'type',
+                'vname' => 'LBL_TYPE',
+                'type' => 'varchar',
+                'massupdate' => false,
+                'studio' => 'false',
+            ),
+        'url_redirect' =>
+            array(
+                'name' => 'url_redirect',
+                'vname' => 'LBL_TYPE',
+                'type' => 'varchar',
+                'massupdate' => false,
+                'studio' => 'false',
+            )
+    ),
+    'relationships' => array(),
+    'indices' => array(
+        array(
+            'name' => 'idx_alerts_is_read',
+            'type' => 'index',
+            'fields' => array('is_read'),
+        ),
+    ),
+    'optimistic_locking' => true,
+    'unified_search' => false,
+);
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('Alerts','Alert', array('basic','assignable'));
+VardefManager::createVardef('Alerts', 'Alert', array('basic', 'assignable'));

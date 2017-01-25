@@ -291,9 +291,8 @@ function checkAlerts() {
             }
 		}
 	}
-
-    alertsTimeoutId = setTimeout("checkAlerts()", 1000);
 }
+alertsTimeoutId = setInterval(checkAlerts, 1000);
 
 function toggleDisplay(id) {
 	if(this.document.getElementById(id).style.display == 'none') {
