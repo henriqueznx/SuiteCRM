@@ -182,6 +182,7 @@ $mod_strings = array (
     'LBL_LDAP_AUTO_CREATE_USERS_DESC'=> 'If an authenticated user does not exist one will be created.',
     'LBL_LDAP_ENC_KEY'	=> 'Encryption Key:',
     'DEVELOPER_MODE'=>'Developer Mode',
+    'LBL_BYPASS_MINIFER'=>'Bypass Minifer',
 
 	'SHOW_DOWNLOADS_TAB' =>'Display Downloads Tab',
 	'SHOW_DOWNLOADS_TAB_HELP' =>'When selected, the Download tab will appear in the User settings and provide users with access to SuiteCRM plug-ins and other available files',

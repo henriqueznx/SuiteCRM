@@ -30,7 +30,12 @@ class SugarMin {
      * @return string $output Output javascript code as a string.
      */
     static public function minify($js, $compression = 'light') {
+        global $config;
         try {
+            if(!empty($config['bypass_minifier']) && $config['bypass_minifier'] === true) {
+                return $js;
+            }
+
             $me = new SugarMin($js, $compression);
             $output = $me->jsParser();
 
