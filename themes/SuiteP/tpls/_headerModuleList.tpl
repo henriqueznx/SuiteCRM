@@ -55,7 +55,7 @@
                         {foreach from=$modules.modules item=module key=modulekey}
                             <li role="presentation" data-test="1">
                                 {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
-                                <a href="javascript:void(0)" onclick="window.location.href = 'index.php{sugar_link id=$moduleTabId module=$modulekey link_only=1 data=$module extraparams=$extraparams}'">
+                                <a href="javascript:void(0)" onclick="window.location.href = '{sugar_link id=$moduleTabId module=$modulekey link_only=1 data=$module extraparams=$extraparams}'">
                                     {$module}
                                     {if $modulekey !='Home' && $modulekey !='Calendar'}
                                         <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module={$modulekey}'"></span>
@@ -66,7 +66,7 @@
                         {/foreach}
                         {foreach from=$modules.extra item=submodulename key=submodule}
                             <li role="presentation" data-test="2">
-                                <a href="javascript:void(0)" onclick="window.location.href = 'index.php{sugar_link module=$submodule link_only=1 extraparams=$extraparams}'">
+                                <a href="javascript:void(0)" onclick="window.location.href = '{sugar_link module=$submodule link_only=1 extraparams=$extraparams}'">
                                     {$submodulename}
                                     <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module={$submodule}'"></span>
                                     {*<span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'http://google.com'"></span>*}
@@ -266,7 +266,7 @@
                     {/foreach}
                     {foreach from=$groupTabs item=modules key=group name=groupList}
                         {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
-                        <li class="topnav">
+                        <li class="topnav {if $smarty.foreach.groupList.last}all{/if}">
                             <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
                             <a href="#" id="grouptab_{$smarty.foreach.groupList.index}" class="dropdown-toggle grouptab"
                                data-toggle="dropdown">{$group}</a>
@@ -287,6 +287,29 @@
                         </li>
                     {/foreach}
                 </ul>
+                {* 7.8 Hide filter menu items when the window is too small to display them *}
+            {literal}
+                <script>
+                  var windowResize = function() {
+                    // Since the height can be changed in Sass.
+                    // Take a measurement of the initial desktop navigation bar height with just one menu item
+                    $('.desktop-toolbar ul.navbar-nav > li').not('.all').addClass('hidden');
+                    var dth = $('.desktop-toolbar').outerHeight();
+
+                    // Show all desktop menu items
+                    $('.desktop-toolbar ul.navbar-nav > li.hidden').removeClass('hidden');
+
+                    // Remove the each menu item from the end of the toolbar until
+                    // the navigation bar is the matches the initial height.
+                    while($('.desktop-toolbar').outerHeight() > dth) {
+                      ti = $('.desktop-toolbar ul.navbar-nav > li').not('.hidden').not('.all');
+                      $(ti).last().addClass('hidden');
+                    }
+                  };
+                  $(window).resize(windowResize);
+                  $(document).ready(windowResize);
+                </script>
+            {/literal}
             {else}
 
                 <ul class="nav navbar-nav navbar-horizontal-fluid">
@@ -392,7 +415,7 @@
                     </li>
                 </ul>
                 <div class="hidden hidden-actions"></div>
-
+                {* Hide nav items when the window size is too small to display them *}
                 {literal}
                     <script>
                         var windowResize = function() {
@@ -741,33 +764,8 @@
                     </ul>
                 </li>
             </ul>
-            {*<div id="globalLinks" class="dropdown nav navbar-nav globalLinks-desktop" >*}
-            {*<li id="usermenu" class="usermenu" aria-expanded="false">*}
-            {*<a>*}
-            {*<span class="user_icon"> </span> {$CURRENT_USER}*}
-            {*<span class="caret"></span>*}
-            {*</a>*}
-            {*</li>*}
 
-            {*<ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu1">*}
-            {*<li role="presentation">*}
-            {*<a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>*}
-            {*{$APP.LBL_PROFILE}*}
-            {*</a>*}
-            {*</li>*}
-            {*{foreach from=$GCLS item=GCL name=gcl key=gcl_key}*}
-            {*<li role="presentation">*}
-            {*<a id="{$gcl_key}_link"*}
-            {*href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>*}
-            {*</li>*}
-            {*{/foreach}*}
-            {*<li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'*}
-            {*class='utilsLink'>{$LOGOUT_LABEL}</a></li>*}
-            {*</ul>*}
-            {*</div>*}
         </div>
-
-
 </nav>
 <!--End Responsive Top Navigation Menu -->
 {if $THEME_CONFIG.display_sidebar}

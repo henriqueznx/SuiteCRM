@@ -81,7 +81,7 @@ $navbar-menu-current-seperator: #F08377;
 $navbar-search-bg: #65697A;
 $navbar-search-btn-bg: #829EB5;
 $navbar-search-text-color: #A2A5AF;
-$navbar-search-color: #817D8D;
+$navbar-search-color: #afaabf;
 
 $navbar-quick-create-link-color: #FFFFFF;
 $navbar-quick-create-mobile-btn-bg: #A2B2BF;
@@ -144,12 +144,15 @@ $list-view-link-color: #E56455;
 $list-view-link-hover-color: #D66C60;
 $list-view-action-button-disabled-bg: #C9D2DA;
 $list-view-action-button-bg: #94A6B5;
-$list-view-action-menu-bg: #7B8A96;
+$list-view-action-menu-bg: #778591;
 $list-view-action-menu-link-bg: #677785;
 $list-view-action-menu-separator: #93A0AB;
 $list-view-choose-columns-displayed: #CCE8E2;
 $list-view-choose-columns-hidden: #FFAFA6;
 $page-list-view-font-size: 12px;
+
+// mass assign form
+$mass-assign-color: #6A6578;
 
 // Filters / Search
 $filters-input-bg: #FFFFFF;
@@ -231,3 +234,10 @@ $scheduler-end-color: #99534d;
 $scheduler-free-color: #6a80e6;
 $scheduler-free-border-color: #FFFFFF;
 $scheduler-busy-color: #e67c73;
+
+
+// Line Items
+$line-item-group-width: 100%;
+
+// Workflow
+$workflow-action-bg: #BFCAD3;
