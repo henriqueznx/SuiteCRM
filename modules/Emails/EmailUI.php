@@ -1538,8 +1538,8 @@ eoq;
         if (!empty($focus->reply_to_email)) {
             $replyTo = "
 				<tr>
-		        <td class=\"tabDetailViewDL\"><slot>" . $mod_strings['LBL_REPLY_TO_NAME'] . "</slot></td>
-		        <td colspan=3 class=\"tabDetailViewDF\"><slot>" . $focus->reply_to_addr . "</slot></td>
+		        <td class=\"tabDetailViewDL\"><span>" . $mod_strings['LBL_REPLY_TO_NAME'] . "</span></td>
+		        <td colspan=3 class=\"tabDetailViewDF\"><span>" . $focus->reply_to_addr . "</span></td>
 		        </tr>";
             $smarty->assign("REPLY_TO", $replyTo);
         }

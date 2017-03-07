@@ -99,7 +99,7 @@
                         <table width="100%" cellpadding="0" cellspacing="1">
                             <tr id="mailsettings1">
                                 <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpserver_label">{sugar_translate module='Emails' label='LBL_MAIL_SMTPSERVER'}</span> <span class="required" id="required_mail_smtpserver">{$app_strings.LBL_REQUIRED_SYMBOL}</span></td>
-                                <td width="30%" ><slot><input type="text" id="mail_smtpserver" name="mail_smtpserver" tabindex="1" size="25" maxlength="64"></slot></td>
+                                <td width="30%" ><span><input type="text" id="mail_smtpserver" name="mail_smtpserver" tabindex="1" size="25" maxlength="64"></span></td>
                                 <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpport_label">{sugar_translate module='Emails' label='LBL_MAIL_SMTPPORT'}</span></td>
                                 <td width="30%" ><input type="text" id="mail_smtpport" name="mail_smtpport" tabindex="1" size="5" maxlength="5"></td>
                             </tr>
@@ -117,16 +117,16 @@
                             </tr>
                             <tr id="smtp_auth1">
                                 <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpuser_label">{sugar_translate module='Emails' label='LBL_MAIL_SMTPUSER'}</span> <span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span></td>
-                                <td width="30%" ><slot><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="64" tabindex='1' ></slot></td>
+                                <td width="30%" ><span><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="64" tabindex='1' ></span></td>
                                 <td >&nbsp;</td>
                                 <td >&nbsp;</td>
                             </tr>
                             <tr id="smtp_auth2">
                                 <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtppass_label">{sugar_translate module='Emails' label='LBL_MAIL_SMTPPASS'}</span> <span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span></td>
-                                <td width="30%" ><slot>
+                                <td width="30%" ><span>
                                 <input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="64" abindex='1'>
                                 <a href="javascript:void(0)" id='mail_smtppass_link' onClick="SUGAR.util.setEmailPasswordEdit('mail_smtppass')" style="display: none">{$app_strings.LBL_CHANGE_PASSWORD}</a>
-                                </slot></td>
+                                </span></td>
                                 <td >&nbsp;</td>
                                 <td >&nbsp;</td>
                             </tr>

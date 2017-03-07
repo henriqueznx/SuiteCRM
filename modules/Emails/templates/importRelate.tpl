@@ -108,13 +108,13 @@ function parent_typechangeQS() {
 <table><tr><td>
 <select onchange=" document['{$formName}'].parent_name.value=''; checkParentType(document['{$formName}'].parent_type.value, document['{$formName}'].change_parent); parent_typechangeQS();" name="parent_type" id="parent_type" tabindex="2">
 {$parentOptions}</select>
-</slot>
+</span>
 </td><td>
 <slot _moz-userdefined="">
 <input type="hidden" value="" name="parent_id" id="parent_id"/>
 <input type="text" value="" tabindex="2" name="parent_name" id="parent_name" class="sqsEnabled" autocomplete="OFF"/>
 <input type="button"  onclick='{literal} if(document["{/literal}{$formName}{literal}"].parent_type.value != ""){open_popup(document["{/literal}{$formName}{literal}"].parent_type.value,600,400,"",true,false,{"call_back_function":"set_return","form_name":"{/literal}{$formName}{literal}","field_to_name_array":{"id":"parent_id","name":"parent_name"}});}'{/literal} value="{$APP.LBL_SELECT_BUTTON_LABEL}"  title="{$APP.LBL_SELECT_BUTTON_TITLE}" class="button" tabindex="2" name="button" id="change_parent"/>
-</slot>
+</span>
 </td></tr></table>
 </td>
 </tr>

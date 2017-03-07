@@ -72,40 +72,40 @@
 
 <table width="100%" border="0" cellspacing="{$GRIDLINE}" cellpadding="0" class="detail view">
 	<tr>
-		<td width="15%" valign="top" scope="row"><slot>{$APP.LBL_ASSIGNED_TO}</slot></td>
-		<td width="35%" valign="top"><slot>{$ASSIGNED_TO}</slot></td>
-		<td width="15%" scope="row"><slot>{$MOD.LBL_DATE_SENT}</slot></td>
-		<td width="35%" colspan="3"><slot>{$DATE_START} {$TIME_START}</slot></td>
+		<td width="15%" valign="top" scope="row"><span>{$APP.LBL_ASSIGNED_TO}</span></td>
+		<td width="35%" valign="top"><span>{$ASSIGNED_TO}</span></td>
+		<td width="15%" scope="row"><span>{$MOD.LBL_DATE_SENT}</span></td>
+		<td width="35%" colspan="3"><span>{$DATE_START} {$TIME_START}</span></td>
 	</tr>
 	<tr>
-		<td scope="row"><slot>&nbsp;</slot></td>
-		<td><slot>&nbsp;</slot></td>
-		<td scope="row"><slot>{$PARENT_TYPE}</slot></td>
-		<td><slot>{$PARENT_NAME}</slot></td>
+		<td scope="row"><span>&nbsp;</span></td>
+		<td><span>&nbsp;</span></td>
+		<td scope="row"><span>{$PARENT_TYPE}</span></td>
+		<td><span>{$PARENT_NAME}</span></td>
 	</tr>
 	<tr>
-		<td scope="row"><slot>{$MOD.LBL_FROM}</slot></td>
-		<td colspan=3><slot>{$FROM}</slot></td>
+		<td scope="row"><span>{$MOD.LBL_FROM}</span></td>
+		<td colspan=3><span>{$FROM}</span></td>
 	</tr>
 	<tr>
-		<td scope="row"><slot>{$MOD.LBL_TO}</slot></td>
-		<td colspan='3'><slot>{$TO}</slot></td>
+		<td scope="row"><span>{$MOD.LBL_TO}</span></td>
+		<td colspan='3'><span>{$TO}</span></td>
 	</tr>
 	<tr>
-		<td scope="row"><slot>{$MOD.LBL_CC}</slot></td>
-		<td colspan='3'><slot>{$CC}</slot></td>
+		<td scope="row"><span>{$MOD.LBL_CC}</span></td>
+		<td colspan='3'><span>{$CC}</span></td>
 	</tr>
 	<tr>
-		<td scope="row"><slot>{$MOD.LBL_BCC}</slot></td>
-		<td colspan='3'><slot>{$BCC}</slot></td>
+		<td scope="row"><span>{$MOD.LBL_BCC}</span></td>
+		<td colspan='3'><span>{$BCC}</span></td>
 	</tr>
 	<tr>
-		<td scope="row"><slot>{$MOD.LBL_SUBJECT}</slot></td>
-		<td colspan='3'><slot>{$NAME}</slot></td>
+		<td scope="row"><span>{$MOD.LBL_SUBJECT}</span></td>
+		<td colspan='3'><span>{$NAME}</span></td>
 	</tr>
 	<tr>
-		<td valign="top" valign="top" scope="row"><slot>{$MOD.LBL_BODY}</slot></td>
-		<td colspan="3"  style="background-color: #ffffff; color: #000000" ><slot>
+		<td valign="top" valign="top" scope="row"><span>{$MOD.LBL_BODY}</span></td>
+		<td colspan="3"  style="background-color: #ffffff; color: #000000" ><span>
 			<div id="html_div" style="background-color: #ffffff;padding: 5px">{$DESCRIPTION_HTML}</div>
 			<input id='toggle_textarea_elem' onclick="toggle_textarea();" type="checkbox" name="toggle_html"/> <label for='toggle_textarea_elem'>{$MOD.LBL_SHOW_ALT_TEXT}</label><br>
 			<div id="text_div" style="display: none;background-color: #ffffff;padding: 5px">{$DESCRIPTION}</div>
@@ -121,8 +121,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td valign="top" scope="row"><slot>{$MOD.LBL_ATTACHMENTS}</td>
-		<td colspan="3"><slot>{$ATTACHMENTS}</slot></td>
+		<td valign="top" scope="row"><span>{$MOD.LBL_ATTACHMENTS}</td>
+		<td colspan="3"><span>{$ATTACHMENTS}</span></td>
 	</tr>
 </table>
 {literal}

@@ -574,7 +574,7 @@ $(function () {
             $(e).html('&nbsp;');
           }
         });
-        if ($(e).html().trim() == '<slot>&nbsp;</slot>') {
+        if ($(e).html().trim() == '<span>&nbsp;</span>') {
           $(e).addClass('hidden');
           $(e).addClass('hiddenOnTablet');
         }
