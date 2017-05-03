@@ -1796,11 +1796,6 @@ div.qtip.qtip-default {
   background-color: #D4F1EA;
 }
 
-.search_form .view select,
-.search_form .view select#saved_search_select {
-  padding: initial;
-}
-
 .modal-content .search_form .view select,
 .modal-content .search_form .view select#saved_search_select {
   border: 2px solid #A5E8D6;
@@ -1974,10 +1969,6 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
   background-color: #D4F1EA;
 }
 
-.search_form .view select,
-.search_form .view select#saved_search_select {
-  padding: initial;
-}
 
 .modal-content .search_form .view select,
 .modal-content .search_form .view select#saved_search_select {
@@ -3380,13 +3371,6 @@ ul.clickMenu > li > span.searchAppliedAlert {
   background-color: $input-bg;
 }
 
-.search_form .view select {
-  padding: initial;
-}
-
-.search_form .view select#saved_search_select {
-  padding: initial;
-}
 
 .modal-content .search_form .view select {
   border: 2px solid $input-bg;
