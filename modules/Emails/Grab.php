@@ -1,4 +1,5 @@
-<!--
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,38 +38,39 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
--->
 
-<!-- BEGIN: history -->
-<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
-    <tr height="20">
-    <th width="2%"><img src="include/images/blank.gif" width="1" height="1" alt=""></th>
-    <th width="28%">{MOD.LBL_LIST_SUBJECT}</th>
-    <th width="10%">{MOD.LBL_LIST_STATUS}</th>
-    <th width="20%">{MOD.LBL_LIST_CONTACT}</th>
-    <th width="10%" nowrap="nowrap">{MOD.LBL_LIST_DATE}</th>
 
-    </tr>
+global $current_user;
 
-<!-- BEGIN: row -->
-<tr height="20" class="{ROW_COLOR}S1">
-        <td nowrap="nowrap" valign="top">{ACTIVITY_MODULE_PNG}</td>
-        <td nowrap="nowrap" valign="top">{ACTIVITY.NAME}  {ACTIVITY.ATTACHMENT}</td>
-        <td nowrap="nowrap" valign="top">{ACTIVITY.TYPE} {ACTIVITY.STATUS}</td>
-        <td valign="top">{ACTIVITY.CONTACT_NAME}</td>
-        <td nowrap="nowrap" valign="top">{ACTIVITY.DATE_TYPE}<img src="include/images/blank.gif" width="3" height="1" alt="">{ACTIVITY.DATE}</td>
 
-</tr>
-<!--  BEGIN: description -->
-<tr class="{ROW_COLOR}S1">
-    <td colspan="1" valign="top"></td>
-    <td colspan="4" valign="top">
-        <table><tr class="{ROW_COLOR}S1"><td valign="top"><img src="include/images/blank.gif" width="3" height="1" alt=""></td><td valign="top">{ACTIVITY.DESCRIPTION}
-        </td></tr></table>
-    </td>
-</tr>
-<!--  END: description -->
+$focus = new Email();
+// Get Group User IDs
+$groupUserQuery = 'SELECT name, group_id FROM inbound_email ie INNER JOIN users u ON (ie.group_id = u.id AND u.is_group = 1)';
+_pp($groupUserQuery);
+$r = $focus->db->query($groupUserQuery);
+$groupIds = '';
+while($a = $focus->db->fetchByAssoc($r)) {
+	$groupIds .= "'".$a['group_id']."', ";
+}
+$groupIds = substr($groupIds, 0, (strlen($groupIds) - 2));
 
-<!-- END: row -->
-</table>
-<!-- END: history -->
+$query = 'SELECT emails.id AS id FROM emails';
+$query .= " WHERE emails.deleted = 0 AND emails.status = 'unread' AND emails.assigned_user_id IN ({$groupIds})";  
+//$query .= ' LIMIT 1';
+
+//_ppd($query);
+$r2 = $focus->db->query($query); 
+$count = 0;
+$a2 = $focus->db->fetchByAssoc($r2);
+
+$focus->retrieve($a2['id']);
+$focus->assigned_user_id = $current_user->id;
+$focus->save();
+
+if(!empty($a2['id'])) {
+	header('Location: index.php?module=Emails&action=ListView&type=inbound&assigned_user_id='.$current_user->id);
+} else {
+	header('Location: index.php?module=Emails&action=ListView&show_error=true&type=inbound&assigned_user_id='.$current_user->id);
+}
+
+?>

@@ -127,7 +127,7 @@ $app_list_strings = array(
             'Notes' => 'Note',
             'Calls' => 'Call',
             'Emails' => 'Email',
-            'EmailTemplates' => 'Email Templates',
+            'EmailTemplates' => 'Email Template',
             'Meetings' => 'Meeting',
             'Tasks' => 'Task',
             'Calendar' => 'Calendar',
@@ -754,6 +754,12 @@ $app_list_strings = array(
 
     'dom_email_link_type' => array('sugar' => 'SuiteCRM Email Client',
         'mailto' => 'External Email Client', ),
+
+    'dom_editor_type' => array(
+        'none' => 'Direct HTML',
+        'tinymce' => 'Tiny MCE',
+        'mozaik' => 'Mozaik',
+    ),
 
     'dom_email_editor_option' => array('' => 'Default Email Format',
         'html' => 'HTML Email',
@@ -1474,7 +1480,7 @@ $app_strings = array(
     'LBL_EMAIL_SETTINGS_REQUIRE_REFRESH' => 'Select the number of emails per page in the Inbox. This setting might require a page refresh in order to take effect.',
     'LBL_EMAIL_SETTINGS_RETRIEVING_ACCOUNT' => 'Retrieving Mail Account',
     'LBL_EMAIL_SETTINGS_RULES' => 'Rules',
-    'LBL_EMAIL_SETTINGS_SAVED' => 'The settings have been saved.\n\nYou must reload the page for the new settings to take effect.',
+    'LBL_EMAIL_SETTINGS_SAVED' => 'The settings have been saved.',
     'LBL_EMAIL_SETTINGS_SEND_EMAIL_AS' => 'Send Plain Text Emails Only',
     'LBL_EMAIL_SETTINGS_SHOW_IN_FOLDERS' => 'Active',
     'LBL_EMAIL_SETTINGS_SHOW_NUM_IN_LIST' => 'Emails per Page',
@@ -2304,8 +2310,8 @@ $app_strings = array(
     'LBL_DURATION_HOUR' => 'hour',
     'LBL_DURATION_MINUTE' => 'minute',
     'LBL_DURATION_DAYS' => 'days',
-    'LBL_DURATION_HOURS' => 'hours',
-    'LBL_DURATION_MINUTES' => 'minutes',
+    'LBL_DURATION_HOURS' => 'Duration Hours',
+    'LBL_DURATION_MINUTES' => 'Duration Minutes',
 
     //Calendar widget labels
     'LBL_CHOOSE_MONTH' => 'Choose Month',
@@ -3594,6 +3600,8 @@ $app_list_strings['moduleList']['jjwg_Maps'] = 'Maps';
 $app_list_strings['moduleList']['jjwg_Markers'] = 'Map Markers';
 $app_list_strings['moduleList']['jjwg_Areas'] = 'Map Areas';
 $app_list_strings['moduleList']['jjwg_Address_Cache'] = 'Map Address Cache';
+
+$app_list_strings['moduleList']['jjwp_Partners'] = 'JJWP Partners';
 
 $app_list_strings['map_unit_type_list']['mi'] = 'Miles';
 $app_list_strings['map_unit_type_list']['km'] = 'Kilometers';
