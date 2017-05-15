@@ -2479,6 +2479,11 @@ $app_list_strings['project_priority_options'] = array(
     'Low' => 'Low',
 );
 
+
+$app_list_strings['moduleList']['Attachments'] = 'Attachments';
+$app_list_strings['record_type_display_attachments'][''] = '';
+$app_list_strings['record_type_display_attachments']['Notes'] = 'Notes';
+
 $app_list_strings['kbdocument_status_dom'] = array(
     'Draft' => 'Draft',
     'Expired' => 'Expired',

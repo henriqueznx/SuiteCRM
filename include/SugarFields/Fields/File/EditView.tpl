@@ -38,10 +38,11 @@
  ********************************************************************************/
 
 *}
+
 {{if isset($vardef.allowEapm) && $vardef.allowEapm}}
 <script type="text/javascript" src='{{sugar_getjspath file="cache/include/externalAPI.cache.js"}}'></script>
 {{/if}}
-<script type="text/javascript" src='{{sugar_getjspath file="include/SugarFields/Fields/File/SugarFieldFile.js"}}'></script>
+<script type="text/javascript" src='{{sugar_getjspath file="custom/include/SugarFields/Fields/File/SugarFieldFile.js"}}'></script>
 {{capture name=idName assign=idName}}{{sugarvar key='name'}}{{/capture}}
 {{if !empty($displayParams.idName)}}
     {{assign var=idName value=$displayParams.idName}}
@@ -75,6 +76,9 @@
 <input type="hidden" name="{{$vardef.docUrl}}" id="{{$vardef.docUrl}}" value="{$fields.{{$vardef.docUrl}}.value}">
 <input type="hidden" name="{{$idName}}_old_doctype" id="{{$idName}}_old_doctype" value="{$fields.{{$vardef.docType}}.value}">
 {{/if}}
+
+<div id="attachment_container"></div>
+
 <span id="{{$idName}}_old" style="display:{if !$showRemove}none;{/if}">
   <a href="index.php?entryPoint=download&id={$fields.{{$vardef.fileId}}.value}&type={{$vardef.linkModule}}" class="tabDetailViewDFLink">{{sugarvar key='value'}}</a>
 
@@ -93,8 +97,8 @@
 {if !$noChange}
 <span id="{{$idName}}_new" style="display:{if $showRemove}none;{/if}">
 <input type="hidden" name="{{$idName}}_escaped">
-<input id="{{$idName}}_file" name="{{$idName}}_file" 
-type="file" title='{{$vardef.help}}' size="{{$displayParams.size|default:30}}"
+<input id="{{$idName}}_file" name="{{$filename}}"
+type="file" title='{{$vardef.help}}' size="{{$displayParams.size|default:30}}" {{$multiple}}
 {{if !empty($displayParams.accesskey)}} accesskey='{{$displayParams.accesskey}}' {{/if}} 
 {{if !empty($vardef.len)}}
     maxlength='{{$vardef.len}}'

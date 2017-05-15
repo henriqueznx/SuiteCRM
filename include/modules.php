@@ -72,6 +72,7 @@ $moduleList[] = 'ResourceCalendar';
 $moduleList[] = 'AOBH_BusinessHours';
 
 $moduleList[] = 'Spots';
+$moduleList[] = 'Attachments';
 
 // this list defines all of the module names and bean names in the app
 // to create a new module's bean class, add the bean definition here
@@ -124,6 +125,7 @@ $beanList['DocumentRevisions'] = 'DocumentRevision';
 $beanList['Roles'] = 'Role';
 
 $beanList['Audit'] = 'Audit';
+$beanList['Attachments'] = 'Attachments';
 
 // deferred
 //$beanList['Queues'] = 'Queue';
@@ -209,7 +211,7 @@ $beanFiles['Configurator'] = 'modules/Configurator/Configurator.php';
 
 $beanFiles['Spots'] = 'modules/Spots/Spots.php';
 $beanFiles['AOBH_BusinessHours'] = 'modules/AOBH_BusinessHours/AOBH_BusinessHours.php';
-
+$beanFiles['Attachments'] = 'modules/Attachments/Attachments.php';
 
 // added these lists for security settings for tabs
 $modInvisList = array(

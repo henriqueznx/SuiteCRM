@@ -38,15 +38,40 @@
  ********************************************************************************/
 
 *}
-<span class="sugar_field" id="{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}">
-<a href="index.php?entryPoint=download&id={$fields.{{$vardef.fileId}}.value}&type={{$vardef.linkModule}}" class="tabDetailViewDFLink" target='_blank'>{{sugarvar key='value'}}</a>
-</span>
+<div id="attachment_container"></div>
+{literal}
+<script>
+    $.ajax({
+    url: "index.php?module=Attachments&action=getAttachments&id=" + $("input[name='record']").val(),
+    context: document.body
+    }).done(function(data) {
+    var obj = jQuery.parseJSON( data );
+    if(obj != null){
+      $.each( obj, function( key, value ) {
+        $("#attachment_container").append('<div><a href="index.php?entryPoint=download&id='+
+          value.id +
+          '&type=' + value.module + '" id="file_' + value.id +
+          '" class="tabDetailViewDFLink" target="_blank">' +
+          value.name +
+          '</a>');
+      });
+    }
+        });
+</script>
+{/literal}
+
+    <span class="sugar_field" id="{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}">
+        <a href="index.php?entryPoint=download&id={$fields.{{$vardef.fileId}}.value}&type={{$vardef.linkModule}}" class="tabDetailViewDFLink" target='_blank'>{{sugarvar key='value'}}</a>
+    </span>
+
+
+
 {{if isset($vardef) && isset($vardef.allowEapm) && $vardef.allowEapm}}
 {if isset($fields.{{$vardef.docType}}) && !empty($fields.{{$vardef.docType}}.value) && $fields.{{$vardef.docType}}.value != 'SugarCRM' && !empty($fields.{{$vardef.docUrl}}.value) }
-{capture name=imageNameCapture assign=imageName}
-{$fields.{{$vardef.docType}}.value}_image_inline.png
-{/capture}
-<a href="{$fields.{{$vardef.docUrl}}.value}" class="tabDetailViewDFLink" target="_blank">{sugar_getimage name=$imageName alt=$imageName other_attributes='border="0" '}</a>
+    {capture name=imageNameCapture assign=imageName}
+        {$fields.{{$vardef.docType}}.value}_image_inline.png
+    {/capture}
+ <a href="{$fields.{{$vardef.docUrl}}.value}" class="tabDetailViewDFLink" target="_blank">{sugar_getimage name=$imageName alt=$imageName other_attributes='border="0" '}</a>
 {/if}
 {{/if}}
 {{if !empty($displayParams.enableConnectors)}}
