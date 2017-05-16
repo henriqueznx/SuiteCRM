@@ -40,6 +40,7 @@
 
 namespace SuiteCRM\Errors;
 
+use SuiteCRM\Data\LinkInterface;
 use SuiteCRM\Errors\ErrorInterface as ErrorInterface;
 use SuiteCRM\Utilities\UuidInterface as UuidInterface;
 use SuiteCRM\Data\MetaDataInterface as MetaDataInterface;
@@ -58,27 +59,27 @@ class Error implements ErrorInterface
      */
     protected $id;
     /**
-     * @var $links UuidInterface
+     * @var LinkInterface $links
      */
     protected $links;
     /**
-     * @var $code string
+     * @var string $code
      */
     protected $code;
     /**
-     * @var $title string
+     * @var string $title
      */
     protected $title;
     /**
-     * @var $detail string
+     * @var string $detail
      */
     protected $detail;
     /**
-     * @var $source SourceInterface
+     * @var SourceInterface $source
      */
     protected $source;
     /**
-     * @var $metadata MetaDataInterface
+     * @var MetaDataInterface $metadata
      */
     protected $metadata;
 
