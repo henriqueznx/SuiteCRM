@@ -68,7 +68,7 @@ class DataRepository extends TopLevelRepository implements DataRepositoryInterfa
     /**
      * @inheritdoc
      */
-    public function get()
+    public function getData()
     {
         // TODO: Implement get() method.
     }

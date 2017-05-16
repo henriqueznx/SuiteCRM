@@ -50,5 +50,5 @@ interface DataInterface
     /**
      * @return array Key => Value
      */
-    public function get();
+    public function getData();
 }

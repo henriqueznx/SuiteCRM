@@ -49,7 +49,7 @@ class JsonApi implements JsonApiInterface
     /**
      * @inheritdoc
      */
-    public function get()
+    public function getData()
     {
         // TODO: Implement get() method.
     }

@@ -63,7 +63,7 @@ class RelatedResource implements RelatedResourceInterface
     /**
      * @inheritdoc
      */
-    public function get()
+    public function getData()
     {
         // TODO: Implement get() method.
     }

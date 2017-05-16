@@ -59,7 +59,7 @@ class Attributes implements AttributesInterface
     /**
      * @inheritdoc
      */
-    public function get()
+    public function getData()
     {
         // TODO: Implement get() method.
     }

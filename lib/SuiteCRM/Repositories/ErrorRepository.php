@@ -64,7 +64,7 @@ class ErrorRepository extends TopLevelRepository implements ErrorRepositoryInter
     /**
      * @inheritdoc
      */
-    public function get()
+    public function getData()
     {
         // TODO: Implement get() method.
     }

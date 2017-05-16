@@ -67,7 +67,7 @@ class Relationships implements RelationshipsInterface
     /**
      * @inheritdoc
      */
-    public function get()
+    public function getData()
     {
         // TODO: Implement get() method.
     }
