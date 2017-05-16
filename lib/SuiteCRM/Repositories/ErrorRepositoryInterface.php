@@ -40,12 +40,12 @@
 
 namespace SuiteCRM\Repositories;
 
-use SuiteCRM\Data\DataInterface as DataInterface;
+use SuiteCRM\Repositories\TopLevelRepositoryInterface as TopLevelRepositoryInterface;
 
 /**
  * @license AGPL 3
  * @link https://github.com/salesagility/SuiteCRM
  */
-interface ErrorRepositoryInterface extends DataInterface
+interface ErrorRepositoryInterface extends TopLevelRepositoryInterface
 {
 }
