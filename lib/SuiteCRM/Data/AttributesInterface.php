@@ -49,20 +49,20 @@ use SuiteCRM\Data\DataInterface as DataInterface;
 interface AttributesInterface extends DataInterface
 {
     /**
-     * @param $key
-     * @param $value
+     * @param $key string
+     * @param $value array|string|integer|float|bool|null
      * @return void
      */
     public function addAttribute($key, $value);
 
     /**
-     * @param $key
+     * @param $key string
      * @return void
      */
     public function removeAttribute($key);
 
     /**
-     * @param $key
+     * @param $key string
      * @return mixed
      */
     public function atAttribute($key);
