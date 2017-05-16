@@ -46,6 +46,6 @@ use SuiteCRM\Data\DataInterface as DataInterface;
  * @license AGPL 3
  * @link https://github.com/salesagility/SuiteCRM
  */
-interface MetaDataInterface extends DataInterface
+interface MetaDataInterface extends AttributesInterface
 {
 }

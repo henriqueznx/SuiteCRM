@@ -50,7 +50,7 @@ use SuiteCRM\Data\AttributesInterface as AttributesInterface;
  * MetaData which implements the data structure specified by json api
  * http://jsonapi.org/format/#document-meta
  */
-class MetaData implements MetaDataInterface, AttributesInterface
+class MetaData implements MetaDataInterface
 {
     /*
      * @var  array $metadata
