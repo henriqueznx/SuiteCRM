@@ -52,9 +52,11 @@ class UuidException extends \Exception
     /**
      * @return static
      */
-    public static function invalidFormat()
+    public static function invalidFormat($uuid)
     {
-        $errorMessage = 'Invalid Uuid Format.';
+        $errorMessage = 'Invalid Uuid Format: '.
+            'Expected 000000-0000-0000-0000-000000000000 '.
+            'but got $uuid instead';
 
         return new static($errorMessage);
     }

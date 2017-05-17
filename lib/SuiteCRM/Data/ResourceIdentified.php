@@ -40,42 +40,50 @@
 
 namespace SuiteCRM\Data;
 
-use SuiteCRM\Data\ResourceInterface as ResourceInterface;
-use SuiteCRM\Data\ResourceException as ResourceException;
+use SuiteCRM\Data\ResourceIdentifiedInterface as ResourceIdentifiedInterface;
+use SuiteCRM\Data\ResourceIdentifiedException as ResourceIdentifiedException;
+use SuiteCRM\Utilities\UuidInterface as UuidInterface;
 
 /**
  * @license AGPL 3
  * @link https://github.com/salesagility/SuiteCRM
  *
- * Link which implements the data structure specified by json api
- * http://jsonapi.org/format/#document-links
+ * Resource which implements the data structure specified by json api
+ * http://jsonapi.org/format/#document-resource-identifier-objects
  */
-class Resource implements ResourceInterface
+class ResourceIdentified implements ResourceIdentifiedInterface
 {
     /*
      * @var UuidInterface $data
      */
     protected $id;
+    
     /*
      * @var string $type
      */
     protected $type;
-    /*
-     * @var AttributeInterface $attributes
-     */
-    protected $attributes;
-    /*
-     * @var RelationshipInterface $relationships
-     */
-    protected $relationships;
-    /*
-     * @var LinkInterface $links
-     */
-    protected $links;
-    /*
-     * @var MetaDataInterface $meta
-     */
-    protected $meta;
+
+    /**
+     * ResourceIdentified Constructor
+     */ 
+    public function __construct(UuidInterface $uuid, $type)
+    {
+        $this->setId($uuid);
+        $this->setType($type);
+    }
+
+    /**
+     * Copy Constructor
+     * Useful when converting a Resource to ResourceIdentified
+     */ 
+    public static function fromResourceIdentified(ResourceIdentifiedInterface $resourceId)
+    {
+        return self(
+            $resourceId->getId(),
+            $resourceId->getType()
+        );
+    }
+    
     /**
      * @inheritdoc
      */
@@ -84,11 +92,7 @@ class Resource implements ResourceInterface
         return array
             (
                 'id' => $this->id->get(),
-                'type' => $this->type,
-                'attributes' => $this->attributes,
-                'relationships' => $this->relationships->get(),
-                'links' => $this->links->get(),
-                'meta'=> $this->meta->get()
+                'type' => $this->type
             );
     }
 
@@ -122,17 +126,16 @@ class Resource implements ResourceInterface
     public function setType($type)
     {
         if(gettype($type) !== "string") {
-            ResourceException::invalidType;
+            ResourceIdentifiedException::invalidType;
         }
         $this->type = $type;
     }
-
-   /**
+    /**
      * @inheritdoc
      */ 
     public function isResourceIdentifed()
     {
-        return false;
+        return true;
     }
 }
 

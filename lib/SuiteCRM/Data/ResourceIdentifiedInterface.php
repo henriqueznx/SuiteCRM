@@ -41,7 +41,7 @@
 namespace SuiteCRM\Data;
 
 use SuiteCRM\Data\DataInterface as DataInterface;
-use SuiteCRM\Utilities\UuidInterface;
+use SuiteCRM\Utilities\UuidInterface as UuidInterface;
 
 /**
  * @license AGPL 3
@@ -56,9 +56,10 @@ interface ResourceIdentifiedInterface extends DataInterface
     public function getId();
 
     /**
+     * @param UuidInterface $uuid
      * @return null
      */
-    public function setId();
+    public function setId(UuidInterface $uuid);
 
     /**
      * @return string
@@ -66,7 +67,18 @@ interface ResourceIdentifiedInterface extends DataInterface
     public function getType();
 
     /**
+     * @param string ResourceType
      * @return null
+     * @throws ResourceIdentifiedException::invalidType
+     * @throws ResourceException::invalidType
      */
-    public function setType();
+    public function setType($type);
+
+    /**
+     * @return bool 
+     * true === Object is a ResourceIdentified which has only has id and type.
+     * false === Object is a Resource. 
+     */ 
+    public function isResourceIdentifed();
 }
+

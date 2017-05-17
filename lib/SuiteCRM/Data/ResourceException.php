@@ -40,99 +40,25 @@
 
 namespace SuiteCRM\Data;
 
-use SuiteCRM\Data\ResourceInterface as ResourceInterface;
-use SuiteCRM\Data\ResourceException as ResourceException;
+use SuiteCRM\Data\ResourceIdentifiedException as ResourceIdentifiedException;
 
 /**
  * @license AGPL 3
  * @link https://github.com/salesagility/SuiteCRM
  *
- * Link which implements the data structure specified by json api
- * http://jsonapi.org/format/#document-links
+ * Throws Resource Exceptions
  */
-class Resource implements ResourceInterface
+class ResourceException extends ResourceIdentifiedException
 {
-    /*
-     * @var UuidInterface $data
-     */
-    protected $id;
-    /*
-     * @var string $type
-     */
-    protected $type;
-    /*
-     * @var AttributeInterface $attributes
-     */
-    protected $attributes;
-    /*
-     * @var RelationshipInterface $relationships
-     */
-    protected $relationships;
-    /*
-     * @var LinkInterface $links
-     */
-    protected $links;
-    /*
-     * @var MetaDataInterface $meta
-     */
-    protected $meta;
     /**
-     * @inheritdoc
+     * @return static
      */
-    public function getData()
+    public static function invalidType()
     {
-        return array
-            (
-                'id' => $this->id->get(),
-                'type' => $this->type,
-                'attributes' => $this->attributes,
-                'relationships' => $this->relationships->get(),
-                'links' => $this->links->get(),
-                'meta'=> $this->meta->get()
-            );
-    }
+        $errorMessage = 'Invalid Argument Exception - Resource type: '.
+            'Expected string literal but type was ('.gettype($type).') '. $type;
 
-    /**
-     * @inheritdoc
-     */
-    public function getId()
-    {
-       return $this->id;
-    }
 
-    /**
-     * @inheritdoc
-     */
-    public function setId(UuidInterface $uuid)
-    {
-        $this->id = $uuid;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setType($type)
-    {
-        if(gettype($type) !== "string") {
-            ResourceException::invalidType;
-        }
-        $this->type = $type;
-    }
-
-   /**
-     * @inheritdoc
-     */ 
-    public function isResourceIdentifed()
-    {
-        return false;
+        return new static($errorMessage);
     }
 }
-
