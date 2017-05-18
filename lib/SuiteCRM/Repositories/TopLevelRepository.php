@@ -61,6 +61,9 @@ use SuiteCRM\Data\LinkInterface as LinkInterface;
  * only the correct keys will be in the final format. These objects use the
  * repository design pattern to decouple the data from the datasource
  * such as the database, file, email etc...
+ *
+ * The DataInterface ensures that access to the data is consistent. Each object specified
+ * in the specification has an interface.
  */
 class TopLevelRepository implements TopLevelRepositoryInterface
 {
@@ -68,10 +71,12 @@ class TopLevelRepository implements TopLevelRepositoryInterface
      * @var MetaDataInterface $meta
      */
     protected $meta;
+
     /**
      * @var JsonApiInterface $jsonapi
      */
     protected $jsonapi;
+    
     /**
      * @var LinkInterface $links
      */
