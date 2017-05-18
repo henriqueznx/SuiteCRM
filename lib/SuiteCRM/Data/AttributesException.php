@@ -40,7 +40,6 @@
 
 namespace SuiteCRM\Data;
 
-use SuiteCRM\Data\ResourceIdentifiedException as ResourceIdentifiedException;
 
 /**
  * @license AGPL 3
@@ -48,16 +47,36 @@ use SuiteCRM\Data\ResourceIdentifiedException as ResourceIdentifiedException;
  *
  * Throws Resource Exceptions
  */
-class ResourceException extends ResourceIdentifiedException
+class AttributeException
 {
     /**
      * @return static
      */
-    public static function invalidType($type)
+    public static function invalidKey($key)
     {
-        $errorMessage = 'Invalid Argument Exception - Resource type: '.
-            'Expected string literal but type was ('.gettype($type).') '. $type;
+        $errorMessage = 'Invalid Argument Exception - Attribute key: '.
+            'Expected string literal but type was ('.gettype($key).') ';
 
+        return new static($errorMessage);
+    }
+    /**
+     * @return static
+     */
+    public static function keyNotFound($key)
+    {
+        $errorMessage = 'Key Not Found Exception - Attribute key: '.$key;
+
+        return new static($errorMessage);
+    }
+
+    /**
+     * @return static
+     */
+    public static function invalidValue($value)
+    {
+        $errorMessage = 'Invalid Argument Exception - Attribute key: '.
+            'Expected array|string|integer|float|bool|null but type was ('.
+            gettype($value).') ';
 
         return new static($errorMessage);
     }

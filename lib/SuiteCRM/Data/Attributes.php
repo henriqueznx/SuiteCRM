@@ -41,7 +41,7 @@
 namespace SuiteCRM\Data;
 
 use SuiteCRM\Data\AttributesInterface as AttributesInterface;
-
+use SuiteCRM\Data\AttributeException as AttributesException;
 /**
  * @license AGPL 3
  * @link https://github.com/salesagility/SuiteCRM
@@ -49,42 +49,139 @@ use SuiteCRM\Data\AttributesInterface as AttributesInterface;
  * Link which implements the data structure specified by json api
  * http://jsonapi.org/format/#document-links
  */
-class Attributes implements AttributesInterface
+class Attributes implements AttributesInterface, ArrayAccess
 {
     /**
-     * @var array
+     * @var array $attributes
      */
     protected $attributes = array();
 
     /**
-     * @inheritdoc
-     */
+     * @uses DataInterface
+     * @returns array
+     */ 
     public function getData()
     {
-        // TODO: Implement get() method.
+        return $attributes;
     }
 
     /**
-     * @inheritdoc
-     */
+     * @param string $offset
+     * @param array|string|integer|float|bool|null $value
+     * @throws AttributeException
+     */ 
     public function addAttribute($key, $value)
     {
-        return null;
+        if(gettype($key) !== "string") {
+            AttributeException::invalidKey($key);    
+        }
+
+        if(gettype($value) === "resource") {
+            AttributeException::invalidValue($value);
+        }
+
+        if(gettype($value) === "object") {
+            AttributesException::invalidValue($value);
+        }
+        $this->attributes[$key] = $value;
     }
 
     /**
-     * @inheritdoc
+     * @param string $offset
+     * @param array|string|integer|float|bool|null $value
+     * @throws AttributeException
+     */
+    public function setAttribute($key, $value)
+    {
+        if(gettype($key) !== "string") {
+            AttributeException::invalidKey($key);    
+        }
+
+        if(gettype($value) === "resource") {
+            AttributeException::invalidValue($value);
+        }
+
+        if(gettype($value) === "object") {
+            AttributesException::invalidValue($value);
+        }
+        $this->attributes[$key] = $value;
+    }
+
+    /**
+     * @param string $offset
+     * @throws AttributeException
      */
     public function removeAttribute($key)
     {
-        // TODO: Implement removeAttribute() method.
+        if(!isset($this->attributes[$key])) {
+            AttributeException::keyNotFound;
+        } else {
+             unset($this->attributes[$key]);
+        }
     }
 
     /**
-     * @inheritdoc
+     * @param string $offset
+     * @return boolean
+     */   
+    public function attributeExits($key)
+    {
+        if(isset($this->attributes[$key])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * @param string $offset
+     * @return array|string|integer|float|bool|null
+     * @throws AttributeException
      */
     public function atAttribute($key)
     {
-        // TODO: Implement atAttribute() method.
+        if(!isset($this->attributes[$key])) {
+            AttributeException::keyNotFound;
+        }
+
+        return $this->attributes[$key];
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @return boolean
+     */ 
+    public function offsetExists ($offset) {
+        return $this->attributeExits($offset);
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @return array|string|integer|float|bool|null
+     * @throws AttributeException
+     */ 
+    public function offsetGet ($offset) {
+        return $this->atAttribute($offset);
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @param array|string|integer|float|bool|null $value
+     * @throws AttributeException
+     */ 
+    public function offsetSet ($offset, $value) {
+        $this->setAttribute($offset, $value);
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @throws AttributeException
+     */ 
+    public function offsetUnset ($offset) {
+        $this->removeAttribute($offset);
     }
 }
