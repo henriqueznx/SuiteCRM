@@ -95,17 +95,18 @@ class Error implements ErrorInterface
      */
     public function getData()
     {
-        return array(
+        $response = array(
             'errors' => array(
                 'id' => $this->id->get(),
-                'links' => $this->links->getData(),
                 'code' => $this->code,
                 'title' => $this->title,
                 'detail' => $this->detail,
-                'source' => $this->source->getData(),
-                'metadata' => $this->metadata->getData()
             )
         );
+        $response = array_merge_recursive($response, $this->links->getData());
+        $response = array_merge_recursive($response, $this->source->getData());
+        return array_merge_recursive($response, $this->metadata->getData());
+
     }
 }
 
