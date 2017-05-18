@@ -48,4 +48,56 @@ use SuiteCRM\Data\DataInterface as DataInterface;
  */
 interface RelationshipsInterface extends DataInterface
 {
+    /**
+     * @return string
+     */
+    public function getRelationshipName();
+
+    /**
+     * @param string $resourceName
+     * @param RelationshipInterface $relationship
+     * @return void
+     * @throws RelationshipsException
+     */
+    public function addRelationship($resourceName, RelationshipInterface $relationship);
+
+    /**
+     * @param string $resourceName
+     * @param RelationshipInterface $relationship
+     * @return void
+     * @throws RelationshipsException
+     */
+    public function setRelationship($resourceName, RelationshipInterface $relationship);
+
+    /**
+     * @param string $resourceName
+     * @return void
+     * @throws RelationshipsException
+     */
+    public function removeRelationship($resourceName);
+
+    /**
+     * @param string $resourceName
+     * @return boolean
+     */
+    public function RelationshipExits($resourceName);
+
+    /**
+     * @param string $resourceName
+     * @return RelationshipInterface
+     * @throws RelationshipsException
+     */
+    public function atRelationship($resourceName);
+
+    /**
+     * @param LinkInterface $link
+     * @return void
+     */
+    public function setLink(LinkInterface $link);
+
+    /**
+     * @param LinkInterface $link
+     * @return void
+     */
+    public function setMetaData(MetaDataInterface $metadata);
 }

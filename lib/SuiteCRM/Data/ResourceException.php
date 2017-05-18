@@ -55,10 +55,9 @@ class ResourceException extends ResourceIdentifiedException
      */
     public static function invalidType($type)
     {
-        $errorMessage = 'Invalid Argument Exception - Resource type: '.
-            'Expected string literal but type was ('.gettype($type).') '. $type;
-
-
+        $errorMessage = 'Invalid Argument Exception - Resource type: ' .
+            'Expected string literal but type was (' . gettype($type) . ') ' . $type;
+        
         return new static($errorMessage);
     }
 }

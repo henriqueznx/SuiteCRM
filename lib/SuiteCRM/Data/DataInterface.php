@@ -44,7 +44,6 @@ namespace SuiteCRM\Data;
  * @license AGPL 3
  * @link https://github.com/salesagility/SuiteCRM
  */
-
 interface DataInterface
 {
     /**

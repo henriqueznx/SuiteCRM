@@ -42,6 +42,7 @@ namespace SuiteCRM\Data;
 
 use SuiteCRM\Data\ResourceInterface as ResourceInterface;
 use SuiteCRM\Data\ResourceException as ResourceException;
+use SuiteCRM\Utilities\UuidInterface as UuidInterface;
 
 /**
  * @license AGPL 3
@@ -52,56 +53,65 @@ use SuiteCRM\Data\ResourceException as ResourceException;
  */
 class Resource implements ResourceInterface
 {
-    /*
+    /**
      * @var UuidInterface $data
      */
     protected $id;
-    /*
+
+    /**
      * @var string $type
      */
     protected $type;
-    /*
-     * @var AttributeInterface $attributes
+
+    /**
+     * @var AttributesInterface $attributes
      */
     protected $attributes;
-    /*
+
+    /**
      * @var RelationshipInterface $relationships
      */
     protected $relationships;
-    /*
+
+    /**
      * @var LinkInterface $links
      */
     protected $links;
-    /*
+
+    /**
      * @var MetaDataInterface $meta
      */
     protected $meta;
+
     /**
-     * @inheritdoc
+     * @uses DataInterface
+     * @returns array
      */
     public function getData()
     {
-        return array
-            (
-                'id' => $this->id->get(),
-                'type' => $this->type,
-                'attributes' => $this->attributes,
-                'relationships' => $this->relationships->get(),
-                'links' => $this->links->get(),
-                'meta'=> $this->meta->get()
-            );
+        $response = array
+        (
+            'id' => $this->id->get(),
+            'type' => $this->type,
+        );
+        $response = array_merge_recursive($response, $this->attributes->get());
+        $response = array_merge_recursive($response, $this->relationships->get());
+        $response = array_merge_recursive($response, $this->links->get());
+        return array_merge_recursive($response, $this->meta->get());
+
     }
 
     /**
-     * @inheritdoc
+     * @return UuidInterface $uuid
      */
     public function getId()
     {
-       return $this->id;
+        return $this->id;
     }
 
     /**
-     * @inheritdoc
+     * @param UuidInterface $uuid
+     * @return void
      */
     public function setId(UuidInterface $uuid)
     {
@@ -109,7 +119,7 @@ class Resource implements ResourceInterface
     }
 
     /**
-     * @inheritdoc
+     * @return void
      */
     public function getType()
     {
@@ -117,20 +127,22 @@ class Resource implements ResourceInterface
     }
 
     /**
-     * @inheritdoc
+     * @return void
      */
     public function setType($type)
     {
-        if(gettype($type) !== "string") {
-            ResourceException::invalidType;
+        if (gettype($type) !== "string") {
+            ResourceException::invalidType($this);
         }
         $this->type = $type;
     }
 
-   /**
-     * @inheritdoc
-     */ 
-    public function isResourceIdentifed()
+    /**
+     * @return bool
+     * true === Object is a ResourceIdentified which has only has id and type.
+     * false === Object is a Resource.
+     */
+    public function isResourceIdentified()
     {
         return false;
     }

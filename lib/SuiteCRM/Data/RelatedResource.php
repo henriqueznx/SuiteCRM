@@ -61,10 +61,18 @@ class RelatedResource implements RelatedResourceInterface
     protected $meta;
 
     /**
-     * @inheritdoc
+     * @uses DataInterface
+     * @returns array
      */
     public function getData()
     {
-        // TODO: Implement get() method.
+        $response = array(
+            'related' => array(
+                'href' => $this->href,
+            )
+        );
+        return array_merge_recursive($response['related'], $this->meta->getData());
+
     }
+
 }

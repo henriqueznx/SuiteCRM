@@ -57,7 +57,7 @@ class ResourceIdentified implements ResourceIdentifiedInterface
      * @var UuidInterface $data
      */
     protected $id;
-    
+
     /*
      * @var string $type
      */
@@ -65,7 +65,7 @@ class ResourceIdentified implements ResourceIdentifiedInterface
 
     /**
      * ResourceIdentified Constructor
-     */ 
+     */
     public function __construct(UuidInterface $uuid, $type)
     {
         $this->setId($uuid);
@@ -75,7 +75,7 @@ class ResourceIdentified implements ResourceIdentifiedInterface
     /**
      * Copy Constructor
      * Useful when converting a Resource to ResourceIdentified
-     */ 
+     */
     public static function fromResourceIdentified(ResourceIdentifiedInterface $resourceId)
     {
         return self(
@@ -83,17 +83,17 @@ class ResourceIdentified implements ResourceIdentifiedInterface
             $resourceId->getType()
         );
     }
-    
+
     /**
      * @inheritdoc
      */
     public function getData()
     {
         return array
-            (
-                'id' => $this->id->get(),
-                'type' => $this->type
-            );
+        (
+            'id' => $this->id->get(),
+            'type' => $this->type
+        );
     }
 
     /**
@@ -101,7 +101,7 @@ class ResourceIdentified implements ResourceIdentifiedInterface
      */
     public function getId()
     {
-       return $this->id;
+        return $this->id;
     }
 
     /**
@@ -125,15 +125,16 @@ class ResourceIdentified implements ResourceIdentifiedInterface
      */
     public function setType($type)
     {
-        if(gettype($type) !== "string") {
+        if (gettype($type) !== "string") {
             ResourceIdentifiedException::invalidType;
         }
         $this->type = $type;
     }
+
     /**
      * @inheritdoc
-     */ 
-    public function isResourceIdentifed()
+     */
+    public function isResourceIdentified()
     {
         return true;
     }

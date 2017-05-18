@@ -38,74 +38,47 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Errors;
+namespace SuiteCRM\Data;
 
-use SuiteCRM\Data\LinkInterface;
-use SuiteCRM\Errors\ErrorInterface as ErrorInterface;
-use SuiteCRM\Utilities\UuidInterface as UuidInterface;
-use SuiteCRM\Data\MetaDataInterface as MetaDataInterface;
 
 /**
  * @license AGPL 3
  * @link https://github.com/salesagility/SuiteCRM
  *
- * Error which implements the data structure specified by json api
- * http://jsonapi.org/format/#error-objects
+ * Throws Resource Exceptions
  */
-class Error implements ErrorInterface
+class MetaDataException
 {
     /**
-     * @var UuidInterface $id
+     * @return static
      */
-    protected $id;
-
-    /**
-     * @var LinkInterface $links
-     */
-    protected $links;
-
-    /**
-     * @var string $code
-     */
-    protected $code;
-
-    /**
-     * @var string $title
-     */
-    protected $title;
-
-    /**
-     * @var string $detail
-     */
-    protected $detail;
-
-    /**
-     * @var SourceInterface $source
-     */
-    protected $source;
-
-    /**
-     * @var MetaDataInterface $metadata
-     */
-    protected $metadata;
-
-    /**
-     * @uses DataInterface
-     * @returns array
-     */
-    public function getData()
+    public static function invalidKey($key)
     {
-        return array(
-            'errors' => array(
-                'id' => $this->id->get(),
-                'links' => $this->links->getData(),
-                'code' => $this->code,
-                'title' => $this->title,
-                'detail' => $this->detail,
-                'source' => $this->source->getData(),
-                'metadata' => $this->metadata->getData()
-            )
-        );
+        $errorMessage = 'Invalid Argument Exception - Attribute key: ' .
+            'Expected string literal but type was (' . gettype($key) . ') ';
+
+        return new static($errorMessage);
+    }
+
+    /**
+     * @return static
+     */
+    public static function keyNotFound($key)
+    {
+        $errorMessage = 'Key Not Found Exception - Attribute key: ' . $key;
+
+        return new static($errorMessage);
+    }
+
+    /**
+     * @return static
+     */
+    public static function invalidValue($value)
+    {
+        $errorMessage = 'Invalid Argument Exception - Attribute key: ' .
+            'Expected array|string|integer|float|bool|null but type was (' .
+            gettype($value) . ') ';
+
+        return new static($errorMessage);
     }
 }
-

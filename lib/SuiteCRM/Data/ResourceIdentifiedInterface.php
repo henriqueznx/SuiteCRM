@@ -62,7 +62,9 @@ interface ResourceIdentifiedInterface extends DataInterface
     public function setId(UuidInterface $uuid);
 
     /**
-     * @return string
+     * @return null
+     * @throws ResourceIdentifiedException::invalidType
+     * @throws ResourceException::invalidType
      */
     public function getType();
 
@@ -75,10 +77,10 @@ interface ResourceIdentifiedInterface extends DataInterface
     public function setType($type);
 
     /**
-     * @return bool 
+     * @return bool
      * true === Object is a ResourceIdentified which has only has id and type.
-     * false === Object is a Resource. 
-     */ 
-    public function isResourceIdentifed();
+     * false === Object is a Resource.
+     */
+    public function isResourceIdentified();
 }
 

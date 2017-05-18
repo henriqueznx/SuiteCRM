@@ -40,7 +40,7 @@
 
 namespace SuiteCRM\Data;
 
-use SuiteCRM\Data\DataInterface as DataInterface;
+use SuiteCRM\Data\AttributesInterface as AttributesInterface;
 
 /**
  * @license AGPL 3

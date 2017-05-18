@@ -54,17 +54,18 @@ class AttributeException
      */
     public static function invalidKey($key)
     {
-        $errorMessage = 'Invalid Argument Exception - Attribute key: '.
-            'Expected string literal but type was ('.gettype($key).') ';
+        $errorMessage = 'Invalid Argument Exception - Attribute key: ' .
+            'Expected string literal but type was (' . gettype($key) . ') ';
 
         return new static($errorMessage);
     }
+
     /**
      * @return static
      */
     public static function keyNotFound($key)
     {
-        $errorMessage = 'Key Not Found Exception - Attribute key: '.$key;
+        $errorMessage = 'Key Not Found Exception - Attribute key: ' . $key;
 
         return new static($errorMessage);
     }
@@ -74,9 +75,9 @@ class AttributeException
      */
     public static function invalidValue($value)
     {
-        $errorMessage = 'Invalid Argument Exception - Attribute key: '.
-            'Expected array|string|integer|float|bool|null but type was ('.
-            gettype($value).') ';
+        $errorMessage = 'Invalid Argument Exception - Attribute key: ' .
+            'Expected array|string|integer|float|bool|null but type was (' .
+            gettype($value) . ') ';
 
         return new static($errorMessage);
     }

@@ -38,74 +38,66 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Errors;
+namespace SuiteCRM\Data;
 
-use SuiteCRM\Data\LinkInterface;
-use SuiteCRM\Errors\ErrorInterface as ErrorInterface;
-use SuiteCRM\Utilities\UuidInterface as UuidInterface;
-use SuiteCRM\Data\MetaDataInterface as MetaDataInterface;
+use SuiteCRM\Data\DataInterface as DataInterface;
 
 /**
  * @license AGPL 3
  * @link https://github.com/salesagility/SuiteCRM
- *
- * Error which implements the data structure specified by json api
- * http://jsonapi.org/format/#error-objects
  */
-class Error implements ErrorInterface
+interface RelationshipInterface extends DataInterface
 {
     /**
-     * @var UuidInterface $id
+     * @return string
      */
-    protected $id;
+    public function getRelationshipName();
 
     /**
-     * @var LinkInterface $links
+     * @param string $id
+     * @param ResourceIdentified $resource
+     * @return void
+     * @throws ResourceException
      */
-    protected $links;
+    public function addResource($id, ResourceIdentified $resource);
 
     /**
-     * @var string $code
+     * @param string $id
+     * @param ResourceIdentified $resource
+     * @return void
+     * @throws ResourceException
      */
-    protected $code;
+    public function setResource($id, ResourceIdentified $resource);
 
     /**
-     * @var string $title
+     * @param string $id
+     * @return void
+     * @throws ResourceException
      */
-    protected $title;
+    public function removeResource($id);
 
     /**
-     * @var string $detail
+     * @param string $id
+     * @return boolean
      */
-    protected $detail;
+    public function ResourceExits($id);
 
     /**
-     * @var SourceInterface $source
+     * @param string $id
+     * @return ResourceIdentified
+     * @throws ResourceException
      */
-    protected $source;
+    public function atResource($id);
 
     /**
-     * @var MetaDataInterface $metadata
+     * @param LinkInterface $link
+     * @return void
      */
-    protected $metadata;
+    public function setLink(LinkInterface $link);
 
     /**
-     * @uses DataInterface
-     * @returns array
+     * @param LinkInterface $link
+     * @return void
      */
-    public function getData()
-    {
-        return array(
-            'errors' => array(
-                'id' => $this->id->get(),
-                'links' => $this->links->getData(),
-                'code' => $this->code,
-                'title' => $this->title,
-                'detail' => $this->detail,
-                'source' => $this->source->getData(),
-                'metadata' => $this->metadata->getData()
-            )
-        );
-    }
+    public function setMetaData(MetaDataInterface $metadata);
 }
-

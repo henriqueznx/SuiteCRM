@@ -40,7 +40,10 @@
 
 namespace SuiteCRM\Data;
 
-use SuiteCRM\Data\RelationshipsInterface as RelationshipsInterface;
+use SuiteCRM\Data\RelationshipInterface as RelationshipInterface;
+use SuiteCRM\Data\ResourceIdentified as ResourceIdentified;
+use SuiteCRM\Data\LinkInterface as LinkInterface;
+use SuiteCRM\Data\MetaDataInterface as MetaDataInterface;
 
 /**
  * @license AGPL 3
@@ -49,22 +52,43 @@ use SuiteCRM\Data\RelationshipsInterface as RelationshipsInterface;
  * Link which implements the data structure specified by json api
  * http://jsonapi.org/format/#document-links
  */
-class Relationships implements RelationshipsInterface
+class Relationship implements RelationshipInterface
 {
     /**
-     * @var array $data  (RelationshipsInterface, ...)
+     * @var ResourceIdentified $data
      */
-    protected $relationships;
+    protected $data;
 
     /**
-     * @uses DataInterface
-     * @returns array
+     * @var LinkInterface $links
      */
-    public function getData()
-    {
-        return array(
-            'relationships' => $this->relationships
-        );
+    protected $links;
+
+    /**
+     * @var MetaDataInterface $links
+     */
+    protected $meta;
+
+    /**
+     * @var string $name
+     */
+    protected $name;
+
+    /**
+     * Relationship constructor.
+     * @param ResourceIdentified $resource
+     * @param LinkInterface|null $link
+     * @param MetaDataInterface|null $meta
+     */
+    public function __construct(
+        ResourceIdentified $resource,
+        LinkInterface $link = null,
+        MetaDataInterface $meta = null
+    ) {
+        $this->data = $resource;
+        $this->name = $resource->getType();
+        $this->links = $link;
+        $this->meta = $meta;
     }
 
     /**
@@ -72,73 +96,87 @@ class Relationships implements RelationshipsInterface
      */
     public function getRelationshipName()
     {
-        // TODO: Implement getRelationshipName() method.
+       return $this->name;
     }
 
     /**
-     * @param string $resourceName
-     * @param RelationshipInterface $relationship
-     * @return void
-     * @throws RelationshipsException
+     * @uses DataInterface
+     * @returns array
      */
-    public function addRelationship($resourceName, RelationshipInterface $relationship)
+    public function getData()
     {
-        // TODO: Implement addRelationship() method.
+        $response = array();
+        if(!empty($this->data)) {
+            $response['data'] = $this->data;
+        }
+
+        if(!empty($this->links)) {
+            $response['links'] = $this->links;
+        }
+
+        if(!empty($this->meta)) {
+            $response['meta'] = $this->data;
+        }
+
+        return $response;
     }
 
     /**
-     * @param string $resourceName
-     * @param RelationshipInterface $relationship
+     * @param string $id
+     * @param ResourceIdentified $resource
      * @return void
-     * @throws RelationshipsException
+     * @throws ResourceException
      */
-    public function setRelationship($resourceName, RelationshipInterface $relationship)
+    public function addResource($id, ResourceIdentified $resource)
     {
-        // TODO: Implement setRelationship() method.
+        // TODO: Implement addResource() method.
     }
 
     /**
-     * @param string $resourceName
+     * @param string $id
+     * @param ResourceIdentified $resource
      * @return void
-     * @throws RelationshipsException
+     * @throws ResourceException
      */
-    public function removeRelationship($resourceName)
+    public function setResource($id, ResourceIdentified $resource)
     {
-        // TODO: Implement removeRelationship() method.
+        // TODO: Implement setResource() method.
     }
 
     /**
-     * @param string $resourceName
+     * @param string $id
+     * @return void
+     * @throws ResourceException
+     */
+    public function removeResource($id)
+    {
+        // TODO: Implement removeResource() method.
+    }
+
+    /**
+     * @param string $id
      * @return boolean
      */
-    public function RelationshipExits($resourceName)
+    public function ResourceExits($id)
     {
-        // TODO: Implement RelationshipExits() method.
+        // TODO: Implement ResourceExits() method.
     }
 
     /**
-     * @param string $resourceName
-     * @return RelationshipInterface
-     * @throws RelationshipsException
+     * @param string $id
+     * @return ResourceIdentified
+     * @throws ResourceException
      */
-    public function atRelationship($resourceName)
+    public function atResource($id)
     {
-        // TODO: Implement atRelationship() method.
+        // TODO: Implement atResource() method.
     }
 
-    /**
-     * @param LinkInterface $link
-     * @return void
-     */
     public function setLink(LinkInterface $link)
     {
         // TODO: Implement setLink() method.
     }
 
-    /**
-     * @param LinkInterface $link
-     * @return void
-     */
     public function setMetaData(MetaDataInterface $metadata)
     {
         // TODO: Implement setMetaData() method.

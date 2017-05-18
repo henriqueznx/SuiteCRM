@@ -44,7 +44,7 @@ namespace SuiteCRM\Data;
  * @license AGPL 3
  * @link https://github.com/salesagility/SuiteCRM
  *
- * Throws ResourceIdentified Exceptions 
+ * Throws ResourceIdentified Exceptions
  */
 class ResourceIdentifiedException extends \Exception
 {
@@ -53,8 +53,8 @@ class ResourceIdentifiedException extends \Exception
      */
     public static function invalidArgumentType($type)
     {
-        $errorMessage = 'Invalid Argument Exception - ResourceIdentified type: '.
-            'Expected string literal but type was ('.gettype($type).') '. $type;
+        $errorMessage = 'Invalid Argument Exception - ResourceIdentified type: ' .
+            'Expected string literal but type was (' . gettype($type) . ') ' . $type;
 
         return new static($errorMessage);
     }

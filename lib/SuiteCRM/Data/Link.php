@@ -77,10 +77,21 @@ class Link implements LinkInterface
     protected $last;
 
     /**
-     * @inheritdoc
+     * @uses DataInterface
+     * @returns array
      */
     public function getData()
     {
-        // TODO: Implement get() method.
+        $response = array(
+            'links' => array(
+                'self' => $this->self,
+                'first' => $this->first,
+                'prev' => $this->prev,
+                'next' => $this->next,
+                'last' => $this->last
+            )
+        );
+
+        return array_merge_recursive($response['links'], $this->related->getData());
     }
 }

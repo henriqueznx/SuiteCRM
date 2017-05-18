@@ -41,7 +41,7 @@
 namespace SuiteCRM\Data;
 
 use SuiteCRM\Data\MetaDataInterface as MetaDataInterface;
-use SuiteCRM\Data\AttributesInterface as AttributesInterface;
+
 
 /**
  * @license AGPL 3
@@ -52,40 +52,139 @@ use SuiteCRM\Data\AttributesInterface as AttributesInterface;
  */
 class MetaData implements MetaDataInterface
 {
-    /*
-     * @var  array $metadata
+    /**
+     * @var array $meta
      */
-    protected $metadata;
+    protected $meta;
 
     /**
-     * @inheritdoc
+     * @uses DataInterface
+     * @returns array
      */
     public function getData()
     {
-        // TODO: Implement get() method.
+        return array(
+            'meta' => $this->meta
+        );
     }
 
     /**
-     * @inheritdoc
+     * @param string $offset
+     * @param array|string|integer|float|bool|null $value
+     * @throws MetaDataException
      */
     public function addAttribute($key, $value)
     {
-        // TODO: Implement addAttribute() method.
+        if (gettype($key) !== "string") {
+            MetaDataException::invalidKey($key);
+        }
+
+        if (gettype($value) === "resource") {
+            MetaDataException::invalidValue($value);
+        }
+
+        if (gettype($value) === "object") {
+            AttributesException::invalidValue($value);
+        }
+        $this->meta[$key] = $value;
     }
 
     /**
-     * @inheritdoc
+     * @param string $offset
+     * @param array|string|integer|float|bool|null $value
+     * @throws MetaDataException
+     */
+    public function setAttribute($key, $value)
+    {
+        if (gettype($key) !== "string") {
+            MetaDataException::invalidKey($key);
+        }
+
+        if (gettype($value) === "resource") {
+            MetaDataException::invalidValue($value);
+        }
+
+        if (gettype($value) === "object") {
+            AttributesException::invalidValue($value);
+        }
+        $this->meta[$key] = $value;
+    }
+
+    /**
+     * @param string $offset
+     * @throws MetaDataException
      */
     public function removeAttribute($key)
     {
-        // TODO: Implement removeAttribute() method.
+        if (!isset($this->meta[$key])) {
+            MetaDataException::keyNotFound;
+        } else {
+            unset($this->meta[$key]);
+        }
     }
 
     /**
-     * @inheritdoc
+     * @param string $offset
+     * @return boolean
+     */
+    public function attributeExits($key)
+    {
+        return isset($this->meta[$key]);
+    }
+
+    /**
+     * @param string $offset
+     * @return array|string|integer|float|bool|null
+     * @throws MetaDataException
      */
     public function atAttribute($key)
     {
-        // TODO: Implement atAttribute() method.
+        if (!isset($this->meta[$key])) {
+            MetaDataException::keyNotFound;
+        }
+
+        return $this->meta[$key];
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @return boolean
+     */
+    public function offsetExists($offset)
+    {
+        return $this->attributeExits($offset);
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @return array|string|integer|float|bool|null
+     * @throws MetaDataException
+     */
+    public function offsetGet($offset)
+    {
+        return $this->atAttribute($offset);
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @param array|string|integer|float|bool|null $value
+     * @throws MetaDataException
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->setAttribute($offset, $value);
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @throws MetaDataException
+     */
+    public function offsetUnset($offset)
+    {
+        $this->removeAttribute($offset);
     }
 }
