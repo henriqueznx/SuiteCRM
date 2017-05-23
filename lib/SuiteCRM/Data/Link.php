@@ -215,7 +215,6 @@ class Link implements LinkInterface, \ArrayAccess
     /**
      * @uses ArrayAccess
      * @param string $offset
-     * @return void
      */
     public function offsetUnset($offset)
     {
