@@ -41,6 +41,7 @@
 namespace SuiteCRM\Data;
 
 use SuiteCRM\Data\RelatedResourceInterface as RelatedResourceInterface;
+use SuiteCRM\Data\MetaDataInterface as MetaDataInterface;
 
 /**
  * @license AGPL 3
@@ -56,7 +57,7 @@ class RelatedResource implements RelatedResourceInterface
      */
     protected $href;
     /**
-     * @var RelatedResourceInterface $included
+     * @var MetaDataInterface $meta
      */
     protected $meta;
 
@@ -69,6 +70,7 @@ class RelatedResource implements RelatedResourceInterface
         $response = array(
             'related' => array(
                 'href' => $this->href,
+                'meta' => $this->meta
             )
         );
         return array_merge_recursive($response['related'], $this->meta->getData());

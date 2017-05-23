@@ -52,7 +52,7 @@ interface AttributesInterface extends DataInterface
      * @param string $key
      * @param array|string|integer|float|bool|null $value
      * @return void
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function addAttribute($key, $value);
 
@@ -60,14 +60,14 @@ interface AttributesInterface extends DataInterface
      * @param string $key
      * @param array|string|integer|float|bool|null $value
      * @return void
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function setAttribute($key, $value);
 
     /**
      * @param string $key
      * @return void
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function removeAttribute($key);
 
@@ -80,7 +80,7 @@ interface AttributesInterface extends DataInterface
     /**
      * @param string $key
      * @return array|string|integer|float|bool|null
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function atAttribute($key);
 }
