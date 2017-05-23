@@ -173,7 +173,7 @@ class Relationship implements RelationshipInterface, \ArrayAccess
     }
 
     /**
-     * @param LinkInterface $link
+     * @param \SuiteCRM\Data\LinkInterface $link
      */
     public function setLink(LinkInterface $link)
     {
@@ -181,7 +181,7 @@ class Relationship implements RelationshipInterface, \ArrayAccess
     }
 
     /**
-     * @param MetaDataInterface $metadata
+     * @param \SuiteCRM\Data\MetaDataInterface $metadata
      */
     public function setMetaData(MetaDataInterface $metadata)
     {
