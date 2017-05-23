@@ -67,7 +67,7 @@ class Uuid implements UuidInterface
             if (self::validate($value)) {
                 $this->id = $value;
             } else {
-                UuidException::invalidFormat();
+                UuidException::invalidFormat($value);
             }
         }
     }

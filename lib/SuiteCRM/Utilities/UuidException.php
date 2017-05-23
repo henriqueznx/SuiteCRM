@@ -50,13 +50,14 @@ namespace SuiteCRM\Utilities;
 class UuidException extends \Exception
 {
     /**
+     * @param string $uuid
      * @return static
      */
     public static function invalidFormat($uuid)
     {
         $errorMessage = 'Invalid Uuid Format: '.
             'Expected 000000-0000-0000-0000-000000000000 '.
-            'but got $uuid instead';
+            'but got '.$uuid.' instead';
 
         return new static($errorMessage);
     }
