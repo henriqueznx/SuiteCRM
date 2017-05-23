@@ -41,6 +41,7 @@
 namespace SuiteCRM\Data;
 
 use SuiteCRM\Data\MetaDataInterface as MetaDataInterface;
+use SuiteCRM\Data\MetaDataException as MetaDataException;
 
 
 /**
@@ -69,62 +70,62 @@ class MetaData implements MetaDataInterface
     }
 
     /**
-     * @param string $offset
+     * @param string $key
      * @param array|string|integer|float|bool|null $value
      * @throws MetaDataException
      */
     public function addAttribute($key, $value)
     {
         if (gettype($key) !== "string") {
-            MetaDataException::invalidKey($key);
+            throw MetaDataException::invalidKey($key);
         }
 
         if (gettype($value) === "resource") {
-            MetaDataException::invalidValue($value);
+            throw MetaDataException::invalidValue($value);
         }
 
         if (gettype($value) === "object") {
-            AttributesException::invalidValue($value);
+            throw MetaDataException::invalidValue($value);
         }
         $this->meta[$key] = $value;
     }
 
     /**
-     * @param string $offset
+     * @param string $key
      * @param array|string|integer|float|bool|null $value
      * @throws MetaDataException
      */
     public function setAttribute($key, $value)
     {
         if (gettype($key) !== "string") {
-            MetaDataException::invalidKey($key);
+            throw MetaDataException::invalidKey($key);
         }
 
         if (gettype($value) === "resource") {
-            MetaDataException::invalidValue($value);
+            throw MetaDataException::invalidValue($value);
         }
 
         if (gettype($value) === "object") {
-            AttributesException::invalidValue($value);
+            throw MetaDataException::invalidValue($value);
         }
         $this->meta[$key] = $value;
     }
 
     /**
-     * @param string $offset
+     * @param string $key
      * @throws MetaDataException
      */
     public function removeAttribute($key)
     {
         if (!isset($this->meta[$key])) {
-            MetaDataException::keyNotFound;
+            throw MetaDataException::keyNotFound($key);
         } else {
             unset($this->meta[$key]);
         }
     }
 
     /**
-     * @param string $offset
+     * @param string $key
      * @return boolean
      */
     public function attributeExits($key)
@@ -133,14 +134,14 @@ class MetaData implements MetaDataInterface
     }
 
     /**
-     * @param string $offset
+     * @param string $key
      * @return array|string|integer|float|bool|null
      * @throws MetaDataException
      */
     public function atAttribute($key)
     {
         if (!isset($this->meta[$key])) {
-            MetaDataException::keyNotFound;
+            throw MetaDataException::keyNotFound($key);;
         }
 
         return $this->meta[$key];
@@ -148,43 +149,43 @@ class MetaData implements MetaDataInterface
 
     /**
      * @uses ArrayAccess
-     * @param string $offset
+     * @param string $key
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($key)
     {
-        return $this->attributeExits($offset);
+        return $this->attributeExits($key);
     }
 
     /**
      * @uses ArrayAccess
-     * @param string $offset
+     * @param string $key
      * @return array|string|integer|float|bool|null
      * @throws MetaDataException
      */
-    public function offsetGet($offset)
+    public function offsetGet($key)
     {
-        return $this->atAttribute($offset);
+        return $this->atAttribute($key);
     }
 
     /**
      * @uses ArrayAccess
-     * @param string $offset
+     * @param string $key
      * @param array|string|integer|float|bool|null $value
      * @throws MetaDataException
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($key, $value)
     {
-        $this->setAttribute($offset, $value);
+        $this->setAttribute($key, $value);
     }
 
     /**
      * @uses ArrayAccess
-     * @param string $offset
+     * @param string $key
      * @throws MetaDataException
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($key)
     {
-        $this->removeAttribute($offset);
+        $this->removeAttribute($key);
     }
 }

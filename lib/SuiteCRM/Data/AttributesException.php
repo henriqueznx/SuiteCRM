@@ -40,8 +40,6 @@
 
 namespace SuiteCRM\Data;
 
-use SebastianBergmann\Comparator\ExceptionComparator;
-
 
 /**
  * @license AGPL 3
@@ -49,9 +47,10 @@ use SebastianBergmann\Comparator\ExceptionComparator;
  *
  * Throws Resource Exceptions
  */
-class AttributeException extends \Exception
+class AttributesException extends \Exception
 {
     /**
+     * @param string $key
      * @return static
      */
     public static function invalidKey($key)
@@ -63,6 +62,7 @@ class AttributeException extends \Exception
     }
 
     /**
+     * @param string $key
      * @return static
      */
     public static function keyNotFound($key)
@@ -73,6 +73,7 @@ class AttributeException extends \Exception
     }
 
     /**
+     * @param array|string|integer|float|bool|null $value
      * @return static
      */
     public static function invalidValue($value)

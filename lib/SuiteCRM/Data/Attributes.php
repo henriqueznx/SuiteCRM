@@ -41,7 +41,7 @@
 namespace SuiteCRM\Data;
 
 use SuiteCRM\Data\AttributesInterface as AttributesInterface;
-use SuiteCRM\Data\AttributeException as AttributesException;
+use SuiteCRM\Data\AttributesException as AttributesException;
 
 /**
  * @license AGPL 3
@@ -50,7 +50,7 @@ use SuiteCRM\Data\AttributeException as AttributesException;
  * Link which implements the data structure specified by json api
  * http://jsonapi.org/format/#document-links
  */
-class Attributes implements AttributesInterface, ArrayAccess
+class Attributes implements AttributesInterface, \ArrayAccess
 {
     /**
      * @var array $attributes
@@ -72,20 +72,20 @@ class Attributes implements AttributesInterface, ArrayAccess
      * @param string $key
      * @param array|string|integer|float|bool|null $value
      * @return void
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function addAttribute($key, $value)
     {
         if (gettype($key) !== "string") {
-            AttributeException::invalidKey($key);
+            throw AttributesException::invalidKey($key);
         }
 
         if (gettype($value) === "resource") {
-            AttributeException::invalidValue($value);
+            throw AttributesException::invalidValue($value);
         }
 
         if (gettype($value) === "object") {
-            AttributesException::invalidValue($value);
+            throw AttributesException::invalidValue($value);
         }
         $this->attributes[$key] = $value;
     }
@@ -94,20 +94,20 @@ class Attributes implements AttributesInterface, ArrayAccess
      * @param string $key
      * @param array|string|integer|float|bool|null $value
      * @return void
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function setAttribute($key, $value)
     {
         if (gettype($key) !== "string") {
-            AttributeException::invalidKey($key);
+            throw AttributesException::invalidKey($key);
         }
 
         if (gettype($value) === "resource") {
-            AttributeException::invalidValue($value);
+            throw AttributesException::invalidValue($value);
         }
 
         if (gettype($value) === "object") {
-            AttributesException::invalidValue($value);
+            throw AttributesException::invalidValue($value);
         }
         $this->attributes[$key] = $value;
     }
@@ -115,12 +115,12 @@ class Attributes implements AttributesInterface, ArrayAccess
     /**
      * @param string $key
      * @return void
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function removeAttribute($key)
     {
         if (!isset($this->attributes[$key])) {
-            AttributeException::keyNotFound;
+            throw AttributesException::keyNotFound($key);
         } else {
             unset($this->attributes[$key]);
         }
@@ -139,12 +139,12 @@ class Attributes implements AttributesInterface, ArrayAccess
      * @param string $key
      * @return array|string|integer|float|bool|null
      * @return void
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function atAttribute($key)
     {
         if (!isset($this->attributes[$key])) {
-            AttributeException::keyNotFound;
+            throw AttributesException::keyNotFound($key);
         }
 
         return $this->attributes[$key];
@@ -153,7 +153,6 @@ class Attributes implements AttributesInterface, ArrayAccess
     /**
      * @uses ArrayAccess
      * @param string $offset
-     * @return void
      * @return boolean
      */
     public function offsetExists($offset)
@@ -165,7 +164,7 @@ class Attributes implements AttributesInterface, ArrayAccess
      * @uses ArrayAccess
      * @param string $offset
      * @return array|string|integer|float|bool|null
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function offsetGet($offset)
     {
@@ -177,7 +176,7 @@ class Attributes implements AttributesInterface, ArrayAccess
      * @param string $offset
      * @param array|string|integer|float|bool|null $value
      * @return void
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function offsetSet($offset, $value)
     {
@@ -188,7 +187,7 @@ class Attributes implements AttributesInterface, ArrayAccess
      * @uses ArrayAccess
      * @param string $offset
      * @return void
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function offsetUnset($offset)
     {
