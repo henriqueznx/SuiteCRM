@@ -48,4 +48,53 @@ use SuiteCRM\Data\DataInterface as DataInterface;
  */
 interface LinkInterface extends DataInterface
 {
+    /**
+     * @return string
+     */
+    public function getSelf();
+
+    /**
+     * @param string $self
+     */
+    public function setSelf($self);
+
+    /**
+     * @return string
+     */
+    public function getRelated();
+
+    /**
+     * @param string $related
+     */
+    public function setRelated($related);
+
+    /**
+     * @return string
+     */
+    public function getFirst();
+
+    /**
+     * @param string $first
+     */
+    public function setFirst($first);
+
+    /**
+     * @return string
+     */
+    public function getPrev();
+
+    /**
+     * @param string $prev
+     */
+    public function setPrev($prev);
+
+    /**
+     * @return string
+     */
+    public function getNext();
+
+    /**
+     * @param string $prev
+     */
+    public function setLast($prev);
 }

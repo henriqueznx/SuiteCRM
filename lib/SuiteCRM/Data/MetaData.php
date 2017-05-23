@@ -51,7 +51,7 @@ use SuiteCRM\Data\MetaDataException as MetaDataException;
  * MetaData which implements the data structure specified by json api
  * http://jsonapi.org/format/#document-meta
  */
-class MetaData implements MetaDataInterface
+class MetaData implements MetaDataInterface, \ArrayAccess
 {
     /**
      * @var array $meta
@@ -141,7 +141,7 @@ class MetaData implements MetaDataInterface
     public function atAttribute($key)
     {
         if (!isset($this->meta[$key])) {
-            throw MetaDataException::keyNotFound($key);;
+            throw MetaDataException::keyNotFound($key);
         }
 
         return $this->meta[$key];

@@ -49,32 +49,118 @@ use SuiteCRM\Data\LinkInterface as LinkInterface;
  * Link which implements the data structure specified by json api
  * http://jsonapi.org/format/#document-links
  */
-class Link implements LinkInterface
+class Link implements LinkInterface, \ArrayAccess
 {
     /**
-     * @var $data string url
+     * @var string $data string url
      */
     protected $self;
+
     /**
-     * @var $included RelatedResourceInterface
+     * @var RelatedResourceInterface $included
      */
     protected $related;
+
     /**
-     * @var $first string url|null (pagination)
+     * @var string|null $first string(pagination)
      */
     protected $first;
+
     /**
-     * @var $prev string url|null (pagination)
+     * @var string|null $prev url|null (pagination)
      */
     protected $prev;
+
     /**
-     * @var $next string url|null (pagination)
+     * @var string|null $next (pagination)
      */
     protected $next;
+
     /**
-     * @var $last string url|null (pagination)
+     * @var string|null $last (pagination)
      */
     protected $last;
+
+    /**
+     * @return string
+     */
+    public function getSelf()
+    {
+        return $this->self;
+    }
+
+    /**
+     * @param string $self
+     */
+    public function setSelf($self)
+    {
+        $this->self = $self;
+    }
+
+    /**
+     * @return RelatedResourceInterface
+     */
+    public function getRelated()
+    {
+        return $this->related;
+    }
+
+    /**
+     * @param string $related
+     */
+    public function setRelated($related)
+    {
+        $this->related = $related;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getFirst()
+    {
+        return $this->first;
+    }
+
+    /**
+     * @param string $first
+     */
+    public function setFirst($first)
+    {
+        $this->first = $first;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPrev()
+    {
+        return $this->prev;
+    }
+
+    /**
+     * @param string $prev
+     */
+    public function setPrev($prev)
+    {
+        $this->prev = $prev;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getNext()
+    {
+        return $this->next;
+    }
+
+    /**
+     * @param string $prev
+     * @return null|string
+     */
+    public function setLast($prev)
+    {
+        return $this->prev;
+    }
 
     /**
      * @uses DataInterface
@@ -93,5 +179,46 @@ class Link implements LinkInterface
         );
 
         return array_merge_recursive($response['links'], $this->related->getData());
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @return boolean
+     */
+    public function offsetExists($offset)
+    {
+        return property_exists(get_class($this), $offset);
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @return array|string|integer|float|bool|null
+     */
+    public function offsetGet($offset)
+    {
+        $this->{$offset};
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @param array|string|integer|float|bool|null $value
+     * @return void
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->{$offset} = $value;
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @return void
+     */
+    public function offsetUnset($offset)
+    {
+        $this->{$offset} = null;
     }
 }

@@ -50,6 +50,7 @@ namespace SuiteCRM\Data;
 class MetaDataException extends \Exception
 {
     /**
+     * @param string $key
      * @return static
      */
     public static function invalidKey($key)
@@ -61,6 +62,7 @@ class MetaDataException extends \Exception
     }
 
     /**
+     * @param string $key
      * @return static
      */
     public static function keyNotFound($key)
@@ -71,6 +73,7 @@ class MetaDataException extends \Exception
     }
 
     /**
+     * @param array|string|integer|float|bool|null $value
      * @return static
      */
     public static function invalidValue($value)

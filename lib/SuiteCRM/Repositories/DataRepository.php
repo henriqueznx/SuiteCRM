@@ -60,13 +60,14 @@ class DataRepository extends TopLevelRepository implements DataRepositoryInterfa
      * @var ResourceInterface $data
      */
     protected $data;
+
     /**
      * @var ResourceInterface
      */
     protected $included;
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function getData()
     {
