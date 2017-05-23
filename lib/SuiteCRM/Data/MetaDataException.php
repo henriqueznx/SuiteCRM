@@ -47,7 +47,7 @@ namespace SuiteCRM\Data;
  *
  * Throws Resource Exceptions
  */
-class MetaDataException
+class MetaDataException extends \Exception
 {
     /**
      * @return static

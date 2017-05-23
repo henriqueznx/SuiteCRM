@@ -40,6 +40,8 @@
 
 namespace SuiteCRM\Data;
 
+use SebastianBergmann\Comparator\ExceptionComparator;
+
 
 /**
  * @license AGPL 3
@@ -47,7 +49,7 @@ namespace SuiteCRM\Data;
  *
  * Throws Resource Exceptions
  */
-class AttributeException
+class AttributeException extends \Exception
 {
     /**
      * @return static

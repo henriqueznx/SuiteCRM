@@ -47,7 +47,7 @@ namespace SuiteCRM\Data;
  *
  * Throws Resource Exceptions
  */
-class RelationshipsException
+class RelationshipsException extends \Exception
 {
     /**
      * @return static
