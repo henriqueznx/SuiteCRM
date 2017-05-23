@@ -52,7 +52,7 @@ use SuiteCRM\Data\MetaDataInterface as MetaDataInterface;
  * Link which implements the data structure specified by json api
  * http://jsonapi.org/format/#document-links
  */
-class Relationship implements RelationshipInterface
+class Relationship implements RelationshipInterface, \ArrayAccess
 {
     /**
      * @var ResourceIdentified $data
@@ -172,13 +172,59 @@ class Relationship implements RelationshipInterface
         // TODO: Implement atResource() method.
     }
 
+    /**
+     * @param LinkInterface $link
+     */
     public function setLink(LinkInterface $link)
     {
         // TODO: Implement setLink() method.
     }
 
+    /**
+     * @param MetaDataInterface $metadata
+     */
     public function setMetaData(MetaDataInterface $metadata)
     {
         // TODO: Implement setMetaData() method.
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @return boolean
+     */
+    public function offsetExists($offset)
+    {
+        return property_exists(get_class($this), $offset);
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @return array|string|integer|float|bool|null
+     */
+    public function offsetGet($offset)
+    {
+        $this->{$offset};
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     * @param array|string|integer|float|bool|null $value
+     * @return void
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->{$offset} = $value;
+    }
+
+    /**
+     * @uses ArrayAccess
+     * @param string $offset
+     */
+    public function offsetUnset($offset)
+    {
+        $this->{$offset} = null;
     }
 }
