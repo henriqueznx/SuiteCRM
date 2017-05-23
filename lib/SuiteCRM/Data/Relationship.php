@@ -55,17 +55,17 @@ use SuiteCRM\Data\MetaDataInterface as MetaDataInterface;
 class Relationship implements RelationshipInterface, \ArrayAccess
 {
     /**
-     * @var ResourceIdentified $data
+     * @var \SuiteCRM\Data\ResourceIdentified $data
      */
     protected $data;
 
     /**
-     * @var LinkInterface $links
+     * @var \SuiteCRM\Data\LinkInterface $links
      */
     protected $links;
 
     /**
-     * @var MetaDataInterface $links
+     * @var \SuiteCRM\Data\MetaDataInterface $links
      */
     protected $meta;
 
@@ -76,9 +76,9 @@ class Relationship implements RelationshipInterface, \ArrayAccess
 
     /**
      * Relationship constructor.
-     * @param ResourceIdentified $resource
-     * @param LinkInterface|null $link
-     * @param MetaDataInterface|null $meta
+     * @param \SuiteCRM\Data\ResourceIdentified $resource
+     * @param \SuiteCRM\Data\LinkInterface|null $link
+     * @param \SuiteCRM\Data\MetaDataInterface|null $meta
      */
     public function __construct(
         ResourceIdentified $resource,
@@ -123,9 +123,9 @@ class Relationship implements RelationshipInterface, \ArrayAccess
 
     /**
      * @param string $id
-     * @param ResourceIdentified $resource
+     * @param \SuiteCRM\Data\ResourceIdentified $resource
      * @return void
-     * @throws ResourceException
+     * @throws \SuiteCRM\Data\ResourceException
      */
     public function addResource($id, ResourceIdentified $resource)
     {
@@ -134,9 +134,9 @@ class Relationship implements RelationshipInterface, \ArrayAccess
 
     /**
      * @param string $id
-     * @param ResourceIdentified $resource
+     * @param \SuiteCRM\Data\ResourceIdentified $resource
      * @return void
-     * @throws ResourceException
+     * @throws \SuiteCRM\Data\ResourceException
      */
     public function setResource($id, ResourceIdentified $resource)
     {
@@ -146,7 +146,7 @@ class Relationship implements RelationshipInterface, \ArrayAccess
     /**
      * @param string $id
      * @return void
-     * @throws ResourceException
+     * @throws \SuiteCRM\Data\ResourceException
      */
     public function removeResource($id)
     {
@@ -164,8 +164,8 @@ class Relationship implements RelationshipInterface, \ArrayAccess
 
     /**
      * @param string $id
-     * @return ResourceIdentified
-     * @throws ResourceException
+     * @return \SuiteCRM\Data\ResourceIdentified
+     * @throws \SuiteCRM\Data\ResourceException
      */
     public function atResource($id)
     {
@@ -205,7 +205,7 @@ class Relationship implements RelationshipInterface, \ArrayAccess
      */
     public function offsetGet($offset)
     {
-        $this->{$offset};
+        return $this->{$offset};
     }
 
     /**

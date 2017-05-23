@@ -41,6 +41,7 @@
 namespace SuiteCRM\Data;
 
 use SuiteCRM\Data\LinkInterface as LinkInterface;
+use SuiteCRM\Data\RelatedResourceInterface as RelatedResourceInterface;
 
 /**
  * @license AGPL 3
@@ -98,7 +99,7 @@ class Link implements LinkInterface, \ArrayAccess
     }
 
     /**
-     * @return RelatedResourceInterface
+     * @return \SuiteCRM\Data\RelatedResourceInterface
      */
     public function getRelated()
     {
@@ -163,7 +164,7 @@ class Link implements LinkInterface, \ArrayAccess
     }
 
     /**
-     * @uses DataInterface
+     * @uses \SuiteCRM\Data\DataInterface
      * @returns array
      */
     public function getData()

@@ -59,7 +59,7 @@ class MetaData implements MetaDataInterface, \ArrayAccess
     protected $meta;
 
     /**
-     * @uses DataInterface
+     * @uses \SuiteCRM\Data\DataInterface
      * @returns array
      */
     public function getData()
@@ -72,7 +72,7 @@ class MetaData implements MetaDataInterface, \ArrayAccess
     /**
      * @param string $key
      * @param array|string|integer|float|bool|null $value
-     * @throws MetaDataException
+     * @throws \SuiteCRM\Data\MetaDataException
      */
     public function addAttribute($key, $value)
     {
@@ -93,7 +93,7 @@ class MetaData implements MetaDataInterface, \ArrayAccess
     /**
      * @param string $key
      * @param array|string|integer|float|bool|null $value
-     * @throws MetaDataException
+     * @throws \SuiteCRM\Data\MetaDataException
      */
     public function setAttribute($key, $value)
     {
@@ -113,7 +113,7 @@ class MetaData implements MetaDataInterface, \ArrayAccess
 
     /**
      * @param string $key
-     * @throws MetaDataException
+     * @throws \SuiteCRM\Data\MetaDataException
      */
     public function removeAttribute($key)
     {
@@ -136,7 +136,7 @@ class MetaData implements MetaDataInterface, \ArrayAccess
     /**
      * @param string $key
      * @return array|string|integer|float|bool|null
-     * @throws MetaDataException
+     * @throws \SuiteCRM\Data\MetaDataException
      */
     public function atAttribute($key)
     {
@@ -161,7 +161,7 @@ class MetaData implements MetaDataInterface, \ArrayAccess
      * @uses ArrayAccess
      * @param string $key
      * @return array|string|integer|float|bool|null
-     * @throws MetaDataException
+     * @throws \SuiteCRM\Data\MetaDataException
      */
     public function offsetGet($key)
     {
@@ -172,7 +172,7 @@ class MetaData implements MetaDataInterface, \ArrayAccess
      * @uses ArrayAccess
      * @param string $key
      * @param array|string|integer|float|bool|null $value
-     * @throws MetaDataException
+     * @throws \SuiteCRM\Data\MetaDataException
      */
     public function offsetSet($key, $value)
     {
@@ -182,7 +182,7 @@ class MetaData implements MetaDataInterface, \ArrayAccess
     /**
      * @uses ArrayAccess
      * @param string $key
-     * @throws MetaDataException
+     * @throws \SuiteCRM\Data\MetaDataException
      */
     public function offsetUnset($key)
     {

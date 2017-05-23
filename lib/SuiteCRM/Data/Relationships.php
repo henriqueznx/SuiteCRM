@@ -41,6 +41,9 @@
 namespace SuiteCRM\Data;
 
 use SuiteCRM\Data\RelationshipsInterface as RelationshipsInterface;
+use SuiteCRM\Data\MetaDataInterface as MetaDataInterface;
+use SuiteCRM\Data\LinkInterface as LinkInterface;
+
 
 /**
  * @license AGPL 3

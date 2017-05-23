@@ -55,24 +55,24 @@ interface RelationshipInterface extends DataInterface
 
     /**
      * @param string $id
-     * @param ResourceIdentified $resource
+     * @param \SuiteCRM\Data\ResourceIdentified $resource
      * @return void
-     * @throws ResourceException
+     * @throws \SuiteCRM\Data\ResourceException
      */
     public function addResource($id, ResourceIdentified $resource);
 
     /**
      * @param string $id
-     * @param ResourceIdentified $resource
+     * @param \SuiteCRM\Data\ResourceIdentified $resource
      * @return void
-     * @throws ResourceException
+     * @throws \SuiteCRM\Data\ResourceException
      */
     public function setResource($id, ResourceIdentified $resource);
 
     /**
      * @param string $id
      * @return void
-     * @throws ResourceException
+     * @throws \SuiteCRM\Data\ResourceException
      */
     public function removeResource($id);
 
@@ -84,19 +84,19 @@ interface RelationshipInterface extends DataInterface
 
     /**
      * @param string $id
-     * @return ResourceIdentified
-     * @throws ResourceException
+     * @return \SuiteCRM\Data\ResourceIdentified
+     * @throws \SuiteCRM\Data\ResourceException
      */
     public function atResource($id);
 
     /**
-     * @param LinkInterface $link
+     * @param \SuiteCRM\Data\LinkInterface $link
      * @return void
      */
     public function setLink(LinkInterface $link);
 
     /**
-     * @param LinkInterface $link
+     * @param \SuiteCRM\Data\MetaDataInterface $metadata
      * @return void
      */
     public function setMetaData(MetaDataInterface $metadata);

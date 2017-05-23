@@ -42,6 +42,10 @@ namespace SuiteCRM\Data;
 
 use SuiteCRM\Data\ResourceInterface as ResourceInterface;
 use SuiteCRM\Data\ResourceException as ResourceException;
+use SuiteCRM\Data\RelationshipInterface as RelationshipInterface;
+use SuiteCRM\Data\AttributesInterface as AttributesInterface;
+use SuiteCRM\Data\MetaDataInterface as MetaDataInterface;
+use SuiteCRM\Data\LinkInterface as LinkInterface;
 use SuiteCRM\Utilities\UuidInterface as UuidInterface;
 
 /**

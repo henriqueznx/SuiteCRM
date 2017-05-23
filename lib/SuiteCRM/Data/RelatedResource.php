@@ -56,13 +56,14 @@ class RelatedResource implements RelatedResourceInterface, \ArrayAccess
      * @var string $data url
      */
     protected $href;
+
     /**
-     * @var MetaDataInterface $meta
+     * @var \SuiteCRM\Data\MetaDataInterface $meta
      */
     protected $meta;
 
     /**
-     * @uses DataInterface
+     * @uses \SuiteCRM\Data\DataInterface
      * @returns array
      */
     public function getData()
@@ -94,7 +95,7 @@ class RelatedResource implements RelatedResourceInterface, \ArrayAccess
      */
     public function offsetGet($offset)
     {
-        $this->{$offset};
+        return $this->{$offset};
     }
 
     /**
