@@ -58,7 +58,7 @@ class Link implements LinkInterface, \ArrayAccess
     protected $self;
 
     /**
-     * @var RelatedResourceInterface $included
+     * @var \SuiteCRM\Data\RelatedResourceInterface $included
      */
     protected $related;
 
@@ -107,9 +107,9 @@ class Link implements LinkInterface, \ArrayAccess
     }
 
     /**
-     * @param string $related
+     * @param \SuiteCRM\Data\RelatedResourceInterface $related
      */
-    public function setRelated($related)
+    public function setRelated(RelatedResourceInterface $related)
     {
         $this->related = $related;
     }

@@ -42,6 +42,7 @@ namespace SuiteCRM\Data;
 
 use SuiteCRM\Data\RelatedResourceInterface as RelatedResourceInterface;
 use SuiteCRM\Data\MetaDataInterface as MetaDataInterface;
+use SuiteCRM\Data\RelatedResourceException as RelatedResourceException;
 
 /**
  * @license AGPL 3
@@ -61,6 +62,42 @@ class RelatedResource implements RelatedResourceInterface, \ArrayAccess
      * @var \SuiteCRM\Data\MetaDataInterface $meta
      */
     protected $meta;
+    
+    /**
+     * @return string
+     */ 
+    public function getHref()
+    {
+        return $this->href;
+    }
+    
+    /**
+     * @param string $value
+     * @return void
+     */ 
+    public function setHref($value)
+    {
+        if(gettype($value) !== 'string') {
+            throw RelatedResourceException::invalidHrefValue($value);
+        }
+    }
+    
+    /**
+     * @return \SuiteCRM\data\MetaDataInterface
+     */ 
+    public function getMeta()
+    {
+        return $this->meta;
+    }
+    
+    /**
+     * @param \SuiteCRM\Data\MetaDataInterface $meta
+     * @return void
+     */
+    public function setMeta(MetaDataInterface $meta)
+    {
+        $this->meta = $mata;
+    }
 
     /**
      * @uses \SuiteCRM\Data\DataInterface

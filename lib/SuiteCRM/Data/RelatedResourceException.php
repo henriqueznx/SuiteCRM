@@ -40,34 +40,25 @@
 
 namespace SuiteCRM\Data;
 
-use SuiteCRM\Data\DataInterface as DataInterface
-use SuiteCRM\Data\MetaDataInterface as MetaDataInterface;
 
 /**
  * @license AGPL 3
  * @link https://github.com/salesagility/SuiteCRM
+ *
+ * Throws Resource Exceptions
  */
-interface RelatedResourceInterface extends DataInterface
-{
-    /**
-     * @return string
-     */ 
-    public function getHref();
-    
+class RelatedResourceException extends \Exception
+{  
     /**
      * @param string $value
-     * @return void
-     */ 
-    public function setHref($value);
-    
-    /**
-     * @return \SuiteCRM\data\MetaDataInterface
-     */ 
-    public function getMeta();
-    
-    /**
-     * @param \SuiteCRM\Data\MetaDataInterface $meta
-     * @return void
+     * @return static
      */
-    public function setMeta(MetaDataInterface $meta);
+    public static function invalidHrefValue($value)
+    {
+        $errorMessage = 'Invalid Argument Exception - Attribute key: ' .
+            'Expected stringi but type was (' .
+            gettype($value) . ') ';
+
+        return new static($errorMessage);
+    }
 }
