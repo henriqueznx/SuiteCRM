@@ -48,7 +48,7 @@ use SuiteCRM\Data\RelatedResourceException as RelatedResourceException;
  * @license AGPL 3
  * @link https://github.com/salesagility/SuiteCRM
  *
- * Link which implements the data structure specified by json api
+ * Implements the data structure specified by json api
  * http://jsonapi.org/format/#document-links
  */
 class RelatedResource implements RelatedResourceInterface, \ArrayAccess

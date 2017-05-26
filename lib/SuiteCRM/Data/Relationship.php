@@ -50,7 +50,7 @@ use SuiteCRM\Data\MetaDataInterface as MetaDataInterface;
  * @link https://github.com/salesagility/SuiteCRM
  *
  * Link which implements the data structure specified by json api
- * http://jsonapi.org/format/#document-links
+ * http://jsonapi.org/format/#document-resource-object-relationships
  */
 class Relationship implements RelationshipInterface, \ArrayAccess
 {
@@ -175,7 +175,7 @@ class Relationship implements RelationshipInterface, \ArrayAccess
     /**
      * @param \SuiteCRM\Data\LinkInterface $link
      */
-    public function setLink(LinkInterface $link)
+    public function setLinks(LinkInterface $link)
     {
         // TODO: Implement setLink() method.
     }

@@ -93,7 +93,7 @@ interface RelationshipInterface extends DataInterface
      * @param \SuiteCRM\Data\LinkInterface $link
      * @return void
      */
-    public function setLink(LinkInterface $link);
+    public function setLinks(LinkInterface $link);
 
     /**
      * @param \SuiteCRM\Data\MetaDataInterface $metadata
