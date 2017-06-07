@@ -60,6 +60,8 @@ class SavedSearchTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($savedSearch->id));
         $this->assertEquals(36, strlen($savedSearch->id));
 
+        //test handleSave method
+        $this->handleSaveAndRetrieveSavedSearch($savedSearch->id);
 
         // Where is the unit test?
         // Where is the main method?
